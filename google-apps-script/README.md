@@ -23,4 +23,14 @@ Supported Web App writes:
 - `saveUserAccount`
 - `sendResultEmail`
 
+Supported Web App reads:
+
+- `vouchers`
+- `userAccounts`
+- `attempts`
+- `lots`
+- `questions`
+
+The public GitHub Pages app reads through JSONP (`callback=...`) to avoid browser CORS blocks on Apps Script.
+
 For GitHub Pages, the public site will call the Web App URL for reads and writes.

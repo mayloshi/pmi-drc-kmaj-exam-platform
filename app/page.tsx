@@ -80,11 +80,12 @@ type UserAccount = {
   role: string;
   voucherCode: string;
   password: string;
+  passwordHash?: string;
   defaultLanguage: Language;
   createdAt: string;
 };
 
-const VERSION = "v0.1.3";
+const VERSION = "v0.1.4";
 const UPDATED_AT = "2026-07-30";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
@@ -497,6 +498,39 @@ function parseEmailList(value: string) {
   return [...new Set(value.split(/[\n,;]+/).map((email) => normalizeEmail(email)).filter(Boolean))];
 }
 
+function normalizeVoucherRecord(row: Record<string, string>): VoucherRecord {
+  const status = row.status === "used" || row.status === "assigned" ? row.status : "available";
+  return {
+    code: row.code || row.voucherCode || "",
+    role: row.role || "",
+    status,
+    assignedTo: row.assignedTo || "",
+    usedBy: row.usedBy || "",
+    createdAt: row.createdAt || "",
+    usedAt: row.usedAt || "",
+  };
+}
+
+function normalizeUserAccount(row: Record<string, string>): UserAccount {
+  return {
+    name: row.name || "",
+    email: row.email || "",
+    organization: row.organization || "",
+    cohort: row.cohort || "",
+    role: row.role || "",
+    voucherCode: row.voucherCode || "",
+    password: row.password || "",
+    passwordHash: row.passwordHash || "",
+    defaultLanguage: row.defaultLanguage === "en" ? "en" : "fr",
+    createdAt: row.createdAt || "",
+  };
+}
+
+async function sha256(value: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
 function candidateKey(candidate: Candidate) {
   return (candidate.email || candidate.name).trim().toLowerCase();
 }
@@ -576,7 +610,7 @@ export default function Home() {
   const visibleLots = lots.filter((lot) => lot.examType === candidate.examType);
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
-    Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password && canUseAccount());
+    Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
   const guestMonthlyLotCount = countGuestMonthlyLots(candidate, attempts);
   const candidateAttempts = attempts.filter((attempt) => {
     const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
@@ -602,23 +636,29 @@ export default function Home() {
     saveJson(STORAGE_CANDIDATE, next);
   }
 
-  function canUseAccount() {
-    if (!candidate.hasAccount) return true;
+  async function validateAccountLogin() {
     const email = normalizeEmail(candidate.email);
-    return userAccounts.some((user) => normalizeEmail(user.email) === email && user.password === candidate.password);
+    const account = userAccounts.find((user) => normalizeEmail(user.email) === email);
+    if (!account) return null;
+    if (account.password && account.password === candidate.password) return account;
+    if (account.passwordHash) {
+      const passwordHash = await sha256(candidate.password);
+      if (passwordHash === account.passwordHash) return account;
+    }
+    return null;
   }
 
-  function startSelect() {
+  async function startSelect() {
     if (!canAccessLots) {
       setAccessNotice(t.accessMissingNameEmail);
       return;
     }
-    if (candidate.hasAccount && (!candidate.password || !canUseAccount())) {
+    const account = candidate.hasAccount ? await validateAccountLogin() : null;
+    if (candidate.hasAccount && (!candidate.password || !account)) {
       setAccessNotice(t.loginUnknown);
       return;
     }
     if (candidate.hasAccount) {
-      const account = userAccounts.find((user) => normalizeEmail(user.email) === normalizeEmail(candidate.email));
       if (account) {
         const nextCandidate = {
           ...candidate,
@@ -654,6 +694,53 @@ export default function Home() {
     } catch (error) {
       setSyncStatus(`${action}: ${error instanceof Error ? error.message : "sync error"}`);
       return false;
+    }
+  }
+
+  function loadFromAppsScript<T>(action: string): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (!settings.appsScriptUrl.trim()) {
+        reject(new Error(language === "fr" ? "Endpoint Apps Script non configure." : "Apps Script endpoint is not configured."));
+        return;
+      }
+      const callbackName = `pmiDrcKmaj_${action}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const callbacks = window as unknown as Record<string, (payload: T) => void>;
+      const script = document.createElement("script");
+      const separator = settings.appsScriptUrl.includes("?") ? "&" : "?";
+      script.src = `${settings.appsScriptUrl}${separator}action=${encodeURIComponent(action)}&callback=${encodeURIComponent(callbackName)}&t=${Date.now()}`;
+      callbacks[callbackName] = (payload: T) => {
+        resolve(payload);
+        script.remove();
+        delete callbacks[callbackName];
+      };
+      script.onerror = () => {
+        script.remove();
+        delete callbacks[callbackName];
+        reject(new Error(`Unable to load ${action}`));
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  async function refreshRemoteData() {
+    try {
+      const [remoteVouchers, remoteUsers] = await Promise.all([
+        loadFromAppsScript<Record<string, string>[]>("vouchers"),
+        loadFromAppsScript<Record<string, string>[]>("userAccounts"),
+      ]);
+      const nextVouchers = remoteVouchers.map(normalizeVoucherRecord).filter((voucher) => voucher.code);
+      const nextUsers = remoteUsers.map(normalizeUserAccount).filter((user) => user.email);
+      if (nextVouchers.length) {
+        setVoucherRecords(nextVouchers);
+        saveJson(STORAGE_VOUCHERS, nextVouchers);
+      }
+      if (nextUsers.length) {
+        setUserAccounts(nextUsers);
+        saveJson(STORAGE_USERS, nextUsers);
+      }
+      setSyncStatus(`read: ${new Date().toISOString()}`);
+    } catch (error) {
+      setSyncStatus(`read: ${error instanceof Error ? error.message : "sync error"}`);
     }
   }
 
@@ -705,6 +792,7 @@ export default function Home() {
       role: voucher.role,
       voucherCode: voucher.code,
       password: candidate.password,
+      passwordHash: await sha256(candidate.password),
       defaultLanguage: candidate.language,
       createdAt: new Date().toISOString(),
     };
@@ -829,8 +917,13 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function goExams() {
-    if (canAccessLots) {
+  async function goExams() {
+    if (candidate.hasAccount && canAccessLots) {
+      await startSelect();
+      window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+      return;
+    }
+    if (!candidate.hasAccount && canAccessLots) {
       setView("select");
       window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
       return;
@@ -898,7 +991,7 @@ export default function Home() {
         <button onClick={goHome}>⌂ {t.home}</button>
         <button onClick={goTop}>↑ {t.top}</button>
         <button onClick={goExams}>▦ {t.exams}</button>
-        <button onClick={() => window.location.reload()}>↻ {t.refresh}</button>
+        <button onClick={settings.appsScriptUrl.trim() ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
       </nav>
 
       {view === "home" && (
@@ -950,7 +1043,7 @@ export default function Home() {
               <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
             </div>
             {accountNotice && <p className="helper-note">{accountNotice}</p>}
-            {candidate.hasAccount && candidate.email && candidate.password && !canUseAccount() && <p className="error">{t.loginUnknown}</p>}
+            {accessNotice && <p className="error">{accessNotice}</p>}
           </div>
           </section>
         </>

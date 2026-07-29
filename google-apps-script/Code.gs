@@ -66,14 +66,15 @@ function setupDatabase() {
 }
 
 function doGet(e) {
-  const action = e.parameter.action || "health";
+  const action = (e && e.parameter && e.parameter.action) || "health";
   const spreadsheet = getOrCreateSpreadsheet_();
-  if (action === "lots") return json_(readRows_(spreadsheet, "Lots"));
-  if (action === "questions") return json_(readRows_(spreadsheet, "QuestionBank").filter((row) => row.active !== "false"));
-  if (action === "attempts") return json_(readRows_(spreadsheet, "Attempts"));
-  if (action === "vouchers") return json_(readRows_(spreadsheet, "Vouchers"));
-  if (action === "userAccounts") return json_(readRows_(spreadsheet, "UserAccounts"));
-  return json_({ ok: true, database: SPREADSHEET_NAME });
+  let payload = { ok: true, database: SPREADSHEET_NAME };
+  if (action === "lots") payload = readRows_(spreadsheet, "Lots");
+  if (action === "questions") payload = readRows_(spreadsheet, "QuestionBank").filter((row) => row.active !== "false");
+  if (action === "attempts") payload = readRows_(spreadsheet, "Attempts");
+  if (action === "vouchers") payload = readRows_(spreadsheet, "Vouchers");
+  if (action === "userAccounts") payload = readRows_(spreadsheet, "UserAccounts");
+  return output_(payload, e);
 }
 
 function doPost(e) {
@@ -282,6 +283,16 @@ function getUserId_(user) {
 function hashPassword_(password) {
   const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, password);
   return bytes.map((byte) => (byte + 256).toString(16).slice(-2)).join("");
+}
+
+function output_(payload, e) {
+  const callback = e && e.parameter && e.parameter.callback;
+  if (callback && /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(callback)) {
+    return ContentService
+      .createTextOutput(`${callback}(${JSON.stringify(payload)});`)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return json_(payload);
 }
 
 function json_(payload) {
