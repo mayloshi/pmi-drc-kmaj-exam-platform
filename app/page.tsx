@@ -84,7 +84,7 @@ type UserAccount = {
   createdAt: string;
 };
 
-const VERSION = "v0.1.1";
+const VERSION = "v0.1.2";
 const UPDATED_AT = "2026-07-29";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
@@ -235,8 +235,8 @@ const copy = {
     emailResults: "Je souhaite recevoir mes résultats par email.",
     seeLots: "Voir les lots",
     clear: "Annuler",
-    accessMissingNameEmail: "Indiquez le nom et l'adresse email, ou connectez-vous avec un compte voucher valide.",
-    accessRequired: "Accès requis : nom + email, ou compte avec voucher reconnu et mot de passe.",
+    accessMissingNameEmail: "Indiquez au minimum le nom, ou connectez-vous avec un compte voucher valide.",
+    accessRequired: "Accès requis : nom pour un accès ponctuel, ou compte avec voucher reconnu et mot de passe.",
     platformStructure: "Structure de la plateforme",
     selectedType: "Type choisi",
     availableLots: "Lots disponibles",
@@ -335,8 +335,8 @@ const copy = {
     emailResults: "I would like to receive my results by email.",
     seeLots: "See exam lots",
     clear: "Cancel",
-    accessMissingNameEmail: "Enter name and email address, or sign in with a valid voucher account.",
-    accessRequired: "Required access: name + email, or a valid voucher account with password.",
+    accessMissingNameEmail: "Enter at least the name, or sign in with a valid voucher account.",
+    accessRequired: "Required access: name for guest access, or a valid voucher account with password.",
     platformStructure: "Platform structure",
     selectedType: "Selected type",
     availableLots: "Available lots",
@@ -475,6 +475,45 @@ function saveJson(key: string, value: unknown) {
   }
 }
 
+function normalizeVoucher(code: string) {
+  return code.trim().toUpperCase();
+}
+
+function candidateKey(candidate: Candidate) {
+  return (candidate.email || candidate.name).trim().toLowerCase();
+}
+
+function isSameGuest(candidate: Candidate, attempt: Attempt) {
+  const key = candidateKey(candidate);
+  if (!key) return false;
+  const attemptKey = candidateKey(attempt.candidate);
+  return attemptKey === key;
+}
+
+function isCurrentMonth(date: string) {
+  const current = new Date();
+  const attemptDate = new Date(date);
+  return attemptDate.getFullYear() === current.getFullYear() && attemptDate.getMonth() === current.getMonth();
+}
+
+function countGuestMonthlyLots(candidate: Candidate, attempts: Attempt[]) {
+  const lotIds = new Set(
+    attempts
+      .filter((attempt) => !attempt.candidate.hasAccount && isSameGuest(candidate, attempt) && isCurrentMonth(attempt.startedAt))
+      .map((attempt) => attempt.lotId),
+  );
+  return lotIds.size;
+}
+
+function hasGuestTriedLotThisMonth(candidate: Candidate, attempts: Attempt[], lotId: string) {
+  return attempts.some((attempt) =>
+    !attempt.candidate.hasAccount &&
+    attempt.lotId === lotId &&
+    isSameGuest(candidate, attempt) &&
+    isCurrentMonth(attempt.startedAt),
+  );
+}
+
 function initialCandidate(): Candidate {
   return {
     name: "",
@@ -517,8 +556,9 @@ export default function Home() {
   const currentScore = scoreAttempt(selectedLot, answers);
   const visibleLots = lots.filter((lot) => lot.examType === candidate.examType);
   const canAccessLots =
-    Boolean(candidate.name.trim() && candidate.email.trim()) ||
-    Boolean(candidate.hasAccount && candidate.voucher.trim() && candidate.password && canUseAccount());
+    Boolean(!candidate.hasAccount && candidate.name.trim()) ||
+    Boolean(candidate.hasAccount && candidate.name.trim() && candidate.voucher.trim() && candidate.password && canUseAccount());
+  const guestMonthlyLotCount = countGuestMonthlyLots(candidate, attempts);
   const candidateAttempts = attempts.filter((attempt) => {
     const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
     const sameName = candidate.name && attempt.candidate.name.toLowerCase() === candidate.name.toLowerCase();
@@ -545,12 +585,14 @@ export default function Home() {
 
   function canUseAccount() {
     if (!candidate.hasAccount) return true;
-    const code = candidate.voucher.trim();
-    const account = userAccounts.find((user) => user.voucherCode === code);
+    const code = normalizeVoucher(candidate.voucher);
+    const account = userAccounts.find((user) => normalizeVoucher(user.voucherCode) === code);
     if (account) {
-      return account.password === candidate.password && (!candidate.email || account.email.toLowerCase() === candidate.email.toLowerCase());
+      const sameEmail = !candidate.email || !account.email || account.email.toLowerCase() === candidate.email.toLowerCase();
+      const sameName = !candidate.name || account.name.toLowerCase() === candidate.name.toLowerCase();
+      return account.password === candidate.password && sameEmail && sameName;
     }
-    return voucherRecords.some((voucher) => voucher.code === code);
+    return voucherRecords.some((voucher) => normalizeVoucher(voucher.code) === code && voucher.status !== "used");
   }
 
   function startSelect() {
@@ -587,11 +629,12 @@ export default function Home() {
   }
 
   function createUserAccount() {
-    if (!candidate.name.trim() || !candidate.email.trim()) {
+    if (!candidate.name.trim()) {
       setAccountNotice(t.accessMissingNameEmail);
       return;
     }
-    const voucher = voucherRecords.find((item) => item.code === candidate.voucher.trim());
+    const code = normalizeVoucher(candidate.voucher);
+    const voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used");
     if (!voucher || !candidate.password.trim()) {
       setAccountNotice(t.voucherUnknown);
       return;
@@ -607,7 +650,14 @@ export default function Home() {
       defaultLanguage: candidate.language,
       createdAt: new Date().toISOString(),
     };
-    const nextUsers = [account, ...userAccounts.filter((user) => user.email.toLowerCase() !== account.email.toLowerCase())];
+    const nextUsers = [
+      account,
+      ...userAccounts.filter((user) =>
+        account.email
+          ? user.email.toLowerCase() !== account.email.toLowerCase()
+          : normalizeVoucher(user.voucherCode) !== normalizeVoucher(account.voucherCode),
+      ),
+    ];
     const nextVouchers = voucherRecords.map((item) =>
       item.code === voucher.code
         ? { ...item, status: "used" as const, usedBy: account.email, usedAt: account.createdAt }
@@ -617,11 +667,19 @@ export default function Home() {
     setVoucherRecords(nextVouchers);
     saveJson(STORAGE_USERS, nextUsers);
     saveJson(STORAGE_VOUCHERS, nextVouchers);
+    updateCandidate({ hasAccount: true, voucher: voucher.code });
     setAccountNotice(`${t.accountCreated}: ${account.email}`);
   }
 
   function startExam(lot: ExamLot) {
     if (!lot.questions.length) return;
+    if (!candidate.hasAccount && guestMonthlyLotCount >= 2 && !hasGuestTriedLotThisMonth(candidate, attempts, lot.id)) {
+      setAccessNotice(language === "fr"
+        ? "Accès ponctuel limité à 2 lots d'examen par mois. Connectez-vous avec un compte voucher pour continuer."
+        : "Guest access is limited to 2 exam lots per month. Sign in with a voucher account to continue.");
+      setView("home");
+      return;
+    }
     const draft = loadJson<Attempt | null>(STORAGE_DRAFT, null);
     const useDraft = draft?.lotId === lot.id && draft.status === "saved";
     setSelectedLotId(lot.id);
