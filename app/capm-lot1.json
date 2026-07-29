@@ -1,0 +1,2291 @@
+{
+  "id": "capm-2026-lot-1-questions-01-50",
+  "title": {
+    "fr": "CAPM 2026 - Lot 1 - Questions 1 à 50",
+    "en": "CAPM 2026 - Lot 1 - Questions 1 to 50"
+  },
+  "examType": "CAPM",
+  "source": "CAPM 2026 Lot 1 Fondamentaux et analyse.docx + CAPM_2026_Traduction_FR_Questions_01-50.docx",
+  "questionCount": 50,
+  "questions": [
+    {
+      "id": "Q1",
+      "type": "single",
+      "prompt": {
+        "fr": "Lors de la validation du produit, une partie prenante clé a refusé de signer le document d’acceptation, déclarant que certaines fonctionnalités ne répondaient pas à ses attentes. Qu’aurait pu faire le chef de projet pour éviter cette situation ?",
+        "en": "During product validation, a key stakeholder refused to sign off on the acceptance document, stating that certain functionalities did not meet their expectations. What could the project manager have done to prevent this situation?"
+      },
+      "options": [
+        {
+          "fr": "Impliquer la partie prenante clé pendant la phase de maîtrise de la qualité",
+          "en": "Engage the key stakeholder during the quality control phase"
+        },
+        {
+          "fr": "Impliquer la partie prenante clé pendant la phase d’initialisation du projet",
+          "en": "Engage the key stakeholder during the project initiation phase"
+        },
+        {
+          "fr": "Impliquer la partie prenante clé pendant la phase de planification",
+          "en": "Engage the key stakeholder during the planning phase"
+        },
+        {
+          "fr": "Impliquer la partie prenante clé pendant toutes les phases du projet",
+          "en": "Engage the key stakeholder during all project phases"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Les parties prenantes doivent être impliquées dès le début de la planification du projet et, parfois, également pendant l’initialisation du projet. Les parties prenantes clés doivent aussi être impliquées pendant la phase de maîtrise de la qualité afin qu’elles puissent évaluer les livrables du projet et recommander tout changement avant l’acceptation officielle. Puisque la partie prenante clé concernée est responsable de la signature du document d’acceptation, son pouvoir est considéré comme élevé. Par conséquent, les parties prenantes identifiées comme ayant un pouvoir élevé à l’aide de la grille pouvoir/intérêt doivent être gérées de près et maintenues satisfaites tout au long du projet.",
+        "en": "Stakeholders need to get involved early on during project planning and sometimes during the project initiation as well. Key stakeholders should also be involved during the quality control phase so that they can assess the project deliverables and recommend any changes before the official acceptance. Since the concerned key stakeholder is responsible for signing off the acceptance document, their power is considered high. Therefore, stakeholders who are identified to have high power using the power/interest grid should be managed closely and kept satisfied throughout the whole project."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q2",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Parmi les documents suivants, lesquels sont nécessaires au chef de projet pour élaborer la charte du projet ? (Choisissez trois réponses.)",
+        "en": "Which of the following documents does the project manager need to develop the project charter? (Select three)"
+      },
+      "options": [
+        {
+          "fr": "Plan stratégique",
+          "en": "Strategic plan"
+        },
+        {
+          "fr": "Business case",
+          "en": "Business case"
+        },
+        {
+          "fr": "Accords",
+          "en": "Agreements"
+        },
+        {
+          "fr": "Plan de management du projet",
+          "en": "Project Management Plan"
+        },
+        {
+          "fr": "Plan de gestion des coûts",
+          "en": "Cost Management Plan"
+        }
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": {
+        "fr": "Pour élaborer la charte du projet, le chef de projet a besoin de documents business tels que le business case du projet, le plan des bénéfices/plan stratégique et les accords (PMBOK, 8e édition, page 17). Options D et E : le plan de management du projet et le plan de gestion des coûts sont élaborés une fois que la charte du projet est signée.",
+        "en": "To develop the Project Charter, the project manager needs business documents such as the project’s business case, benefits/strategic plan, and agreements (PMBOK 8th Edition, page 17). Options D & E: The Project Management Plan and the Cost Management Plan are developed once the project charter is signed."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q3",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet dirige un projet composé de quatre phases. Quelle réunion le chef de projet devrait-il tenir à chaque phase afin d’assurer l’engagement continu des parties prenantes ?",
+        "en": "A project manager is leading a project that consists of four phases. Which meeting should the project manager hold at each phase to ensure the stakeholders’ continuous commitment?"
+      },
+      "options": [
+        {
+          "fr": "Réunion de lancement",
+          "en": "Kickoff meeting"
+        },
+        {
+          "fr": "Réunion de rétrospective",
+          "en": "Retrospective meeting"
+        },
+        {
+          "fr": "Réunion de revue des risques",
+          "en": "Risk review meeting"
+        },
+        {
+          "fr": "Réunion de passage de phase",
+          "en": "Stage gate meeting"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Les réunions de passage de phase ou de revue de phase donnent aux parties prenantes du projet l’occasion d’examiner l’avancement du projet ainsi que les actions futures planifiées. Au cours de ces réunions, les parties prenantes peuvent évaluer si le projet est, ou non, en bonne voie pour répondre aux attentes de l’organisation. Le chef de projet devrait planifier des réunions de passage à des jalons clés tout au long du projet, non seulement pour s’assurer que celui-ci est en bonne voie, mais aussi pour démontrer aux parties prenantes que le projet reste sur la bonne trajectoire.",
+        "en": "Stage-gate or phase review meetings represent an opportunity for project stakeholders to review project progress along with planned future actions. In these meetings, project stakeholders can assess whether or not the project is on track to meet the organization’s expectations. The project manager should schedule gate meetings at key milestones throughout the project to not only ensure it is on track but also demonstrate to the project stakeholders that the project is staying on course."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q4",
+      "type": "single",
+      "prompt": {
+        "fr": "Alors qu’il supervise l’exécution d’un projet industriel, un chef de projet observe que deux parties prenantes sont fréquemment en désaccord, ce qui pourrait avoir une incidence négative sur le projet. Laquelle des options suivantes devrait être utilisée pour consigner et suivre ce type de situation ?",
+        "en": "While overseeing the execution of an industrial project, a project manager observes that two stakeholders are frequently in disagreement, potentially affecting the project negatively. Which of the following options should be used to record and track this type of situation?"
+      },
+      "options": [
+        {
+          "fr": "Registre des différends",
+          "en": "Dispute log"
+        },
+        {
+          "fr": "Journal des difficultés",
+          "en": "Problem log"
+        },
+        {
+          "fr": "Registre des changements",
+          "en": "Change log"
+        },
+        {
+          "fr": "Registre des problèmes",
+          "en": "Issue log"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Le registre des problèmes, également appelé journal des problèmes, est un document du projet qui consigne et suit tous les problèmes ayant une incidence négative sur le projet (PMBOK, 8e édition, page 123). Une fois créé, il devient l’outil du chef de projet pour surveiller et communiquer tout ce qui se passe dans le projet. Ces problèmes peuvent concerner des ressources qui quittent le projet, des équipes en conflit ou même des personnes ayant un faible moral. Options A et B : « registre des différends » et « journal des difficultés » sont tous deux des termes inventés. Option C : un registre des changements sert à documenter toutes les demandes de changement (PMBOK, 8e édition, page 116).",
+        "en": "The issue log, also called an issue register, is a project document that records and tracks all issues that have a negative impact on the project (PMBOK 8th edition, page 123). Once created, it’ll be the project manager’s tool to monitor and communicate all that is going on in the project. Such issues may involve resources leaving the project, conflicting teams, or even individuals with low morale. Options A & B: Problem log and dispute log are both made-up terms. Option C: A change log is used to document all change requests (PMBOK 8th Edition, page 116)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q5",
+      "type": "single",
+      "prompt": {
+        "fr": "Les activités qui comprennent des tâches continues et courantes, conçues pour maintenir et soutenir l’infrastructure et les processus de l’organisation, sont très probablement appelées ________.",
+        "en": "Activities that involve ongoing, routine tasks designed to maintain and support the organization's infrastructure and processes are most likely referred to as ________."
+      },
+      "options": [
+        {
+          "fr": "Opérations",
+          "en": "Operations"
+        },
+        {
+          "fr": "Un projet",
+          "en": "A project"
+        },
+        {
+          "fr": "Un programme",
+          "en": "A program"
+        },
+        {
+          "fr": "Un portefeuille",
+          "en": "A portfolio"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Les opérations comprennent des activités courantes et continues qui maintiennent et soutiennent le fonctionnement quotidien de l’infrastructure et des processus d’une organisation. Un projet est une entreprise temporaire mise en œuvre pour créer un produit, un service ou un résultat unique (PMBOK, 8e édition, page 271). Les projets ont des dates de début et de fin précises et visent à atteindre un objectif particulier. Un programme est un groupe de projets connexes gérés de manière coordonnée afin d’obtenir des bénéfices et une maîtrise qu’il ne serait pas possible d’obtenir en les gérant individuellement (PMBOK, 8e édition, page 271). Les programmes ont une portée plus large et sont souvent axés sur l’atteinte d’objectifs à long terme. Un portefeuille est un ensemble de projets, de programmes, de portefeuilles subsidiaires et d’opérations gérés de manière collective afin d’atteindre des objectifs business stratégiques (PMBOK, 8e édition, page 270).",
+        "en": "Operations involve routine, ongoing activities that maintain and support the day-to-day functioning of an organization’s infrastructure and processes. A project is a temporary endeavor undertaken to create a unique product, service, or result (PMBOK 8th Edition, page 271). Projects have specific start and end dates and are aimed at achieving a particular goal. A program is a group of related projects managed in a coordinated way to obtain benefits and control not available from managing them individually (PMBOK 8th Edition, page 271). Programs are broader in scope and often focus on achieving long-term objectives. A portfolio is a collection of projects, programs, subsidiary portfolios, and operations managed together to achieve strategic business objectives (PMBOK 8th Edition, page 270)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q6",
+      "type": "single",
+      "prompt": {
+        "fr": "Une équipe projet hésite à commencer les travaux sur un projet, car des parties prenantes clés pourraient exiger une autorisation appropriée et des objectifs clairement définis avant d’aller de l’avant. Que devrait faire le chef de projet ?",
+        "en": "A project team is reluctant to begin work on a project because key stakeholders may request proper authorization and clearly defined objectives before proceeding. What should the project manager do?"
+      },
+      "options": [
+        {
+          "fr": "Annuler le projet",
+          "en": "Cancel the project"
+        },
+        {
+          "fr": "Commencer à travailler sur le projet",
+          "en": "Start working on the project"
+        },
+        {
+          "fr": "Élaborer la charte du projet",
+          "en": "Develop the project charter"
+        },
+        {
+          "fr": "Commencer à travailler sur le projet tout en ajoutant le risque associé au registre des risques",
+          "en": "Start working on the project while adding the associated risk to the risk register"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Une charte du projet est un document officiel créé par l’initiateur ou le sponsor du projet, qui autorise formellement le démarrage du projet. Elle confère au chef de projet l’autorité nécessaire pour affecter les ressources de l’organisation et entreprendre les activités du projet (PMBOK, 8e édition, pages 17-18). Option D : bien qu’il soit important d’identifier les risques et de mettre à jour le registre des risques, le projet ne peut pas démarrer sans avoir été autorisé.",
+        "en": "A project charter is an official document created by the project initiator or sponsor that formally authorizes the project’s initiation. It grants the project manager the authority to allocate organizational resources and undertake project activities (PMBOK 8th Edition, pages 17-18). Option D: While identifying risks and updating the risk register is important, the project cannot start without getting authorized."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q7",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Lors de la livraison d’un projet de rebranding, le sponsor ainsi que d’autres parties prenantes clés hésitent à accepter les livrables et à clôturer le projet. Que devrait faire le chef de projet ? (Choisissez trois réponses.)",
+        "en": "Upon delivering a rebranding project, the sponsor, as well as other key stakeholders, are hesitant to accept deliverables and close the project. What should the project manager do? (Select three)"
+      },
+      "options": [
+        {
+          "fr": "Identifier et résoudre les problèmes en suspens. Ensuite, se montrer ferme quant à la clôture formelle.",
+          "en": "Identify and resolve pending issues. Then, be firm on formal closure."
+        },
+        {
+          "fr": "Clôturer formellement le projet. Les parties prenantes se seront familiarisées avec la nouvelle marque d’ici là.",
+          "en": "Formally close the project. Stakeholders will get well-acquainted with the new brand by that time."
+        },
+        {
+          "fr": "Identifier les raisons de cette réticence et en discuter ouvertement.",
+          "en": "Identify and openly discuss the reasons for reluctance."
+        },
+        {
+          "fr": "Solliciter des commentaires sincères de toutes les parties et essayer d’identifier tout malentendu.",
+          "en": "Invite earnest feedback from all parties and try to identify any misunderstandings."
+        },
+        {
+          "fr": "Négocier un nouveau périmètre du projet.",
+          "en": "Negotiate a new project scope"
+        }
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": {
+        "fr": "Le chef de projet ne devrait pas clôturer le projet lorsque les parties prenantes clés ne sont pas satisfaites. Il devrait d’abord essayer de discuter, d’identifier et de résoudre tout problème ou malentendu.",
+        "en": "The project manager should not close the project when key stakeholders are not satisfied. They should try to discuss, identify, and resolve any issues or misunderstandings first."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q8",
+      "type": "single",
+      "prompt": {
+        "fr": "Toutes les affirmations suivantes sont vraies, sauf :",
+        "en": "All of the following statements are true, except:"
+      },
+      "options": [
+        {
+          "fr": "Un projet peut impliquer plusieurs parties prenantes",
+          "en": "A project can involve multiple stakeholders"
+        },
+        {
+          "fr": "Un programme est un grand projet",
+          "en": "A program is a large project"
+        },
+        {
+          "fr": "La gestion de portefeuille est alignée sur la stratégie de l’organisation",
+          "en": "Portfolio management aligns with organizational strategy"
+        },
+        {
+          "fr": "Plusieurs projets peuvent être regroupés au sein d’un seul programme",
+          "en": "Several projects can be aligned under a single program"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Les programmes ne sont pas de grands projets. Alors qu’un programme vise principalement à maximiser les profits de l’organisation, le management de projet vise la création de livrables qui répondent aux besoins des parties prenantes et les satisfont.",
+        "en": "Programs are not big projects. While a program mainly focuses on maximizing the organization's profits, project management targets the creation of deliverables that meet and satisfy stakeholder needs."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q9",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Quelles compétences interpersonnelles un chef de projet utilise-t-il fréquemment dans un projet ? (Choisissez trois réponses.)",
+        "en": "Which interpersonal skills does a project manager use frequently in a project? (Select three answers)"
+      },
+      "options": [
+        {
+          "fr": "Intelligence émotionnelle",
+          "en": "Emotional intelligence"
+        },
+        {
+          "fr": "Négociation",
+          "en": "Negotiation"
+        },
+        {
+          "fr": "Prise de décision",
+          "en": "Decision making"
+        },
+        {
+          "fr": "Gestion des conflits",
+          "en": "Conflict management"
+        },
+        {
+          "fr": "Réseautage",
+          "en": "Networking"
+        }
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": {
+        "fr": "Les compétences interpersonnelles fréquemment utilisées dans les projets comprennent l’intelligence émotionnelle, la prise de décision et la résolution des conflits (PMBOK, 8e édition, page 174). Ce sont les compétences utilisées pour établir et entretenir des relations avec les autres. L’intelligence émotionnelle est la capacité de reconnaître, de comprendre et de gérer efficacement ses propres émotions et celles des autres, et d’en être conscient (PMBOK, 8e édition, page 169). Tout au long du projet, des décisions sont prises quotidiennement ; un chef de projet devrait donc choisir la technique et l’approche de prise de décision appropriées. En outre, la gestion des conflits est cruciale, car elle correspond à la capacité de traiter et de résoudre les conflits au sein d’une équipe projet (PMBOK, 8e édition, page 156).",
+        "en": "Interpersonal skills that are used frequently in projects include emotional intelligence, decision making, and conflict resolution (PMBOK 8th Edition, page 174). These are the skills used to establish and maintain relationships with others. Emotional intelligence is the ability to recognize, understand, manage, and effectively be aware of the emotions of oneself and others (PMBOK 8th Edition, page 169). Throughout the project, daily decisions are made, therefore a project manager should exhibit the right choice of decision-making technique and approach. Moreover, Conflict management is crucial as it’s the ability to handle and resolve conflicts within a project team (PMBOK 8th Edition, page 156)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q10",
+      "type": "single",
+      "prompt": {
+        "fr": "Une cheffe de projet travaille dans le cadre d’un contrat. Après avoir achevé le contrat et clôturé le projet, elle se retrouve sans travail. Dans quel type de structure organisationnelle travaille-t-elle ?",
+        "en": "A project manager is working on a contract. After completing the contract and closing the project, she finds herself without work. What type of organizational structure does the project manager work in?"
+      },
+      "options": [
+        {
+          "fr": "Structure matricielle forte",
+          "en": "Strong matrix"
+        },
+        {
+          "fr": "Structure par projets",
+          "en": "Projectized"
+        },
+        {
+          "fr": "Structure fonctionnelle",
+          "en": "Functional"
+        },
+        {
+          "fr": "Structure matricielle faible",
+          "en": "Weak matrix"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Une organisation orientée projet, ou organisation par projets, est une organisation dans laquelle une part considérable des processus et des activités se déroule sous forme de projets. Il n’existe pas de hiérarchie définie ; les ressources sont réunies spécifiquement pour un projet. Une fois le projet terminé, elles sont soit affectées à un nouveau projet, soit libérées.",
+        "en": "A Project-oriented organization, or a projectized organization, is one in which a considerable part of its processes and activities take place in the form of projects. There is no defined hierarchy; resources are brought together specifically for a project. Once the project is finished, they’re either moved to a new project or released."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q11",
+      "type": "single",
+      "prompt": {
+        "fr": "Vous gérez simultanément six projets au sein de l’entreprise. Deux projets sont de nature similaire, tandis que les quatre autres sont complètement différents. Vous travaillez en tant que ______________.",
+        "en": "You are managing six projects at the same time within the company. Two projects are of a similar type, while the other four are completely different. You work as a ______________."
+      },
+      "options": [
+        {
+          "fr": "Gestionnaire de portefeuille",
+          "en": "Portfolio manager"
+        },
+        {
+          "fr": "Gestionnaire de programme",
+          "en": "Program manager"
+        },
+        {
+          "fr": "Chef de projet",
+          "en": "Project manager"
+        },
+        {
+          "fr": "Coordonnateur de programme",
+          "en": "Program coordinator"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Dans le management de portefeuille, un groupe de programmes et de projets connexes ou non connexes est géré de manière coordonnée (PMBOK, 8e édition, page 10). Le management de portefeuille vise à réduire l’écart entre la stratégie et la mise en œuvre en alignant les projets afin d’atteindre les objectifs business.",
+        "en": "In portfolio management, a group of related or non-related programs and projects are managed in coordination (PMBOK 8th edition, page 10). Portfolio management is intended to reduce the gap between strategy and implementation by aligning projects to attain business objectives."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q12",
+      "type": "single",
+      "prompt": {
+        "fr": "Lors de la réunion de lancement de son premier projet, le chef de projet présente le plan de projet aux parties prenantes. Alors qu’ils en examinent les détails, une partie prenante exprime sa frustration face aux inexactitudes du plan, qui ne reflète pas ses attentes. Quelle est la raison la plus probable de la description inexacte des exigences des parties prenantes par le chef de projet ?",
+        "en": "During the kick-off meeting of their first project, the project manager presents the project plan to stakeholders. As they go through the details, a stakeholder expressed frustration with the plan's inaccuracies in reflecting their expectations. What is the most likely reason behind the project manager’s inaccurate description of stakeholder requirements?"
+      },
+      "options": [
+        {
+          "fr": "Le chef de projet n’a pas utilisé le périmètre du projet comme guide lors de la création du plan de projet.",
+          "en": "The project manager did not use the project scope as a guide when creating the project plan."
+        },
+        {
+          "fr": "Le chef de projet n’a présenté que la première version du plan de projet ; celui-ci peut donc toujours être amélioré.",
+          "en": "The project manager only presented the first draft of the project plan, so it can always be improved."
+        },
+        {
+          "fr": "Le chef de projet n’a pas suffisamment impliqué les parties prenantes du projet pour recueillir avec précision leurs exigences.",
+          "en": "The project manager did not engage the project stakeholders sufficiently to accurately capture their requirements."
+        },
+        {
+          "fr": "Le chef de projet n’a pas suffisamment bien expliqué le plan. Une meilleure présentation aurait évité ce malentendu.",
+          "en": "The project manager did not explain the plan well enough. A better presentation would have prevented this misunderstanding."
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : puisque le plan de projet est fondé sur le périmètre, si celui-ci n’est pas défini de manière collaborative, le plan ne répondra très probablement pas aux attentes des parties prenantes. Option B : étant donné que le plan est présenté lors d’une réunion de lancement, cela suggère un projet prédictif, dans lequel un plan final ou bien élaboré est généralement présenté aux parties prenantes pour approbation, plutôt qu’une première version. Option C : le chef de projet n’a très probablement pas impliqué les parties prenantes de manière adéquate, ce qui a conduit à des exigences mal définies et à leur insatisfaction. Un engagement efficace des parties prenantes est nécessaire pour identifier les besoins et aligner le périmètre du projet sur les attentes. Option D : l’insatisfaction des parties prenantes concerne le contenu du plan, et non sa présentation.",
+        "en": "Since the project plan is based on the scope, if the scope is not collaboratively defined, the plan will most likely fail to meet stakeholders’ expectations. Given that the plan is being presented at a kick-off meeting, this suggests a predictive project, where a final or well-developed plan is typically presented for stakeholder approval, rather than a draft. The project manager most likely failed to engage stakeholders adequately, leading to poorly defined requirements and dissatisfaction. Effective stakeholder engagement is needed for identifying needs and aligning the project scope with expectations. The stakeholders' dissatisfaction is with the plan's content, not its presentation."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q13",
+      "type": "single",
+      "prompt": {
+        "fr": "Un projet implique de nombreuses parties prenantes en raison de ses multiples phases et des diverses tâches à exécuter. Que devrait faire le chef de projet ?",
+        "en": "A project involves numerous stakeholders due to its multiple phases and various tasks to execute. What should the project manager do?"
+      },
+      "options": [
+        {
+          "fr": "Ne pas tenir compte des parties prenantes ayant un faible pouvoir",
+          "en": "Disregard low-power stakeholders"
+        },
+        {
+          "fr": "Impliquer uniquement les parties prenantes ayant un intérêt élevé pour le projet",
+          "en": "Only engage stakeholders with high interest in the project"
+        },
+        {
+          "fr": "Analyser toutes les parties prenantes afin de prioriser leur engagement",
+          "en": "Analyze all stakeholders in order to prioritize engagement"
+        },
+        {
+          "fr": "Signaler le problème au sponsor du projet",
+          "en": "Report the issue to the project sponsor"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : en tant que chef de projet, vous ne pouvez exclure ni négliger aucune partie prenante. Option B : ignorer l’une quelconque des parties prenantes du projet peut être très coûteux et avoir une incidence considérable sur le projet. Option C : vous devez identifier toutes les parties prenantes du projet, quel que soit leur nombre, puis analyser chacune d’elles afin de prioriser leur engagement. Option D : l’engagement des parties prenantes relève des responsabilités du chef de projet et ne devrait pas être délégué au sponsor.",
+        "en": "As a project manager, you cannot leave out or disregard any stakeholders. Ignoring any of the project stakeholders can be very costly and can dramatically impact the project. You should identify all project stakeholders, regardless of their number, and then analyze each one of them in order to prioritize the engagement. Stakeholder engagement falls under the project manager’s responsibilities, and should not be delegated to the sponsor."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q14",
+      "type": "single",
+      "prompt": {
+        "fr": "Pendant la phase de planification, le chef de projet a supposé que la composition du comité de pilotage du projet resterait la même. Cependant, comme tout changement pourrait être très critique pour le projet, le chef de projet a chargé un membre de l’équipe de surveiller les déclencheurs potentiels. Où le nom de la personne responsable de la surveillance du comité de pilotage devrait-il être consigné ?",
+        "en": "During the planning phase, the project manager assumed that the composition of the project’s steering committee would remain the same. But, since any change could be very critical to the project, the project manager assigned a team member to monitor potential triggers. Where should the name of the person responsible for monitoring the steering committee be documented?"
+      },
+      "options": [
+        {
+          "fr": "Registre des risques",
+          "en": "Risk register"
+        },
+        {
+          "fr": "Registre des problèmes",
+          "en": "Issue log"
+        },
+        {
+          "fr": "Registre des changements",
+          "en": "Change log"
+        },
+        {
+          "fr": "Registre des parties prenantes",
+          "en": "Stakeholder register"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Option A : un registre des risques contient la liste de tous les risques identifiés, leur description, les réponses planifiées, la probabilité, l’impact, le propriétaire du risque, etc. (PMBOK, 8e édition, page 137). Dans la situation décrite, le changement dans la composition du comité de pilotage est considéré comme un risque, et le nom de la personne responsable de sa gestion devrait être indiqué dans le registre des risques. Une fois que le risque survient, il devient un problème. Option B : puisque la situation décrite n’implique encore aucun problème, le registre des problèmes n’est pas la bonne réponse. Option C : la situation n’implique aucune demande de changement. Par conséquent, le registre des changements n’est pas la bonne option. Option D : le registre des parties prenantes contient des informations sur les parties prenantes du projet et leur classification (PMBOK, 8e édition, pages 141-142). Contrairement au plan d’engagement des parties prenantes, le registre des parties prenantes ne contient pas les actions indiquant quand, comment et par qui les parties prenantes devraient être surveillées et impliquées.",
+        "en": "A risk register contains a list of all identified risks, their description, planned responses, probability, impact, risk owner, etc. (PMBOK 8th edition, page 137). In the described scenario, the change in the composition of the steering committee is considered a risk and the name of the person responsible for managing it should be noted in the risk register. Once the risk occurs, it becomes an issue. Since the described situation doesn’t involve any issues yet, the issue log is not the correct answer. The situation doesn’t involve any change requests. Therefore, a change log is not the right option. The stakeholder register includes information about the project stakeholders and their classification (PMBOK 8th Edition, pages 141-142). Unlike the stakeholder engagement plan, the stakeholder register doesn’t contain action items for when, how, and who should monitor and engage stakeholders."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q15",
+      "type": "single",
+      "prompt": {
+        "fr": "Le sponsor du projet a informé le chef de projet que, si les coûts du projet dépassaient 350 000 USD d’ici la fin de l’année, le projet ne recevrait aucun financement supplémentaire. De quoi s’agit-il parmi les éléments suivants ?",
+        "en": "The project sponsor informed the project manager that if the project costs exceed $350,000 by the end of the year, the project will receive no further funding. This is an example of which of the following?"
+      },
+      "options": [
+        {
+          "fr": "Hypothèse",
+          "en": "Assumption"
+        },
+        {
+          "fr": "Contrainte",
+          "en": "Constraint"
+        },
+        {
+          "fr": "Problème",
+          "en": "Issue"
+        },
+        {
+          "fr": "Risque",
+          "en": "Risk"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Une contrainte est un facteur limitatif qui restreint les options de gestion d’un projet, d’un programme, d’un portefeuille ou d’un processus (PMBOK, 8e édition, page 266). Dans ce cas, il s’agit d’une contrainte budgétaire qui limite les dépenses du projet. Option C : un problème est une condition ou une situation actuelle susceptible d’avoir une incidence sur les objectifs du projet (PMBOK, 8e édition, page 268).",
+        "en": "A constraint is a limiting factor that restricts the options for managing a project, program, portfolio, or process (PMBOK 8th Edition, page 266). In this case, the following is a budget constraint that limits the project spending. Option C: An issue is a present condition or situation that can potentially affect the project's objectives (PMBOK 8th Edition, page 268)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q16",
+      "type": "single",
+      "prompt": {
+        "fr": "L’équipe projet tiendra une réunion mensuelle de revue de l’état d’avancement avec le Product Owner afin d’examiner les livrables produits après l’itération. Quel est le meilleur type de communication à utiliser lors d’une réunion de revue de l’état d’avancement ?",
+        "en": "The project team will hold a monthly status review meeting with the product owner to review post-iteration deliverables. What’s the best communication type to use in a status review meeting?"
+      },
+      "options": [
+        {
+          "fr": "Communication poussée",
+          "en": "Push"
+        },
+        {
+          "fr": "Communication tirée",
+          "en": "Pull"
+        },
+        {
+          "fr": "Communication interactive",
+          "en": "Interactive"
+        },
+        {
+          "fr": "Communication formelle",
+          "en": "Formal"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Lorsqu’une réponse immédiate est requise et que les informations communiquées sont sensibles et pourraient être mal interprétées, il convient d’utiliser la communication interactive. Elle implique une ou plusieurs personnes qui partagent des réflexions et des idées, les participants répondant en temps réel. La communication interactive peut avoir lieu par téléconférence ou en face à face (PMBOK, 8e édition, page 152). Lorsqu’il utilise des moyens de communication tels que les e-mails, le chef de projet ne peut pas observer les expressions faciales ni le langage corporel des parties prenantes.",
+        "en": "When an immediate response is required and the information you’re communicating is sensitive and could be misinterpreted, you should use interactive communication. It involves one or more people sharing thoughts and ideas, with participants responding in real-time. Interactive communication can take place through teleconferences or face-to-face contact (PMBOK 8th Edition, page 152). When using communication media such as emails, the project manager can’t pick up on stakeholders’ facial expressions and body language."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q17",
+      "type": "single",
+      "prompt": {
+        "fr": "Lequel des éléments suivants est considéré comme un facteur environnemental de l’entreprise ?",
+        "en": "What is considered an enterprise environmental factor?"
+      },
+      "options": [
+        {
+          "fr": "Politiques de l’organisation",
+          "en": "Organization policies"
+        },
+        {
+          "fr": "Culture organisationnelle",
+          "en": "Organizational culture"
+        },
+        {
+          "fr": "Données de performance de l’organisation",
+          "en": "Organization’s performance data"
+        },
+        {
+          "fr": "Leçons apprises de l’organisation",
+          "en": "Organization’s lessons learned"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Les facteurs environnementaux de l’entreprise désignent les conditions qui ne sont pas sous le contrôle de l’équipe projet et qui influencent, contraignent ou orientent le projet. Ces conditions peuvent être internes ou externes à l’organisation (PMBOK, 8e édition, pages 18-19). La culture organisationnelle est classée parmi les facteurs environnementaux internes de l’entreprise (Groupes de processus : un guide pratique, page 38). Options A, C et D : les politiques, les leçons apprises et les données de performance du travail de l’organisation sont des actifs organisationnels, et non des facteurs environnementaux de l’entreprise (PMBOK, 8e édition, pages 19-20).",
+        "en": "Enterprise Environmental Factors (EEFs) refer to conditions, not under the control of the project team, that influence, constrain, or direct the project. These conditions could be internal or external to the organization (PMBOK 8th Edition, pages 18-19). Organizational Culture is classified as an internal EEFs (PMI Process Groups, page 38). Options A, C, D: The organization's policies, lessons learned, and work performance data are organizational process assets, not Enterprise Environmental Factors (PMBOK 8th Edition, pages 19-20)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q18",
+      "type": "single",
+      "prompt": {
+        "fr": "Que représente ce tableau ?",
+        "en": "What does this table represent?"
+      },
+      "options": [
+        {
+          "fr": "Matrice RACI",
+          "en": "RACI chart"
+        },
+        {
+          "fr": "Matrice de traçabilité des exigences",
+          "en": "Requirements Traceability Matrix"
+        },
+        {
+          "fr": "Matrice d’évaluation de l’engagement des parties prenantes",
+          "en": "Stakeholder engagement assessment matrix"
+        },
+        {
+          "fr": "Diagramme d’humeur",
+          "en": "Mood chart"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "La matrice d’évaluation de l’engagement des parties prenantes est une matrice qui présente les niveaux d’engagement des parties prenantes (PMBOK, 8e édition, page 200).",
+        "en": "Stakeholder Engagement Assessment Matrix is a matrix that shows stakeholder engagement levels (PMBOK 8th Edition, page 200)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q19",
+      "type": "single",
+      "prompt": {
+        "fr": "Sur le graphique ci-dessous, quelles estimations correspondent respectivement aux positions A, B, C et D ?",
+        "en": "On the graph below, what estimations correspond respectively to positions A, B, C, and D?"
+      },
+      "options": [
+        {
+          "fr": "A. Faible exactitude, faible précision | B. Exactitude élevée, précision élevée | C. Faible exactitude, précision élevée | D. Exactitude élevée, faible précision",
+          "en": "A. Low accuracy, Low precision | B. High accuracy, High precision | C. Low accuracy, High precision | D. High accuracy, Low precision"
+        },
+        {
+          "fr": "A. Exactitude élevée, précision élevée | B. Faible exactitude, faible précision | C. Faible exactitude, précision élevée | D. Exactitude élevée, faible précision",
+          "en": "A. High accuracy, High precision | B. Low accuracy, Low precision | C. Low accuracy, High precision | D. High accuracy, Low precision"
+        },
+        {
+          "fr": "A. Exactitude élevée, précision élevée | B. Faible exactitude, précision élevée | C. Exactitude élevée, faible précision | D. Faible exactitude, faible précision",
+          "en": "A. High accuracy, High precision | B. Low accuracy, High precision | C. High accuracy, Low precision | D. Low accuracy, Low precision"
+        },
+        {
+          "fr": "A. Exactitude élevée, précision élevée | B. Exactitude élevée, faible précision | C. Faible exactitude, précision élevée | D. Faible exactitude, faible précision",
+          "en": "A. High accuracy, High precision | B. High accuracy, Low precision | C. Low accuracy, High precision | D. Low accuracy, Low precision"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "L’exactitude décrit la proximité d’une mesure par rapport à une valeur acceptée. La précision décrit la variabilité statistique des mesures produites ; celles-ci peuvent être très éloignées de la valeur acceptée (PMBOK, 8e édition, pages 265 et 270).",
+        "en": "Accuracy describes how close a measurement is to an accepted value. Precision describes the statistical variability of produced measurement (it can be far off the accepted value) (PMBOK 8th edition, page 265 & 270)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q20",
+      "type": "single",
+      "prompt": {
+        "fr": "Des secteurs tels que les infrastructures, l’aérospatiale et l’automobile utilisent les ________________ pour assurer l’alignement directionnel et l’intégration des activités des composantes. Le succès de ces initiatives est mesuré par la réalisation des bénéfices escomptés et l’efficience de leur production.",
+        "en": "Industries, such as infrastructure, aerospace, and automotive, use ________________ for directional alignment and integration of component activities. The success of these initiatives is measured by the realization of intended benefits and the efficiency of delivering those benefits."
+      },
+      "options": [
+        {
+          "fr": "Projets",
+          "en": "Projects"
+        },
+        {
+          "fr": "Processus",
+          "en": "Processes"
+        },
+        {
+          "fr": "Programmes",
+          "en": "Programs"
+        },
+        {
+          "fr": "Produits",
+          "en": "Products"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "De nombreux secteurs, tels que les infrastructures, l’aérospatiale et l’automobile, utilisent des guides et des cadres de management de programme. Un programme est un groupe de projets connexes gérés de manière coordonnée afin d’obtenir des bénéfices et une maîtrise qu’il ne serait pas possible d’obtenir en les gérant individuellement. Les programmes ont un périmètre plus large et sont souvent axés sur l’atteinte d’objectifs à long terme (PMBOK, 8e édition, page 271).",
+        "en": "Many industries, such as infrastructure, aerospace, and automotive, use program management guides and frameworks. A program is a group of related projects managed in a coordinated way to obtain benefits and control not available from managing them individually. Programs are broader in scope and often focus on achieving long-term objectives (PMBOK 8th Edition, page 271)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q21",
+      "type": "single",
+      "prompt": {
+        "fr": "Laquelle des propositions suivantes décrit le mieux le « cycle de vie du projet » ?",
+        "en": "Which of the following best describes the \"Project Life Cycle\"?"
+      },
+      "options": [
+        {
+          "fr": "Un ensemble d’étapes de planification qui guident les parties prenantes tout au long du projet.",
+          "en": "A set of planning steps that guide project stakeholders throughout the project."
+        },
+        {
+          "fr": "Un regroupement logique d’entrées, d’outils et techniques, et de sorties.",
+          "en": "A logical grouping of inputs, tools and techniques, and outputs."
+        },
+        {
+          "fr": "Une séquence de tâches que l’équipe projet exécute pour produire des résultats.",
+          "en": "A sequence of tasks that the project team performs to deliver outputs."
+        },
+        {
+          "fr": "La série de phases qu’un projet traverse de son démarrage à son achèvement.",
+          "en": "The series of phases that a project passes through from start to completion."
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Option A : « Un ensemble d’étapes de planification qui guident les parties prenantes tout au long du projet » décrit les processus de planification du projet. Option B : « Un regroupement logique d’entrées, d’outils et techniques, et de sorties » désigne les domaines d’intérêt du management de projet, qui comprennent les processus d’initialisation, de planification, d’exécution, de surveillance et de maîtrise, et de clôture (PMBOK, 8e édition, page 271). Option C : « Une séquence de tâches que l’équipe projet exécute pour produire des résultats » décrit plutôt une structure de découpage du projet ou le séquencement des activités qu’un cycle de vie du projet. Option D : le cycle de vie du projet est une série de phases qui comprennent l’initialisation, la planification, l’exécution, la surveillance et la clôture, et qui guident un projet de sa conception à sa livraison et à sa clôture.",
+        "en": "“A set of planning steps that guide project stakeholders throughout the project” describes project planning processes. “A logical grouping of inputs, tools and techniques, and outputs” refers to project management focus areas that include Initiating processes, Planning processes, Executing processes, Monitoring and Controlling processes, and Closing processes (PMBOK 8th Edition, page 271). “A sequence of tasks that the project team performs to deliver outputs” describes work breakdown structures or activity sequencing rather than a project life cycle. The Project Life Cycle is a series of phases that include initiation, planning, execution, monitoring, and closing, and they guide a project from inception to delivery and closure."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q22",
+      "type": "single",
+      "prompt": {
+        "fr": "Laquelle des propositions suivantes N’est PAS considérée comme une caractéristique d’une équipe projet hautement performante ?",
+        "en": "Which of the following is NOT considered a characteristic of a high-performing project team?"
+      },
+      "options": [
+        {
+          "fr": "Capacité d’adaptation à l’évolution des exigences et des difficultés du projet",
+          "en": "Adaptability to shifting project demands and challenges"
+        },
+        {
+          "fr": "Communication fréquente et claire entre les membres de l’équipe",
+          "en": "Frequent and clear communication among team members"
+        },
+        {
+          "fr": "Forte priorité accordée aux réalisations individuelles plutôt qu’aux objectifs collectifs",
+          "en": "Strong focus on individual achievements over collective goals"
+        },
+        {
+          "fr": "Collaboration et confiance mutuelle entre les membres de l’équipe",
+          "en": "Collaboration and mutual trust among team members"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les équipes hautement performantes privilégient la collaboration, les objectifs communs et la réussite collective plutôt que les réalisations individuelles (PMBOK, 8e édition, page 92).",
+        "en": "High-performing teams prioritize collaboration, shared goals, and collective success rather than individual accomplishments (PMBOK 8th Edition, page 92)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q23",
+      "type": "single",
+      "prompt": {
+        "fr": "Comment un chef de projet devrait-il favoriser la résilience au sein de l’équipe projet ?",
+        "en": "How should a project manager promote resilience within the project team?"
+      },
+      "options": [
+        {
+          "fr": "Éviter les situations de forte pression susceptibles de mettre l’équipe à l’épreuve",
+          "en": "Avoid high-pressure situations that may challenge the team"
+        },
+        {
+          "fr": "Encourager l’équipe à tirer les leçons des échecs et à s’adapter rapidement aux changements",
+          "en": "Encourage the team to learn from failures and adapt to changes quickly"
+        },
+        {
+          "fr": "Veiller à ce que le plan de projet ne change pas une fois approuvé",
+          "en": "Ensure the project plan does not change once approved"
+        },
+        {
+          "fr": "Réduire au minimum les retours des parties prenantes externes afin d’éviter les perturbations",
+          "en": "Minimize feedback from external stakeholders to avoid disruptions"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Une équipe résiliente est une équipe capable de s’adapter et de se remettre des revers. Encourager l’équipe à tirer les leçons des échecs favorise un état d’esprit de développement et l’aide à faire face aux difficultés avec souplesse et persévérance.",
+        "en": "A resilient team is one that can adapt and recover from setbacks. Encouraging the team to learn from failures fosters a growth mindset and helps them to handle challenges with flexibility and perseverance."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q24",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet réalise une analyse des parties prenantes à l’aide de la grille pouvoir/intérêt ci-dessous. Quelles actions correspondent respectivement aux quadrants A, B, C et D ?",
+        "en": "A project manager is conducting stakeholder analysis using the power/interest grid below. What actions correspond to the quadrants A, B, C, D respectively?"
+      },
+      "options": [
+        {
+          "fr": "Maintenir satisfait, Surveiller, Tenir informé, Gérer de près",
+          "en": "Keep Satisfied, Monitor, Keep Informed, Manage Closely"
+        },
+        {
+          "fr": "Maintenir satisfait, Gérer de près, Surveiller, Tenir informé",
+          "en": "Keep Satisfied, Manage Closely, Monitor, Keep Informed"
+        },
+        {
+          "fr": "Maintenir satisfait, Gérer de près, Tenir informé, Surveiller",
+          "en": "Keep Satisfied, Manage Closely, Keep Informed, Monitor"
+        },
+        {
+          "fr": "Gérer de près, Maintenir satisfait, Surveiller, Tenir informé",
+          "en": "Manage Closely, Keep Satisfied, Monitor, Keep Informed"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "A. Maintenir satisfait : en raison de leur influence, les parties prenantes ayant un pouvoir élevé et un faible intérêt doivent être maintenues satisfaites. Toutefois, comme elles ne manifestent pas un grand intérêt pour votre projet, elles peuvent se lasser si vous communiquez excessivement avec elles. B. Gérer de près : les parties prenantes ayant un pouvoir élevé et un intérêt élevé sont les plus importantes pour votre projet ; vous devez veiller à les maintenir satisfaites en les gérant de près. C. Surveiller : les parties prenantes ayant un faible pouvoir et un faible intérêt doivent être informées périodiquement, sans excès. D. Tenir informé : vous devrez tenir informées les parties prenantes ayant un faible pouvoir et un intérêt élevé, en prenant régulièrement contact avec elles afin de vous assurer qu’elles ne rencontrent aucune difficulté ni aucun problème. Veuillez noter que, lors de l’examen réel, une telle question se présente généralement sous la forme d’un « glisser-déposer ».",
+        "en": "A. Keep Satisfied: Due to their influence, stakeholders with high power and low interest should be kept satisfied. But, because they don’t have a high interest in your project, they can get bored if you over-communicate with them. B. Manage Closely: Stakeholders with high power and high interest are the most important to your project, and you should make sure to keep them happy by managing them closely. C. Monitor: Stakeholders with low power and low interest should be kept informed periodically without overdoing it. D. Keep Informed: You’ll want to keep stakeholders with low power and high interest informed by checking in with them regularly to make sure they are not experiencing any issues or problems. Please note that in the real exam such a question usually comes in the form of “drag & drop”."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q25",
+      "type": "single",
+      "prompt": {
+        "fr": "La personne qui motive et influence l’équipe projet afin qu’elle poursuive un objectif commun est mieux définie comme un(e) ________.",
+        "en": "The person who is motivating and influencing the project team toward a common goal is best defined as a(n) ________"
+      },
+      "options": [
+        {
+          "fr": "Manager",
+          "en": "Manager"
+        },
+        {
+          "fr": "Coordonnateur",
+          "en": "Coordinator"
+        },
+        {
+          "fr": "Superviseur",
+          "en": "Supervisor"
+        },
+        {
+          "fr": "Leader",
+          "en": "Leader"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Le rôle principal d’un leader consiste à inspirer, à motiver et à influencer les membres de l’équipe afin qu’ils œuvrent en faveur d’une vision partagée ou d’un objectif commun. Le leadership se concentre sur les personnes et leur développement, dans le but de favoriser la collaboration, d’instaurer la confiance et de guider l’équipe vers des résultats positifs (PMBOK, 8e édition, page 47).",
+        "en": "A leader's primary role involves inspiring, motivating, and influencing team members to work towards a shared vision or common goal. Leadership focuses on people and their development, aiming to foster collaboration, build trust, and guide the team toward successful outcomes (PMBOK 8th Edition, page 47)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q26",
+      "type": "single",
+      "prompt": {
+        "fr": "Le sponsor du projet a fait part au chef de projet de ses préoccupations quant à la capacité du produit obtenu à répondre aux besoins business. Par conséquent, le sponsor cherche à réduire les coûts au minimum. Que devrait faire le chef de projet ?",
+        "en": "The project sponsor expressed concerns to the project manager about whether the resulting product would meet business needs. Therefore, the project sponsor is looking to keep costs to a minimum. What should the project manager do?"
+      },
+      "options": [
+        {
+          "fr": "Identifier et mettre en œuvre les exigences nécessaires à la réalisation d’un produit minimum viable (MVP).",
+          "en": "Identify and implement the requirements for making a Minimum Viable Product (MVP)."
+        },
+        {
+          "fr": "Recueillir toutes les exigences et exécuter le projet en utilisant une approche incrémentale.",
+          "en": "Gather all requirements and execute the project using an incremental approach."
+        },
+        {
+          "fr": "Exclure certaines parties prenantes du processus de définition du périmètre afin de limiter les exigences.",
+          "en": "Exclude certain stakeholders from the scope definition process in order to limit requirements."
+        },
+        {
+          "fr": "Signer avec le sponsor un contrat à prix fixe afin de limiter les coûts du projet.",
+          "en": "Sign with the sponsor a fixed-cost contract to limit project costs."
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Option A : le produit minimum viable (MVP) est utilisé pour définir le périmètre de la première version en identifiant les exigences qui apporteraient de la valeur aux clients (PMBOK, 8e édition, page 45). Option B : une approche incrémentale ne convient pas à la situation décrite, puisque le client n’obtiendra pas de produit utilisable avant la fin du projet. Option C : il n’est pas approprié d’exclure certaines parties prenantes afin de limiter les exigences. Le chef de projet devrait associer toutes les parties prenantes au processus de collecte et de priorisation des fonctionnalités du produit. Option D : un contrat à prix fixe ne résoudra pas le problème dans la situation décrite, puisque la préoccupation principale du sponsor consiste à vérifier la demande business pour le produit.",
+        "en": "The Minimum Viable Product (MVP) is used to define the scope of the first release by identifying the requirements that would deliver value to customers (PMBOK 8th edition, page 45). An incremental approach is not suitable for the described scenario since the client won’t get a usable product until the end of the project. It’s not appropriate to exclude certain stakeholders in order to limit requirements. The project manager should involve all stakeholders in the process of collecting and prioritizing product features. A fixed-cost contract will not solve the problem in the described scenario since the main concern of the sponsor is verifying the product’s business demand."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q27",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet détermine les options viables et formule des recommandations sur l’efficience de l’investissement de deux projets potentiels en appliquant des techniques d’évaluation. Sachant que le taux d’actualisation est inconnu, que devrait faire le chef de projet ?",
+        "en": "A project manager determines viable options and provides recommendations about the investment efficiency of two potential projects by implementing valuation techniques. Knowing that the discount rate is unknown, what should the project manager do?"
+      },
+      "options": [
+        {
+          "fr": "Choisir le projet dont le retour sur investissement (ROI) est le plus élevé",
+          "en": "Choose the project that has the highest ROI"
+        },
+        {
+          "fr": "Choisir le projet dont le retour sur investissement (ROI) est le plus faible",
+          "en": "Choose the project that has the lowest ROI"
+        },
+        {
+          "fr": "Choisir le projet dont la valeur actuelle nette (VAN) est la plus élevée",
+          "en": "Choose the project that has the highest NPV"
+        },
+        {
+          "fr": "Choisir le projet dont la valeur actuelle nette (VAN) est la plus faible",
+          "en": "Choose the project that has the lowest NPV"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le calcul de la valeur actuelle nette (VAN) d’un projet nécessite de connaître son taux d’actualisation (i) : Valeur actuelle nette (VAN) = Paiement futur (F) / [(1 + taux d’actualisation (i)) ^ nombre de périodes futures avant le flux de trésorerie (n)]. Puisque cette option n’est pas possible dans la situation décrite, le chef de projet devrait s’appuyer sur le retour sur investissement (ROI) et choisir le projet dont la valeur est la plus élevée (The PMI Guide to Business Analysis, page 90).",
+        "en": "Calculating a project’s Net Present Value (NPV) requires knowing its discount rate (i): Net Present Value (NPV) = Future payment (F) / [ (1 + Discount rate (i) ) ^ number of periods in the future the cash flow is (n) ]. Since this is not an option in the described scenario, the project manager should rely on the Return On Investment (ROI) and pick the project with the highest value (The PMI Guide to Business Analysis, page 90)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q28",
+      "type": "single",
+      "prompt": {
+        "fr": "Une organisation envisage deux projets potentiels ayant des délais de récupération identiques. Après avoir réalisé une analyse de mesure des bénéfices, le chef de projet découvre que le projet B présente un taux de rentabilité interne (TRI) supérieur à celui du projet A. Quel projet l’organisation devrait-elle sélectionner ?",
+        "en": "An organization is considering two potential projects with identical payback periods. After conducting a benefit measurement analysis, the project manager discovers that Project B has a higher Internal Rate of Return (IRR) than Project A. Which project should the organization select?"
+      },
+      "options": [
+        {
+          "fr": "Projet A",
+          "en": "Project A"
+        },
+        {
+          "fr": "Projet B",
+          "en": "Project B"
+        },
+        {
+          "fr": "Il n’existe aucune différence",
+          "en": "There is no difference"
+        },
+        {
+          "fr": "Les informations disponibles ne suffisent pas pour prendre une décision",
+          "en": "The available information is not enough to make a decision"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Le taux de rentabilité interne (TRI) est le taux de croissance annuel qu’un projet est censé générer. Plus le TRI est élevé, plus l’investissement est souhaitable. Le projet B présente un TRI plus élevé ; il sera donc évidemment sélectionné plutôt que le projet A.",
+        "en": "The Internal Rate of Return (IRR) is the annual rate of growth a project is expected to generate. The higher the IRR, the more desirable an investment is. Project B has a higher IRR, thus it will obviously be selected over Project A."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q29",
+      "type": "single",
+      "prompt": {
+        "fr": "Le client envoie au chef de projet un document décrivant les exigences du nouveau projet. Lorsqu’il examine le document, le chef de projet éprouve des difficultés à comprendre certaines exigences, certains résultats et, surtout, l’objectif ultime du projet. Que devrait faire ensuite le chef de projet ?",
+        "en": "The customer sends the project manager a document outlining the new project’s requirements. While checking the document, the project manager struggles to understand some of the requirements, outputs, and especially the ultimate goal of the project. What should the project manager do next?"
+      },
+      "options": [
+        {
+          "fr": "Demander des éclaircissements au client",
+          "en": "Ask the customer for clarification"
+        },
+        {
+          "fr": "Refuser le nouveau projet, car il comporte de nombreuses ambiguïtés",
+          "en": "Reject the new project as it involves a lot of ambiguity"
+        },
+        {
+          "fr": "Commencer à planifier la première itération",
+          "en": "Start planning the first iteration"
+        },
+        {
+          "fr": "Acquérir une équipe pour aider à analyser les exigences du projet",
+          "en": "Acquire a team to help analyze the project requirements"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "En cas d’ambiguïté, le chef de projet devrait d’abord demander des éclaircissements au client avant de prendre toute autre décision. Option C : le projet comporte des exigences et des objectifs imprécis. Il n’est donc pas approprié de commencer à planifier le travail du projet ou d’acquérir une équipe sans avoir d’abord établi une vision claire de ce que comprend le projet.",
+        "en": "In case of ambiguity, the project manager should first ask for clarifications from the customer before making any further decisions. Option C: The project involves unclear requirements and objectives. Thus, it’s not appropriate to start planning project work or acquire a team without first creating a clear vision of what the project consists of."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q30",
+      "type": "single",
+      "prompt": {
+        "fr": "Afin de guider l’équipe de développement sur ce qu’elle entend accomplir, un Product Owner fournit un tableau qui présente les principaux livrables de chaque trimestre du projet d’une durée de neuf mois. Quel artefact ce tableau représente-t-il ?",
+        "en": "To guide the development team on what they intend to achieve, a product owner provides a table that includes the key deliverables of each quarter of the 9-month project. What artifact does this table represent?"
+      },
+      "options": [
+        {
+          "fr": "Énoncé de vision du produit",
+          "en": "Product vision statement"
+        },
+        {
+          "fr": "Wireframe du produit",
+          "en": "Product wireframe"
+        },
+        {
+          "fr": "Roadmap produit",
+          "en": "Product roadmap"
+        },
+        {
+          "fr": "Backlog produit",
+          "en": "Product backlog"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : un énoncé de vision du produit décrit à quoi ressemblerait un produit pour réaliser, à terme, sa vision et donner un sens à son existence. Un énoncé de vision devrait être court, simple et précis. Option B : le wireframe du produit est une maquette ou une esquisse de l’interface utilisateur, des fonctionnalités de haut niveau, de la mise en page, etc. Option C : une roadmap produit est un plan stratégique qui met en évidence les principaux composants d’un produit dont la livraison est planifiée dans un portefeuille, un programme ou plusieurs itérations ou versions du projet, y compris l’ordre probable dans lequel ces composants seront livrés (The PMI Guide to Business Analysis, page 55). La roadmap produit indique la direction que prend le produit à court et à long terme. Dans les organisations agiles, la roadmap produit sert de guide plutôt que de plan de projet. Option D : la roadmap produit se distingue du backlog produit en ce que la roadmap produit présente une vue d’ensemble, tandis que le backlog produit traite des étapes pratiques et réalisables nécessaires pour créer concrètement le produit.",
+        "en": "A product vision statement outlines what a product would look like to ultimately achieve its vision and give purpose to its existence. A vision statement should be short, simple, and specific. The Product wireframe is a mockup or a sketch of the user interface, high-level functionality, page layout, etc. A product roadmap is a strategic plan that highlights the key components of a product that are scheduled for delivery across a portfolio, program, or several project iterations or releases, including the likely order in which these components will be delivered (The PMI Guide to Business Analysis, page 55). The product roadmap indicates where the product is headed in both the short and long terms. In agile organizations, the product roadmap serves as a guide rather than a project plan. The product roadmap is different from the product backlog in that the product roadmap provides the big picture while the product backlog tackles the practical and feasible steps required to tangibly create the product."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q31",
+      "type": "single",
+      "prompt": {
+        "fr": "Un business analyst souhaite vivement mettre en œuvre une nouvelle solution pour l’entreprise. Les parties prenantes ont demandé une évaluation de la valeur business qu’elle apportera. Que devrait faire le business analyst ?",
+        "en": "A business analyst is eager to implement a new solution for the company. The stakeholders requested an assessment of the business value it will bring. What should the business analyst do?"
+      },
+      "options": [
+        {
+          "fr": "Réaliser une analyse coûts-bénéfices",
+          "en": "Conduct a cost-benefit analysis"
+        },
+        {
+          "fr": "Utiliser une technique de benchmarking",
+          "en": "Use a benchmarking technique"
+        },
+        {
+          "fr": "Réaliser une étude de faisabilité",
+          "en": "Conduct a feasibility study"
+        },
+        {
+          "fr": "Réaliser une injection de fonctionnalités",
+          "en": "Conduct a feature injection"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Une analyse coûts-bénéfices évalue le rendement financier de la mise en œuvre de la solution en comparant les bénéfices attendus aux coûts. Il s’agit d’un moyen efficace d’évaluer la valeur business d’une solution (PMBOK, 8e édition, page 158). Le benchmarking consiste généralement à comparer la performance ou les processus d’une entreprise aux normes du secteur ou aux meilleures pratiques. Bien qu’il soit utile pour comprendre la performance relative, il n’évalue pas directement la valeur business spécifique d’une nouvelle solution (PMBOK, 8e édition, page 149). Une étude de faisabilité évalue si un projet ou une solution est viable et peut être mis en œuvre avec succès. Elle porte davantage sur le caractère réalisable de la solution que sur sa valeur business. L’injection de fonctionnalités consiste à décomposer et à analyser les fonctionnalités afin de comprendre leur valeur et leur mise en œuvre. Bien que cela puisse aider à comprendre certains aspects précis d’une solution, cette technique n’évalue pas directement sa valeur business globale.",
+        "en": "A cost-benefit analysis evaluates the financial return of implementing the solution by comparing the expected benefits against the costs. It's an effective way to assess the business value of a solution (PMBOK 8th Edition, page 158). Benchmarking typically involves comparing a company’s performance or processes to industry standards or best practices. While useful for understanding relative performance, it doesn't directly assess the specific business value of a new solution (PMBOK 8th Edition, page 149). A feasibility study assesses whether a project or solution is viable and can be successfully implemented. It focuses more on the practicality of the solution rather than its business value. Feature injection involves breaking down and analyzing features to understand their value and implementation. While this can help in understanding specific aspects of a solution, it doesn’t directly assess the overall business value."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q32",
+      "type": "single",
+      "prompt": {
+        "fr": "L’équipe projet découvre que plusieurs fonctionnalités mises en œuvre s’écartent de ce qui est précisé dans l’énoncé du périmètre. Quel document le chef de projet devrait-il consulter pour traiter le problème ?",
+        "en": "The project team finds out that several implemented features deviate from what is specified in the scope statement. Which document should the project manager consult to address the issue?"
+      },
+      "options": [
+        {
+          "fr": "WBS",
+          "en": "WBS"
+        },
+        {
+          "fr": "Dictionnaire de la WBS",
+          "en": "WBS dictionary"
+        },
+        {
+          "fr": "Matrice de traçabilité des exigences",
+          "en": "Requirements traceability matrix"
+        },
+        {
+          "fr": "Charte du projet",
+          "en": "Project charter"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "La matrice de traçabilité des exigences est un document qui établit une correspondance entre les exigences ainsi qu’avec d’autres aspects du projet. Elle sert de preuve pour confirmer que les exigences ont été satisfaites, car elle documente généralement ces exigences ainsi que les problèmes et les résultats des tests (PMBOK, 8e édition, pages 131-132).",
+        "en": "The requirements traceability matrix is a document that maps requirements as well as other aspects of the project. It's used as evidence to confirm that requirements have been fulfilled, as it typically documents those requirements along with issues and test results (PMBOK 8th edition, pages 131-132)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q33",
+      "type": "single",
+      "prompt": {
+        "fr": "Pour valider les exigences, un business analyst a utilisé une technique illustrée par le schéma suivant. Quelle technique le business analyst a-t-il utilisée ?",
+        "en": "To validate requirements, a business analyst used a technique illustrated by the following graph. What technique did the business analyst use?"
+      },
+      "options": [
+        {
+          "fr": "Focus groups",
+          "en": "Focus Groups"
+        },
+        {
+          "fr": "Groupe nominal",
+          "en": "Nominal Group"
+        },
+        {
+          "fr": "Brainstorming",
+          "en": "Brainstorming"
+        },
+        {
+          "fr": "Delphi",
+          "en": "Delphi"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Delphi est une méthode de recherche de consensus qui consolide les contributions anonymes des experts en la matière (SME) au moyen de plusieurs tours de vote (The PMI Guide to Business Analysis, page 228).",
+        "en": "Delphi is a consensus-building method that consolidates anonymous input from subject matter experts (SMEs) using rounds of voting (The PMI Guide to Business Analysis, page 228)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q34",
+      "type": "single",
+      "prompt": {
+        "fr": "Une équipe projet travaille activement à la création d’une solution et à sa préparation en vue de sa livraison à l’entreprise. Au cours de quelle phase du projet cette activité aurait-elle lieu ?",
+        "en": "A project team is actively working on creating a solution and preparing it for delivery to the business. In which phase of the project would this activity take place?"
+      },
+      "options": [
+        {
+          "fr": "Exécution",
+          "en": "Execution"
+        },
+        {
+          "fr": "Planification",
+          "en": "Planning"
+        },
+        {
+          "fr": "Surveillance et maîtrise",
+          "en": "Monitoring and controlling"
+        },
+        {
+          "fr": "Clôture",
+          "en": "Closure"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Durant la phase d’exécution, l’équipe projet développe, met en œuvre et livre la solution à l’entreprise. Cette phase consiste à réaliser le travail défini dans le plan de projet, à gérer les ressources et à veiller à ce que les livrables répondent aux objectifs du projet. La phase de planification consiste à créer des plans détaillés pour guider l’exécution et la maîtrise du projet. Cela comprend la définition des tâches, des échéanciers, des budgets, des ressources et des stratégies de gestion des risques. Bien qu’elle soit essentielle à la préparation du projet, cette phase ne comprend pas la mise en œuvre ni la livraison de la solution. La phase de surveillance et de maîtrise consiste à suivre l’avancement du projet, à s’assurer qu’il reste conforme au plan et à apporter les ajustements nécessaires. Cette phase concerne la supervision et la maîtrise plutôt que le développement actif ou la livraison de la solution. La phase de clôture marque l’achèvement formel du projet. Durant cette phase, les livrables finaux sont remis, la documentation du projet est achevée et une revue post-projet peut être réalisée. Bien que cette phase puisse comprendre la livraison finale du résultat du projet, elle ne comprend pas le développement ni la mise en œuvre proprement dits de la solution, qui sont réalisés durant la phase d’exécution.",
+        "en": "In the Execution Phase, the project team develops, implements, and delivers the solution to the business. This phase involves carrying out the work defined in the project plan, managing resources, and ensuring that the deliverables meet the project’s objectives. The Planning Phase involves creating detailed plans to guide the execution and control of the project. This includes defining tasks, schedules, budgets, resources, and risk management strategies. While crucial for setting up the project, this phase does not involve implementing or delivering the solution. The Monitoring and Controlling phase involves tracking the project’s progress, ensuring it stays on track with the plan, and making adjustments as needed. This phase is about oversight and control rather than the active development or delivery of the solution. The Closure Phase marks the formal completion of the project. In this phase, final deliverables are handed over, project documentation is completed, and a post-project review may be conducted. Although this phase may include the final delivery of the project outcome, it does not involve the actual development or implementation of the solution, which is done during the Execution Phase."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q35",
+      "type": "single",
+      "prompt": {
+        "fr": "Une organisation a nommé un nouveau chef de projet pour remplacer celui qui est récemment parti. Que devrait faire le nouveau chef de projet en premier ?",
+        "en": "An organization has appointed a new project manager to replace the one who recently left. What should the new project manager do first?"
+      },
+      "options": [
+        {
+          "fr": "Consulter le registre des problèmes et le registre des leçons apprises afin de repérer tout problème grave.",
+          "en": "Check the issue log and the lessons learned register for any serious problems."
+        },
+        {
+          "fr": "Consulter la charte du projet afin de comprendre l’objectif du projet et son business case.",
+          "en": "Check the project charter to understand the project’s goal and business case."
+        },
+        {
+          "fr": "Consulter le plan de management du projet afin de prendre connaissance des références de base du projet.",
+          "en": "Check the project management plan to learn about the project baselines."
+        },
+        {
+          "fr": "Consulter le registre des parties prenantes afin de commencer à interagir avec les différentes parties impliquées dans le projet.",
+          "en": "Check the stakeholders’ register to start interacting with the different parties involved in the project."
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Avant toute chose, le chef de projet doit comprendre pourquoi le projet a été créé, c’est-à-dire son business case. En outre, il devrait connaître les objectifs prédéfinis du projet. Ces deux éléments, ainsi que les principaux livrables, sont tous définis dans la charte du projet (PMBOK, 8e édition, pages 17-18).",
+        "en": "First and foremost, the project manager has to understand why the project is being created in the first place; aka its business case. Moreover, the project manager should be aware of the project’s predefined goals. These two elements along with the main deliverables are all defined in the project charter (PMBOK 8th Edition, pages 17-18)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q36",
+      "type": "single",
+      "prompt": {
+        "fr": "Un business analyst est chargé d’élaborer une roadmap produit pour le projet à venir. Quelle technique devrait-il choisir afin que la roadmap présente efficacement l’ordre et la priorisation des user stories ?",
+        "en": "A Business Analyst is tasked with developing a product roadmap for the upcoming project. What technique should the Business Analyst choose to develop the roadmap in order to ensure it effectively captures the sequence and prioritization of user stories?"
+      },
+      "options": [
+        {
+          "fr": "Cas d’utilisation",
+          "en": "Use case"
+        },
+        {
+          "fr": "Story mapping",
+          "en": "Story mapping"
+        },
+        {
+          "fr": "Analyse SWOT",
+          "en": "SWOT analysis"
+        },
+        {
+          "fr": "Wireframe",
+          "en": "Wireframe"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Un cas d’utilisation est un modèle de processus qui décrit, au moyen d’un récit textuel, les interactions entre le système et l’utilisateur en vue d’atteindre un objectif précis, en couvrant les flux normaux, alternatifs et d’exception de différents scénarios. Il joue un rôle essentiel dans le passage des exigences business aux exigences des parties prenantes ou de la solution en fournissant une description détaillée des interactions. Les cas d’utilisation sont essentiels pour identifier les exigences fonctionnelles et non fonctionnelles ainsi que pour établir les critères d’acceptation. Le story mapping est une technique qui permet d’ordonner les user stories en fonction de leur valeur business et de la séquence habituelle suivie par l’utilisateur. Il aide les équipes à acquérir une compréhension commune du produit à construire et communique les fonctionnalités et composants à livrer. Au départ, les stories peuvent être rédigées à un niveau élevé sous la forme d’epics, qui sont ensuite décomposées en stories plus petites. L’analyse SWOT est une technique d’analyse des forces (S) et des faiblesses (W) d’une organisation ou d’un projet, ainsi que des opportunités (O) et des menaces (T) qui existent à l’extérieur. L’analyse SWOT peut servir à identifier les risques potentiels du produit sous la forme de risques positifs (opportunités) ou négatifs (menaces) (PMBOK, 8e édition, page 204). Les wireframes permettent d’aligner l’équipe projet et les parties prenantes business sur les exigences du système pendant la planification initiale. Il s’agit de dessins de faible fidélité qui illustrent les principaux éléments et la disposition de l’interface utilisateur, en montrant le fonctionnement du système par le parcours des différents écrans de l’application.",
+        "en": "A use case is a process model that describes system-user interactions through a textual narrative to achieve a specific goal, encompassing normal, alternative, and exception flows for various scenarios. It plays a crucial role in transitioning from business to stakeholder or solution requirements by providing a detailed elaboration of interactions. They are essential for identifying both functional and non-functional requirements and for establishing acceptance criteria. Story mapping is a technique for sequencing user stories based on their business value and the typical user sequence. It helps teams gain a shared understanding of the product to be built and communicates the features and components to be delivered. Initially, stories may be written at a high level as epics, which are later broken down into smaller stories. SWOT analysis is a technique for analyzing the (S) strengths and (W) weaknesses of an organization or project, and the (O) opportunities and (T) threats that exist externally. SWOT analysis can be used to identify potential product risks in the form of positive risks (opportunities) or negative risks (threats) (PMBOK 8th Edition, page 204). Wireframes align the project team and business stakeholders with the system requirements during initial planning. They are low-fidelity drawings that illustrate the key elements and layout of the user interface, demonstrating how the system functions by walking through different screens of the application."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q37",
+      "type": "single",
+      "prompt": {
+        "fr": "Toutes les parties prenantes participent à une réunion pour discuter d’un nouveau projet qui devrait commencer dans un mois et durer au moins 10 itérations. Une partie prenante suggère qu’une personne soit responsable de l’élaboration et de la mise à jour de la roadmap produit. Qui devrait assumer cette responsabilité ?",
+        "en": "All stakeholders are attending a meeting to discuss a new project that is expected to start within a month and to last for at least 10 iterations. One stakeholder suggests that someone should be responsible for developing and maintaining the product roadmap. Who should assume this responsibility?"
+      },
+      "options": [
+        {
+          "fr": "Chef de projet",
+          "en": "Project Manager"
+        },
+        {
+          "fr": "Équipe de développement",
+          "en": "Development Team"
+        },
+        {
+          "fr": "Scrum Master",
+          "en": "Scrum Master"
+        },
+        {
+          "fr": "Product Owner",
+          "en": "Product Owner"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "En Agile, le Product Owner devrait être chargé de gérer la roadmap produit, puisqu’il est responsable du succès du produit. La responsabilité principale du Product Owner consiste à représenter le business, ce qui comprend la création et la mise à jour de la vision du produit et de la roadmap, ainsi que du Product Backlog.",
+        "en": "In agile, the product owner should be in charge of managing the product roadmap since they are responsible for the product’s success. The Product Owner’s primary responsibility is to represent the business, which involves the creation and maintenance of the Product Vision and Roadmap, as well as the Product Backlog."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q38",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Parmi les éléments suivants, lesquels sont inclus dans le business case ? (Choisissez trois réponses.)",
+        "en": "Which of the following elements are included in the business case? (Select three)"
+      },
+      "options": [
+        {
+          "fr": "Énoncé de la situation",
+          "en": "Situation statement"
+        },
+        {
+          "fr": "Buts et objectifs business",
+          "en": "Business goals and objectives"
+        },
+        {
+          "fr": "Résultats de l’étude de faisabilité",
+          "en": "Feasibility study results"
+        },
+        {
+          "fr": "Analyse des parties prenantes",
+          "en": "Stakeholder analysis"
+        },
+        {
+          "fr": "Plan de gestion des risques",
+          "en": "Risk management plan"
+        }
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": {
+        "fr": "Un énoncé de la situation est un résumé objectif d’un problème ou d’une opportunité, qui explique son effet sur l’organisation et son impact. Il fait partie du business case et aide les examinateurs à comprendre la difficulté avant d’évaluer les solutions potentielles. Il constitue le résultat du processus « Identifier le problème ou l’opportunité ». Les buts et objectifs business définissent les résultats précis qu’un portefeuille, un programme ou un projet est censé atteindre. Ils constituent le résultat du processus « Déterminer l’état futur » et sont axés sur les résultats business ciblés. Les résultats de l’étude de faisabilité sont les conclusions synthétisées de l’analyse de faisabilité, regroupées dans un dossier destiné à faciliter la revue et la prise de décision par les dirigeants. Les résultats de l’étude de faisabilité constituent le résultat du processus « Déterminer les options viables et formuler une recommandation » (The PMI Guide to Business Analysis, page 96). Options D et E : l’analyse des parties prenantes et le plan de gestion des risques sont réalisés après l’approbation du projet, pendant la phase de planification du projet.",
+        "en": "A situation statement is an objective summary of a problem or opportunity, explaining its effect on the organization and its impact. It is part of the business case and helps reviewers understand the challenge before evaluating potential solutions. It is the output of the \"identify problem or opportunity\" process. Business goals and objectives define the specific outcomes a portfolio, program, or project is expected to achieve, they are the output of of the “determine future state” process and focus on targeted business outcomes Feasibility study results are the summarized findings from the feasibility analysis, compiled into a package to aid executive review and decision-making. Feasibility study results are the output of the process “determine viable options and provide recommendation”. (PMI Guide to Business Analysis, page 96) Options D & E: Stakeholder analysis and Risk management plan are done after the approval of the project; during the project planning phase."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q39",
+      "type": "single",
+      "prompt": {
+        "fr": "Un nouveau chef de projet vient d’être chargé de superviser un projet à l’arrêt. Pour se familiariser rapidement avec les processus du projet et comprendre le périmètre du travail, quel outil serait le plus efficace ?",
+        "en": "A new project manager has just been assigned to oversee a stopped project. To quickly get accustomed to the project's processes and understand the scope of work, which tool would be the most effective?"
+      },
+      "options": [
+        {
+          "fr": "Diagramme de flux de processus",
+          "en": "Process flow diagram"
+        },
+        {
+          "fr": "Rétrospectives et leçons apprises",
+          "en": "Retrospectives and lessons learned"
+        },
+        {
+          "fr": "Analyse des personas",
+          "en": "Persona analysis"
+        },
+        {
+          "fr": "Modèle RACI",
+          "en": "RACI Model"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Un flux de processus présente visuellement les étapes ou les tâches associées aux fonctions d’un poste ou aux interactions avec un produit. Il constitue le fondement du matériel de formation relatif aux nouvelles procédures et peut comprendre des flux supplémentaires détaillant les processus de transition, ce qui aide le chef de projet à comprendre ce qui doit être fait. Les rétrospectives et les leçons apprises exploitent les expériences passées afin d’améliorer la planification future. Les stratégies efficaces d’engagement des parties prenantes et de communication intègrent souvent des recommandations et des pratiques éprouvées issues de projets ou d’itérations antérieurs afin d’améliorer les efforts de développement du produit. Cette réponse est incorrecte dans ce cas, car il ne s’agit pas d’un outil conçu pour présenter une vue d’ensemble des processus du projet. Un persona est un personnage fictif qui représente une partie prenante individuelle ou un groupe de parties prenantes. L’analyse de ces personas peut faire apparaître des tendances permettant de déterminer des stratégies efficaces pour les impliquer et communiquer avec eux. Le modèle RACI est une matrice d’affectation des responsabilités qui clarifie l’implication des parties prenantes en désignant les rôles Responsable, Approbateur, Consulté et Informé. Il aide les gestionnaires de portefeuille, de programme ou les chefs de projet à définir les rôles et responsabilités, réduisant ainsi la confusion et les conflits, particulièrement lorsque les responsabilités se chevauchent (PMBOK, 8e édition, pages 194-195).",
+        "en": "A process flow visually outlines the steps or tasks involved in job functions or interactions with a product. It forms the foundation for training materials on new procedures and may include additional flows to detail the transition processes, helping the project manager understand what needs to be done. Retrospectives and lessons learned leverage past experiences to enhance future planning. Effective stakeholder engagement and communication strategies often incorporate recommendations and successful practices from previous projects or iterations to improve product development efforts. It’s an incorrect answer in this case as it’s not a designed tool for overviewing project processes. A persona is a fictional character that represents an individual or group of stakeholders. By analyzing these personas, patterns can emerge that help identify effective strategies for engaging and communicating with them. The RACI model is a responsibility assignment matrix that clarifies stakeholder involvement by designating roles as Responsible, Accountable, Consulted, and Informed. It helps portfolio, program, or project managers define roles and responsibilities, reducing confusion and conflicts, particularly in overlapping responsibilities (PMBOK 8th Edition, pages 194-195)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q40",
+      "type": "single",
+      "prompt": {
+        "fr": "Lequel des éléments suivants comprend les exigences fonctionnelles et non fonctionnelles ?",
+        "en": "Which of the following includes functional and non-functional requirements?"
+      },
+      "options": [
+        {
+          "fr": "Exigences business",
+          "en": "Business requirements"
+        },
+        {
+          "fr": "Exigences des parties prenantes",
+          "en": "Stakeholders requirements"
+        },
+        {
+          "fr": "Exigences de la solution",
+          "en": "Solution requirements"
+        },
+        {
+          "fr": "Exigences de transition",
+          "en": "Transition requirements"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les exigences business décrivent les besoins et objectifs de haut niveau de l’organisation, notamment les principaux problèmes ou opportunités auxquels le projet vise à répondre. Elles fournissent la justification de la réalisation du projet, généralement formulée dans un business case qui met en évidence les bénéfices attendus et la valeur stratégique (PMBOK, 8e édition, page 130). Les exigences des parties prenantes décrivent les besoins et attentes précis des différentes parties prenantes ou des groupes de parties prenantes (PMBOK, 8e édition, page 130). Les exigences de la solution décrivent les attributs précis d’une solution, y compris les caractéristiques et fonctionnalités d’un produit. Ces exigences répondent aux besoins business et à ceux des parties prenantes et doivent être suffisamment détaillées pour guider efficacement la conception et le développement de la solution. Les exigences de la solution comportent deux sous-catégories : les exigences fonctionnelles et les exigences non fonctionnelles (PMBOK, 8e édition, page 130). Les exigences de transition décrivent les procédures de déploiement et de mise en production d’une solution. Ces exigences sont propres à la phase de déploiement et sont temporaires ; elles ne devront plus être exécutées une fois le projet achevé (PMBOK, 8e édition, page 130).",
+        "en": "Business requirements outline the high-level needs and objectives of the organization, including key issues or opportunities that the project aims to address. They provide a rationale for undertaking the project, typically articulated through a business case that highlights the anticipated benefits and strategic value (PMBOK 8th Edition, page 130). Stakeholder requirements outline the specific needs and expectations of individual stakeholders or stakeholder groups (PMBOK 8th Edition, page 130). Solution requirements outline the specific attributes of a solution, including the features and functionalities of a product. These requirements address both business and stakeholder needs and must be detailed enough to guide the design and development of the solution effectively. Solution requirements have two subcategories: functional and non-functional requirements (PMBOK 8th Edition, page 130). Transition requirements describe the procedures for deploying and releasing a solution into production. These requirements are specific to the deployment phase and are temporary; they will not need to be executed again once the project is complete (PMBOK 8th Edition, page 130)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q41",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel outil ou quelle technique fait partie de la définition des critères d’acceptation ?",
+        "en": "Which tool or technique is part of defining acceptance criteria?"
+      },
+      "options": [
+        {
+          "fr": "Diagrammes PERT",
+          "en": "PERT Charts"
+        },
+        {
+          "fr": "Analyse SWOT",
+          "en": "SWOT Analysis"
+        },
+        {
+          "fr": "Behavior-Driven Development",
+          "en": "Behavior-driven Development"
+        },
+        {
+          "fr": "Registre des risques",
+          "en": "Risk Register"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les diagrammes PERT (Program Evaluation Review Technique) constituent un outil de planification utilisé pour analyser les tâches nécessaires à l’achèvement d’un projet, estimer leur durée et organiser les dépendances entre elles. Ils ne sont pas liés à la définition des critères d’acceptation, qui porte sur les conditions qu’une solution doit remplir pour être acceptée. L’analyse SWOT (forces, faiblesses, opportunités et menaces) est un outil de planification stratégique utilisé pour évaluer ces quatre aspects d’un projet ou d’une entreprise. Elle permet de comprendre les facteurs internes et externes qui influencent un projet, mais ne contribue pas directement à la définition des critères d’acceptation. Le Behavior-Driven Development (BDD) consiste à définir les critères d’acceptation au moyen d’un processus collaboratif, afin que les conditions soient claires et mesurables grâce à des user stories et à des scénarios (The PMI Guide to Business Analysis, pages 218-219). Un registre des risques sert à documenter les risques, leur impact, leur probabilité et les stratégies d’atténuation. Il aide à gérer les risques du projet, mais ne joue aucun rôle dans la définition des critères d’acceptation d’une solution (PMBOK, 8e édition, page 137).",
+        "en": "PERT (Program Evaluation Review Technique) is a scheduling tool used to analyze the tasks required to complete a project, estimate time durations, and organize dependencies between tasks. It is not related to defining acceptance criteria, which focuses on conditions that a solution must meet to be accepted. SWOT (Strengths, Weaknesses, Opportunities, and Threats) is a strategic planning tool used to evaluate these four aspects of a project or business. It helps in understanding the internal and external factors that affect a project but does not directly contribute to defining acceptance criteria. Behavior-driven Development (BDD) involves defining acceptance criteria through a collaborative process, ensuring that conditions are clear and measurable through user stories and scenarios (PMI Guide to business analysis, pages 218 & 219). A risk register is used to document risks, their impact, probability, and mitigation strategies. It helps in managing project risks but does not play a role in defining acceptance criteria for a solution (PMBOK 8th Edition, page 137)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "Q42",
+      "type": "single",
+      "prompt": {
+        "fr": "Un business analyst a été affecté à un système de réservation d’une compagnie aérienne. Il a utilisé l’artéfact suivant pour illustrer les interactions avec le système. Quel artéfact le business analyst a-t-il utilisé ?",
+        "en": "A business analyst was assigned to an airline reservation system. The business analyst used the following artifact to illustrate the interactions with the system. What artifact did the business analyst use?"
+      },
+      "options": [
+        {
+          "fr": "Diagramme de cas d’utilisation",
+          "en": "Use case diagram"
+        },
+        {
+          "fr": "Diagramme de flux",
+          "en": "Flowchart diagram"
+        },
+        {
+          "fr": "Flux de l’interface utilisateur",
+          "en": "User interface flow"
+        },
+        {
+          "fr": "Diagramme de flux de données",
+          "en": "Data flow diagram"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Les diagrammes de cas d’utilisation servent à identifier à la fois la liste des utilisateurs de la solution et les scénarios possibles selon lesquels chacun d’eux utilisera la solution (The PMI Guide to Business Analysis, page 206).",
+        "en": "Use case diagrams are used to identify the list of both the users of the solution and the possible scenarios of how each user will use the solution (The PMI Guide to Business Analysis, page 206)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q43",
+      "type": "single",
+      "prompt": {
+        "fr": "Une entreprise de vente au détail a récemment enregistré une baisse de 20 % de ses ventes en ligne. Quelle est la première étape qu’un business analyst devrait entreprendre ?",
+        "en": "A retail has recently experienced a 20% drop in online sales. What is the first step a business analyst would take?"
+      },
+      "options": [
+        {
+          "fr": "Mettre en œuvre une nouvelle stratégie marketing",
+          "en": "Implement a new marketing strategy"
+        },
+        {
+          "fr": "Recueillir des données sur le comportement des clients et les performances du site web",
+          "en": "Gather data on customer behavior and website performance"
+        },
+        {
+          "fr": "Interroger les parties prenantes afin d’identifier les inefficacités internes",
+          "en": "Interview stakeholders to identify internal inefficiencies"
+        },
+        {
+          "fr": "Engager une partie prenante externe pour rechercher la cause",
+          "en": "Hire an external stakeholder to investigate the cause"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "La mise en œuvre d’une nouvelle stratégie marketing est une action axée sur la solution qui ne devrait pas constituer la première étape. Le business analyst doit comprendre la situation actuelle avant de déterminer les causes du problème. La collecte de données permet une analyse factuelle des problèmes potentiels liés à l’expérience utilisateur, au fonctionnement du site web et aux tendances des clients, fournissant ainsi une base pour les étapes ultérieures. Bien qu’il soit important d’interroger les parties prenantes, le problème concerne ici les ventes en ligne. Il est plus approprié de commencer par recueillir des données sur le comportement des clients. Engager une partie prenante externe pour rechercher la cause pourra être envisagé ultérieurement si les efforts internes ne donnent aucun résultat, mais cela ne devrait pas constituer la première étape.",
+        "en": "Implementing a new marketing strategy is a solution-oriented action that should not be the first step. The business analyst needs to understand the current situation before determining the causes of the problem. Data collection allows for an evidence-based analysis of potential issues related to the user experience, website functionality, and customer trends, providing a foundation for future steps. While interviewing stakeholders is important, the issue at hand involves online sales. It is more appropriate to first gather data on customer behavior. Hiring an external stakeholder to investigate the cause can be an option later in the process if internal efforts do not yield results, but it should not be the first step."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q44",
+      "type": "single",
+      "prompt": {
+        "fr": "Un Product Manager insiste pour qu’une nouvelle fonctionnalité soit développée dans une application existante. Cependant, le business analyst craint que cette fonctionnalité ne traite pas le problème fondamental. Que devrait faire ensuite le business analyst ?",
+        "en": "A product manager is pushing for the development of a new feature in an existing app. However, the business analyst has concerns that this feature may not address the core problem. What should the business analyst do next?"
+      },
+      "options": [
+        {
+          "fr": "Poursuivre le développement de la fonctionnalité puisque le Product Manager l’a demandé.",
+          "en": "Move forward with the feature development since the manager has requested it."
+        },
+        {
+          "fr": "Collaborer avec l’équipe de développement afin de commencer à tester la nouvelle fonctionnalité.",
+          "en": "Collaborate with the development team to begin testing the new feature."
+        },
+        {
+          "fr": "Poursuivre le développement de la fonctionnalité tout en documentant les préoccupations pour référence future.",
+          "en": "Proceed with the feature development while documenting the concerns for future reference."
+        },
+        {
+          "fr": "Suspendre le développement et réaliser une analyse des causes profondes afin de s’assurer que le bon problème est traité.",
+          "en": "Pause development and conduct a root cause analysis to ensure the right problem is being addressed."
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Poursuivre le développement de la fonctionnalité néglige la responsabilité du business analyst de veiller à ce que la solution traite le problème réel, ce qui peut entraîner un gaspillage de ressources si la fonctionnalité ne résout pas le problème fondamental. Commencer les tests sans avoir d’abord vérifié que la fonctionnalité constitue la bonne solution est prématuré. Cela peut détourner davantage de ressources de l’identification du véritable problème. Bien que la documentation des préoccupations soit utile, poursuivre le développement sans traiter le problème fondamental peut toujours aboutir à une solution inefficace. Suspendre le développement et réaliser une analyse des causes profondes permet au business analyst d’examiner correctement le problème sous-jacent avant de poursuivre la solution (PMBOK, 8e édition, page 196).",
+        "en": "Moving forward with the feature development overlooks the business analyst's responsibility to ensure that the solution addresses the actual problem, which can lead to wasted resources if the feature doesn't resolve the core issue. Testing without first ensuring the feature is the correct solution is premature. It can further divert resources away from identifying the real problem. While documenting concerns is helpful, proceeding with development without addressing the core issue can still result in an ineffective solution. Pausing development and conducting a root cause analysis ensures that the business analyst properly investigates the underlying issue before moving forward with the solution (PMBOK 8th Edition, page 196)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Hybrid",
+        "en": "Hybrid"
+      }
+    },
+    {
+      "id": "Q45",
+      "type": "single",
+      "prompt": {
+        "fr": "Un business analyst a recueilli les données de vente du produit et les a comparées aux objectifs business. Quel processus le business analyst a-t-il réalisé ?",
+        "en": "A business analyst collected the product’s sales data and compared it to the business objectives. What process did the business analyst conduct?"
+      },
+      "options": [
+        {
+          "fr": "Évaluer les performances de la solution",
+          "en": "Evaluate solution performance"
+        },
+        {
+          "fr": "Obtenir l’acceptation de la solution pour sa mise en production",
+          "en": "Obtain solution acceptance for release"
+        },
+        {
+          "fr": "Déterminer les options viables et formuler des recommandations",
+          "en": "Determine viable options and provide recommendations"
+        },
+        {
+          "fr": "Déterminer l’approche d’engagement et de communication des parties prenantes",
+          "en": "Determine stakeholder engagement and communication approach"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le business analyst réalise le processus « Évaluer les performances de la solution ». Ce processus sert à déterminer si la solution ou le composant de solution mis en œuvre produit la valeur business prévue (The PMI Guide to Business Analysis, page 280).",
+        "en": "The business analyst is conducting the “Evaluate Solution Performance” process. This process is used to determine whether the implemented solution or solution component is delivering the business value as intended (The PMI Guide to Business Analysis, page 280)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q46",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Un business analyst identifie les problèmes clés et détermine les étapes nécessaires pour évoluer vers un état futur plus efficace. Ensuite, il collaborera avec les parties prenantes afin de s’assurer que leurs préoccupations sont prises en compte et d’obtenir des informations détaillées sur leurs besoins. Ces actions relèvent de quels domaines de l’analyse business ? (Choisissez deux réponses.)",
+        "en": "A business analyst is identifying the key problems and determining the necessary steps to move to a more efficient future state. Afterward, the business analyst will collaborate with stakeholders to ensure their concerns are addressed and obtain detailed information about their needs. These actions are part of which Business Analysis domains? (Select two)"
+      },
+      "options": [
+        {
+          "fr": "Engagement des parties prenantes",
+          "en": "Stakeholder Engagement"
+        },
+        {
+          "fr": "Traçabilité et surveillance",
+          "en": "Traceability and Monitoring"
+        },
+        {
+          "fr": "Analyse",
+          "en": "Analysis"
+        },
+        {
+          "fr": "Évaluation des besoins",
+          "en": "Needs Assessment"
+        },
+        {
+          "fr": "Évaluation de la solution",
+          "en": "Solution Evaluation"
+        }
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": {
+        "fr": "L’engagement des parties prenantes consiste à identifier les parties prenantes, à comprendre leurs besoins et à les impliquer tout au long du projet. En outre, l’évaluation des besoins vise à identifier les problèmes ou opportunités business et à déterminer les étapes nécessaires pour atteindre un état futur. Option B : la traçabilité et la surveillance visent à garantir l’alignement des exigences et des solutions tout au long du projet, à retracer leur statut et à surveiller leur progression. Elles ne consistent pas à identifier des problèmes ni à impliquer les parties prenantes. Option C : bien que l’analyse implique l’examen de données, de processus et de modèles, elle porte sur la création et l’analyse des modèles et des exigences, et non directement sur l’identification des problèmes ou l’engagement des parties prenantes. Option E : l’évaluation de la solution vise à apprécier dans quelle mesure la solution mise en œuvre répond aux besoins des parties prenantes et aux objectifs du projet. Elle intervient après le développement de la solution, et non pendant les phases initiales d’identification des problèmes ou des besoins.",
+        "en": "Stakeholder engagement focuses on identifying stakeholders, understanding their needs, and engaging them throughout the project. Additionally, Needs assessment concentrates on identifying business problems or opportunities and determining the steps necessary to reach a future state. Option B: Traceability and Monitoring is focused on ensuring that requirements and solutions are aligned throughout the project, tracing their status, and monitoring their progress. It does not involve identifying problems or engaging with stakeholders. Option C: Although analysis involves examining data, processes, and models, it deals with creating and analyzing models and requirements, not with directly identifying problems or engaging stakeholders. Option E: Solution Evaluation focuses on assessing how well the implemented solution meets the stakeholders' needs and project objectives, which is something that takes place after the solution is developed, not during the initial phases of identifying problems or needs."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q47",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle technique d’élicitation devrait être utilisée pour obtenir des informations approfondies auprès d’experts en la matière ?",
+        "en": "Which elicitation technique should be used when seeking in-depth information from subject matter experts?"
+      },
+      "options": [
+        {
+          "fr": "Jeux collaboratifs",
+          "en": "Collaborative games"
+        },
+        {
+          "fr": "Questionnaires",
+          "en": "Questionnaires"
+        },
+        {
+          "fr": "Entretiens",
+          "en": "Interviews"
+        },
+        {
+          "fr": "Brainstorming",
+          "en": "Brainstorming"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les entretiens constituent la technique d’élicitation la plus appropriée pour obtenir des informations approfondies auprès d’experts en la matière. Cette approche permet des échanges individuels détaillés et aide le business analyst à recueillir des connaissances spécialisées précises que d’autres techniques, telles que les jeux collaboratifs ou les questionnaires, peuvent ne pas saisir aussi efficacement (PMBOK, 8e édition, page 175).",
+        "en": "Interviews are the most appropriate elicitation technique when seeking in-depth information from subject matter experts. This approach allows for detailed, one-on-one discussions, enabling the business analyst to gather specific, expert insights that other techniques, like collaborative games or questionnaires, may not capture as effectively (PMBOK 8th Edition, page 175)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q48",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle compétence permet à un business analyst de tirer parti de ses expériences passées pour prendre des décisions efficaces lorsqu’il fait face à des difficultés ?",
+        "en": "What skill enables a business analyst to leverage past experiences to make effective decisions when facing challenges?"
+      },
+      "options": [
+        {
+          "fr": "Jugement d’expert",
+          "en": "Expert judgment"
+        },
+        {
+          "fr": "Connaissances techniques",
+          "en": "Technical knowledge"
+        },
+        {
+          "fr": "Adaptabilité",
+          "en": "Adaptability"
+        },
+        {
+          "fr": "Leadership",
+          "en": "Leadership"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le jugement d’expert consiste à utiliser les connaissances et l’expertise acquises lors de projets et de situations antérieurs pour prendre des décisions éclairées, en veillant à ce que les solutions soient alignées à la fois sur les objectifs business et sur les contraintes techniques (PMBOK, 8e édition, page 170).",
+        "en": "Expert judgment involves using knowledge and expertise accumulated from prior projects and situations to make informed decisions, ensuring that solutions are aligned with both business goals and technical constraints (PMBOK 8th Edition, page 170)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q49",
+      "type": "single",
+      "prompt": {
+        "fr": "Laquelle des responsabilités suivantes est propre à l’analyse business ?",
+        "en": "Which of the following responsibilities is unique to business analysis?"
+      },
+      "options": [
+        {
+          "fr": "Définir le périmètre du produit",
+          "en": "Defining product scope"
+        },
+        {
+          "fr": "Définir le périmètre du projet",
+          "en": "Defining project scope"
+        },
+        {
+          "fr": "Gérer les risques et veiller à la livraison des projets dans les délais",
+          "en": "Managing risks and ensuring timely delivery of projects"
+        },
+        {
+          "fr": "Suivre l’avancement du projet",
+          "en": "Tracking project progress"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "L’analyse business vise à définir le périmètre du produit, ce qui comprend la compréhension des besoins business, le recueil des exigences et la vérification que les caractéristiques et fonctions du produit final correspondent aux attentes des parties prenantes (The PMI Guide to Business Analysis, page 17). La définition du périmètre du projet relève principalement du management de projet. Le périmètre du projet décrit le travail nécessaire pour achever le projet, notamment les tâches, les livrables et les limites du projet. La gestion des risques et la garantie d’une livraison dans les délais relèvent du management de projet. Le chef de projet gère l’échéancier et les risques, et suit les dates limites afin de s’assurer que le projet est achevé à temps. Le suivi de l’avancement du projet constitue une fonction essentielle du management de projet. Les chefs de projet surveillent l’achèvement des tâches, les dates limites et l’affectation des ressources afin de veiller à ce que le projet reste sur la bonne voie.",
+        "en": "Business analysis focuses on defining the product scope, which includes understanding business needs, gathering requirements, and ensuring the final product features and functions align with stakeholder expectations (PMI Guide to business analysis, page 17). Defining project scope is primarily a project management responsibility. The project scope outlines the work required to complete the project, including tasks, deliverables, and boundaries of the project. Managing risks and ensuring timely delivery is part of project management. The project manager handles scheduling, risk management, and tracking deadlines to make sure the project is completed on time. Tracking project progress is a key function of project management. Project managers monitor task completion, deadlines, and resource allocation to ensure the project stays on track."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "Q50",
+      "type": "single",
+      "prompt": {
+        "fr": "Un business analyst a utilisé le modèle suivant pour analyser les fonctionnalités d’un produit du point de vue du client. Quelle technique d’analyse business a-t-il utilisée ?",
+        "en": "A business analyst used the following model in analyzing product features from the viewpoint of the customer. What technique did the business analysis use?"
+      },
+      "options": [
+        {
+          "fr": "Analyse Kano",
+          "en": "Kano Analysis"
+        },
+        {
+          "fr": "Analyse MoSCoW",
+          "en": "MoSCoW Analysis"
+        },
+        {
+          "fr": "Modèle de fonctionnalités",
+          "en": "Feature Model"
+        },
+        {
+          "fr": "Modèle d’alignement sur l’objectif",
+          "en": "Purpose Alignment Model"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le modèle Kano est une approche de priorisation des fonctionnalités du produit en fonction de leur coût de mise en œuvre par rapport à leur capacité potentielle à satisfaire les clients (The PMI Guide to Business Analysis, pages 79-80).",
+        "en": "The Kano model is an approach to prioritizing product functionalities based on their implementation cost versus their potential to satisfy customers (The PMI Guide to Business Analysis, pages 79, 80)."
+      },
+      "eco": {
+        "fr": "Cadres d’analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    }
+  ]
+}
