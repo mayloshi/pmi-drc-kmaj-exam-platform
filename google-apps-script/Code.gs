@@ -14,6 +14,7 @@ const SHEETS = {
     "createdAt",
   ],
   TrainerAccounts: ["trainerId", "name", "email", "role", "passwordHash", "active", "createdAt"],
+  UserAccounts: ["userId", "name", "email", "organization", "cohort", "role", "voucherCode", "passwordHash", "defaultLanguage", "active", "createdAt"],
   Vouchers: ["voucherCode", "role", "status", "assignedTo", "usedBy", "createdAt", "usedAt"],
   QuestionBank: [
     "questionId",
@@ -70,15 +71,27 @@ function doGet(e) {
   if (action === "lots") return json_(readRows_(spreadsheet, "Lots"));
   if (action === "questions") return json_(readRows_(spreadsheet, "QuestionBank").filter((row) => row.active !== "false"));
   if (action === "attempts") return json_(readRows_(spreadsheet, "Attempts"));
+  if (action === "vouchers") return json_(readRows_(spreadsheet, "Vouchers"));
+  if (action === "userAccounts") return json_(readRows_(spreadsheet, "UserAccounts"));
   return json_({ ok: true, database: SPREADSHEET_NAME });
 }
 
 function doPost(e) {
-  const body = JSON.parse(e.postData.contents || "{}");
+  const body = JSON.parse((e && e.postData && e.postData.contents) || "{}");
   const spreadsheet = getOrCreateSpreadsheet_();
 
   if (body.action === "saveAttempt") {
     saveAttempt_(spreadsheet, body.attempt);
+    return json_({ ok: true });
+  }
+
+  if (body.action === "saveVouchers") {
+    saveVouchers_(spreadsheet, body.vouchers || []);
+    return json_({ ok: true });
+  }
+
+  if (body.action === "saveUserAccount") {
+    saveUserAccount_(spreadsheet, body.user, body.voucher);
     return json_({ ok: true });
   }
 
@@ -88,6 +101,47 @@ function doPost(e) {
   }
 
   return json_({ ok: false, error: "Unknown action" });
+}
+
+function saveVouchers_(spreadsheet, vouchers) {
+  vouchers.forEach((voucher) => upsertObject_(spreadsheet, "Vouchers", "voucherCode", {
+    voucherCode: voucher.code || voucher.voucherCode,
+    role: voucher.role,
+    status: voucher.status,
+    assignedTo: voucher.assignedTo,
+    usedBy: voucher.usedBy || "",
+    createdAt: voucher.createdAt || new Date().toISOString(),
+    usedAt: voucher.usedAt || "",
+  }));
+}
+
+function saveUserAccount_(spreadsheet, user, voucher) {
+  if (!user) return;
+  upsertObject_(spreadsheet, "UserAccounts", "userId", {
+    userId: getUserId_(user),
+    name: user.name,
+    email: user.email,
+    organization: user.organization,
+    cohort: user.cohort,
+    role: user.role,
+    voucherCode: user.voucherCode,
+    passwordHash: hashPassword_(user.password || ""),
+    defaultLanguage: user.defaultLanguage,
+    active: true,
+    createdAt: user.createdAt || new Date().toISOString(),
+  });
+
+  if (voucher) {
+    upsertObject_(spreadsheet, "Vouchers", "voucherCode", {
+      voucherCode: voucher.code || voucher.voucherCode,
+      role: voucher.role,
+      status: voucher.status,
+      assignedTo: voucher.assignedTo,
+      usedBy: voucher.usedBy,
+      createdAt: voucher.createdAt,
+      usedAt: voucher.usedAt,
+    });
+  }
 }
 
 function saveAttempt_(spreadsheet, attempt) {
@@ -152,11 +206,16 @@ function sendResultEmail_(message) {
 function getOrCreateSpreadsheet_() {
   const folder = ensureFolderPath_(DATABASE_FOLDER);
   const files = folder.getFilesByName(SPREADSHEET_NAME);
-  if (files.hasNext()) return SpreadsheetApp.open(files.next());
-  const spreadsheet = SpreadsheetApp.create(SPREADSHEET_NAME);
-  const file = DriveApp.getFileById(spreadsheet.getId());
-  folder.addFile(file);
-  DriveApp.getRootFolder().removeFile(file);
+  let spreadsheet;
+  if (files.hasNext()) {
+    spreadsheet = SpreadsheetApp.open(files.next());
+  } else {
+    spreadsheet = SpreadsheetApp.create(SPREADSHEET_NAME);
+    const file = DriveApp.getFileById(spreadsheet.getId());
+    folder.addFile(file);
+    DriveApp.getRootFolder().removeFile(file);
+  }
+  Object.keys(SHEETS).forEach((name) => ensureSheet_(spreadsheet, name, SHEETS[name]));
   return spreadsheet;
 }
 
@@ -179,6 +238,28 @@ function appendObject_(spreadsheet, sheetName, object) {
   sheet.appendRow(headers.map((header) => object[header] === undefined ? "" : object[header]));
 }
 
+function upsertObject_(spreadsheet, sheetName, keyHeader, object) {
+  const sheet = spreadsheet.getSheetByName(sheetName);
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const keyIndex = headers.indexOf(keyHeader);
+  const keyValue = object[keyHeader];
+
+  if (keyIndex < 0 || !keyValue || sheet.getLastRow() < 2) {
+    appendObject_(spreadsheet, sheetName, object);
+    return;
+  }
+
+  const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+  const existingIndex = values.findIndex((row) => String(row[keyIndex]).toUpperCase() === String(keyValue).toUpperCase());
+  const rowValues = headers.map((header) => object[header] === undefined ? "" : object[header]);
+
+  if (existingIndex >= 0) {
+    sheet.getRange(existingIndex + 2, 1, 1, rowValues.length).setValues([rowValues]);
+  } else {
+    sheet.appendRow(rowValues);
+  }
+}
+
 function readRows_(spreadsheet, sheetName) {
   const sheet = spreadsheet.getSheetByName(sheetName);
   if (!sheet || sheet.getLastRow() < 2) return [];
@@ -192,6 +273,15 @@ function readRows_(spreadsheet, sheetName) {
 
 function getCandidateId_(candidate) {
   return Utilities.base64EncodeWebSafe(`${candidate.email || candidate.name}|${candidate.organization || ""}`).replace(/=+$/, "");
+}
+
+function getUserId_(user) {
+  return Utilities.base64EncodeWebSafe(`${user.email || user.name}|${user.voucherCode || ""}`).replace(/=+$/, "");
+}
+
+function hashPassword_(password) {
+  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, password);
+  return bytes.map((byte) => (byte + 256).toString(16).slice(-2)).join("");
 }
 
 function json_(payload) {

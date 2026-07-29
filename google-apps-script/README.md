@@ -8,10 +8,19 @@ Use `Code.gs` in a Google Apps Script project bound to the Google account that o
 4. Deploy as a Web App.
 5. Copy the Web App URL into the trainer dashboard field `Endpoint Apps Script`.
 
+After every change to `Code.gs`, create a new Apps Script deployment version or edit the existing Web App deployment so GitHub Pages calls the latest code.
+
 The script creates or reuses:
 
 - Folder: `PMP Prep/DATABASE`
 - Spreadsheet: `PMI RDC K-Majuscule Exam Platform Database`
-- Sheets: `Candidates`, `TrainerAccounts`, `Vouchers`, `QuestionBank`, `Lots`, `Attempts`, `AttemptAnswers`, `SummaryReports`, `EmailQueue`
+- Sheets: `Candidates`, `TrainerAccounts`, `UserAccounts`, `Vouchers`, `QuestionBank`, `Lots`, `Attempts`, `AttemptAnswers`, `SummaryReports`, `EmailQueue`
+
+Supported Web App writes:
+
+- `saveAttempt`
+- `saveVouchers`
+- `saveUserAccount`
+- `sendResultEmail`
 
 For GitHub Pages, the public site will call the Web App URL for reads and writes.

@@ -31,7 +31,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -139,7 +140,8 @@ small {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   min-height: 48px;
   border: 1px solid var(--line);
@@ -147,6 +149,17 @@ select {
   padding: 10px 14px;
   background: #fff;
   color: var(--ink);
+}
+
+textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.field-help {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .version-band {

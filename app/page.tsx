@@ -84,8 +84,8 @@ type UserAccount = {
   createdAt: string;
 };
 
-const VERSION = "v0.1.2";
-const UPDATED_AT = "2026-07-29";
+const VERSION = "v0.1.3";
+const UPDATED_AT = "2026-07-30";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -247,7 +247,8 @@ const copy = {
     platformStructureNote: "Les lots sont filtrés selon le type d'examen choisi. Les questions sont bilingues FR/EN selon la langue sélectionnée. Les domaines ECO, approches et performance domains ne s'affichent pas pendant l'examen.",
     accountWithVoucher: "Créer ou utiliser un compte avec voucher",
     resetPassword: "Réinitialiser le mot de passe",
-    voucherUnknown: "Voucher non reconnu pour cette version test.",
+    voucherUnknown: "Voucher non reconnu ou deja utilise.",
+    loginUnknown: "Email ou mot de passe non reconnu.",
     selectLot: "Sélection du lot",
     editInfo: "Modifier mes informations",
     source: "Source",
@@ -263,7 +264,10 @@ const copy = {
     accountManagement: "Vouchers et comptes utilisateur",
     voucherRole: "Profil du voucher",
     assignedTo: "Attribue a",
+    assignedEmails: "Emails a attribuer",
+    assignedEmailsHelp: "Saisissez un email par ligne, ou separez-les par virgule/point-virgule.",
     generateVoucher: "Generer un voucher",
+    generateVouchers: "Generer et attribuer",
     createUserAccount: "Creer un compte utilisateur",
     generatedVouchers: "Vouchers generes",
     userAccounts: "Comptes utilisateur",
@@ -276,6 +280,7 @@ const copy = {
     uploadLot: "Charger un lot",
     allowRetake: "Autoriser reprise",
     googleConnection: "Connexion Google Sheets",
+    syncStatus: "Statut sync",
     endpoint: "Endpoint Apps Script",
     folderBase: "Dossier / Base",
     cumulativeEco: "Performance cumulée - ECO",
@@ -347,7 +352,8 @@ const copy = {
     platformStructureNote: "Lots are filtered by the selected exam type. Questions are bilingual FR/EN based on the selected language. ECO domains, approaches, and performance domains are hidden during the exam.",
     accountWithVoucher: "Create or use an account with voucher",
     resetPassword: "Reset password",
-    voucherUnknown: "Voucher not recognized in this test version.",
+    voucherUnknown: "Voucher not recognized or already used.",
+    loginUnknown: "Email or password not recognized.",
     selectLot: "Lot selection",
     editInfo: "Edit my information",
     source: "Source",
@@ -363,7 +369,10 @@ const copy = {
     accountManagement: "Vouchers and user accounts",
     voucherRole: "Voucher profile",
     assignedTo: "Assigned to",
+    assignedEmails: "Emails to assign",
+    assignedEmailsHelp: "Enter one email per line, or separate emails with commas/semicolons.",
     generateVoucher: "Generate voucher",
+    generateVouchers: "Generate and assign",
     createUserAccount: "Create user account",
     generatedVouchers: "Generated vouchers",
     userAccounts: "User accounts",
@@ -376,6 +385,7 @@ const copy = {
     uploadLot: "Upload a lot",
     allowRetake: "Allow retake",
     googleConnection: "Google Sheets connection",
+    syncStatus: "Sync status",
     endpoint: "Apps Script endpoint",
     folderBase: "Folder / Database",
     cumulativeEco: "Cumulative performance - ECO",
@@ -479,6 +489,14 @@ function normalizeVoucher(code: string) {
   return code.trim().toUpperCase();
 }
 
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
+}
+
+function parseEmailList(value: string) {
+  return [...new Set(value.split(/[\n,;]+/).map((email) => normalizeEmail(email)).filter(Boolean))];
+}
+
 function candidateKey(candidate: Candidate) {
   return (candidate.email || candidate.name).trim().toLowerCase();
 }
@@ -547,6 +565,7 @@ export default function Home() {
   const [voucherForm, setVoucherForm] = useState({ role: "Volontaire actif", assignedTo: "" });
   const [accountNotice, setAccountNotice] = useState("");
   const [accessNotice, setAccessNotice] = useState("");
+  const [syncStatus, setSyncStatus] = useState("");
 
   const selectedLot = useMemo(() => lots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [selectedLotId]);
   const t = copy[language];
@@ -557,7 +576,7 @@ export default function Home() {
   const visibleLots = lots.filter((lot) => lot.examType === candidate.examType);
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
-    Boolean(candidate.hasAccount && candidate.name.trim() && candidate.voucher.trim() && candidate.password && canUseAccount());
+    Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password && canUseAccount());
   const guestMonthlyLotCount = countGuestMonthlyLots(candidate, attempts);
   const candidateAttempts = attempts.filter((attempt) => {
     const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
@@ -585,14 +604,8 @@ export default function Home() {
 
   function canUseAccount() {
     if (!candidate.hasAccount) return true;
-    const code = normalizeVoucher(candidate.voucher);
-    const account = userAccounts.find((user) => normalizeVoucher(user.voucherCode) === code);
-    if (account) {
-      const sameEmail = !candidate.email || !account.email || account.email.toLowerCase() === candidate.email.toLowerCase();
-      const sameName = !candidate.name || account.name.toLowerCase() === candidate.name.toLowerCase();
-      return account.password === candidate.password && sameEmail && sameName;
-    }
-    return voucherRecords.some((voucher) => normalizeVoucher(voucher.code) === code && voucher.status !== "used");
+    const email = normalizeEmail(candidate.email);
+    return userAccounts.some((user) => normalizeEmail(user.email) === email && user.password === candidate.password);
   }
 
   function startSelect() {
@@ -601,42 +614,87 @@ export default function Home() {
       return;
     }
     if (candidate.hasAccount && (!candidate.password || !canUseAccount())) {
-      setAccessNotice(t.voucherUnknown);
+      setAccessNotice(t.loginUnknown);
       return;
     }
-    saveJson(STORAGE_CANDIDATE, candidate);
+    if (candidate.hasAccount) {
+      const account = userAccounts.find((user) => normalizeEmail(user.email) === normalizeEmail(candidate.email));
+      if (account) {
+        const nextCandidate = {
+          ...candidate,
+          name: account.name,
+          organization: account.organization,
+          cohort: account.cohort,
+          language: account.defaultLanguage,
+          voucher: account.voucherCode,
+        };
+        setCandidate(nextCandidate);
+        setLanguage(nextCandidate.language);
+        saveJson(STORAGE_CANDIDATE, nextCandidate);
+      }
+    }
+    if (!candidate.hasAccount) saveJson(STORAGE_CANDIDATE, candidate);
     setView("select");
   }
 
-  function generateVoucher() {
-    const prefix = voucherForm.role.toUpperCase().replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 12) || "VOUCHER";
-    const code = `${prefix}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
-    const next = [
-      {
-        code,
-        role: voucherForm.role,
-        status: voucherForm.assignedTo ? "assigned" as const : "available" as const,
-        assignedTo: voucherForm.assignedTo,
-        usedBy: "",
-        createdAt: new Date().toISOString(),
-        usedAt: "",
-      },
-      ...voucherRecords,
-    ];
-    setVoucherRecords(next);
-    saveJson(STORAGE_VOUCHERS, next);
-    setAccountNotice(`${t.copyVoucher}: ${code}`);
+  async function postToAppsScript(action: string, payload: Record<string, unknown>) {
+    if (!settings.appsScriptUrl.trim()) {
+      setSyncStatus(language === "fr" ? "Endpoint Apps Script non configure." : "Apps Script endpoint is not configured.");
+      return false;
+    }
+    try {
+      await fetch(settings.appsScriptUrl.trim(), {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action, ...payload }),
+      });
+      setSyncStatus(`${action}: ${new Date().toISOString()}`);
+      return true;
+    } catch (error) {
+      setSyncStatus(`${action}: ${error instanceof Error ? error.message : "sync error"}`);
+      return false;
+    }
   }
 
-  function createUserAccount() {
+  async function generateVoucher() {
+    const prefix = voucherForm.role.toUpperCase().replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 12) || "VOUCHER";
+    const emails = parseEmailList(voucherForm.assignedTo);
+    const recipients = emails.length ? emails : [voucherForm.assignedTo.trim()];
+    const createdAt = new Date().toISOString();
+    const created = recipients.map((assignedTo) => ({
+        code: `${prefix}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
+        role: voucherForm.role,
+        status: assignedTo ? "assigned" as const : "available" as const,
+        assignedTo,
+        usedBy: "",
+        createdAt,
+        usedAt: "",
+      }));
+    const next = [...created, ...voucherRecords];
+    setVoucherRecords(next);
+    saveJson(STORAGE_VOUCHERS, next);
+    setAccountNotice(`${t.copyVoucher}: ${created.map((voucher) => voucher.code).join(", ")}`);
+    await postToAppsScript("saveVouchers", { vouchers: created });
+  }
+
+  async function createUserAccount() {
     if (!candidate.name.trim()) {
       setAccountNotice(t.accessMissingNameEmail);
+      return;
+    }
+    if (!candidate.email.trim()) {
+      setAccountNotice(language === "fr" ? "Email requis pour creer un compte utilisateur." : "Email is required to create a user account.");
       return;
     }
     const code = normalizeVoucher(candidate.voucher);
     const voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used");
     if (!voucher || !candidate.password.trim()) {
       setAccountNotice(t.voucherUnknown);
+      return;
+    }
+    if (voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== normalizeEmail(candidate.email)) {
+      setAccountNotice(language === "fr" ? "Ce voucher est attribue a un autre email." : "This voucher is assigned to another email.");
       return;
     }
     const account: UserAccount = {
@@ -654,7 +712,7 @@ export default function Home() {
       account,
       ...userAccounts.filter((user) =>
         account.email
-          ? user.email.toLowerCase() !== account.email.toLowerCase()
+          ? normalizeEmail(user.email) !== normalizeEmail(account.email)
           : normalizeVoucher(user.voucherCode) !== normalizeVoucher(account.voucherCode),
       ),
     ];
@@ -669,6 +727,7 @@ export default function Home() {
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher.code });
     setAccountNotice(`${t.accountCreated}: ${account.email}`);
+    await postToAppsScript("saveUserAccount", { user: account, voucher: nextVouchers.find((item) => item.code === voucher.code) });
   }
 
   function startExam(lot: ExamLot) {
@@ -691,17 +750,7 @@ export default function Home() {
   }
 
   async function syncAttempt(attempt: Attempt) {
-    if (!settings.appsScriptUrl) return;
-    try {
-      await fetch(settings.appsScriptUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "saveAttempt", attempt }),
-      });
-    } catch {
-      // Local demo stays usable without a configured Apps Script endpoint.
-    }
+    await postToAppsScript("saveAttempt", { attempt });
   }
 
   function submitAttempt(status: Attempt["status"]) {
@@ -901,7 +950,7 @@ export default function Home() {
               <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
             </div>
             {accountNotice && <p className="helper-note">{accountNotice}</p>}
-            {candidate.hasAccount && candidate.voucher && !canUseAccount() && <p className="error">{t.voucherUnknown}</p>}
+            {candidate.hasAccount && candidate.email && candidate.password && !canUseAccount() && <p className="error">{t.loginUnknown}</p>}
           </div>
           </section>
         </>
@@ -1008,7 +1057,7 @@ export default function Home() {
                   <Metric label={t.attemptsLabel} value={String(attempts.length)} />
                   <Metric label={t.average} value={`${Math.round(attempts.reduce((sum, item) => sum + item.percent, 0) / Math.max(1, attempts.length))}%`} />
                   <Metric label={t.tests} value={`${lots.length} standards + import`} />
-                  <Metric label="Sync" value={new Date().toISOString()} />
+                  <Metric label={t.syncStatus} value={syncStatus || "-"} />
                 </div>
                 <div className="actions">
                   <button onClick={exportCsv}>⇩ {t.exportCsv}</button>
@@ -1045,12 +1094,13 @@ export default function Home() {
                       <option>Formateur</option>
                     </select>
                   </label>
-                  <label>{t.assignedTo}
-                    <input value={voucherForm.assignedTo} onChange={(event) => setVoucherForm({ ...voucherForm, assignedTo: event.target.value })} placeholder="nom ou email" />
+                  <label>{t.assignedEmails}
+                    <textarea value={voucherForm.assignedTo} onChange={(event) => setVoucherForm({ ...voucherForm, assignedTo: event.target.value })} placeholder="email1@example.com&#10;email2@example.com" />
+                    <span className="field-help">{t.assignedEmailsHelp}</span>
                   </label>
                 </div>
                 <div className="actions">
-                  <button className="primary" onClick={generateVoucher}>＋ {t.generateVoucher}</button>
+                  <button className="primary" onClick={generateVoucher}>＋ {t.generateVouchers}</button>
                   <button onClick={createUserAccount}>✓ {t.createUserAccount}</button>
                 </div>
                 {accountNotice && <p className="helper-note">{accountNotice}</p>}
