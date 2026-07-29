@@ -60,7 +60,13 @@ Depot cible prevu:
 https://github.com/Mayloshi/pmi-drc-kmaj-exam-platform
 ```
 
-Si le depot n'existe pas encore, le creer dans le compte GitHub `Mayloshi`, puis pousser ce dossier local.
+URL publique GitHub Pages:
+
+```text
+https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/
+```
+
+Le workflow `.github/workflows/github-pages.yml` publie la version statique a chaque push sur `main`.
 
 ## Configuration formateur
 
