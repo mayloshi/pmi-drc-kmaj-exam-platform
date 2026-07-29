@@ -1,6 +1,6 @@
 {
   "name": "pmi-drc-kmaj-exam-platform",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "vinext build",
+    "release:prepare": "node scripts/bump-release.mjs",
     "pages:build": "vite build --config github-pages/vite.config.ts",
+    "pages:release": "pnpm release:prepare && pnpm pages:build",
     "start": "vinext start",
     "test": "vinext build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",

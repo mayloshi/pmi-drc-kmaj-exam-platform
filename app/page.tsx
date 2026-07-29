@@ -62,19 +62,53 @@ type Attempt = {
   remainingSeconds: number;
 };
 
-const VERSION = "v0.1.0";
-const UPDATED_AT = "2026-07-22";
+type VoucherRecord = {
+  code: string;
+  role: string;
+  status: "available" | "assigned" | "used";
+  assignedTo: string;
+  usedBy: string;
+  createdAt: string;
+  usedAt: string;
+};
+
+type UserAccount = {
+  name: string;
+  email: string;
+  organization: string;
+  cohort: string;
+  role: string;
+  voucherCode: string;
+  password: string;
+  defaultLanguage: Language;
+  createdAt: string;
+};
+
+const VERSION = "v0.1.1";
+const UPDATED_AT = "2026-07-29";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
 const STORAGE_CANDIDATE = "pmi-drc-kmaj-candidate";
 const STORAGE_SETTINGS = "pmi-drc-kmaj-settings";
+const STORAGE_VOUCHERS = "pmi-drc-kmaj-vouchers";
+const STORAGE_USERS = "pmi-drc-kmaj-users";
+const DEFAULT_SETTINGS = { appsScriptUrl: "", sheetName: "PMP Prep / DATABASE", trainerAccount: "admin@pmi-drcongo.org" };
 
-const vouchers = [
-  { code: "PMIRDC-ACTIF-2026", role: "Volontaire actif", used: false },
-  { code: "KMAJ-CENTRE-2026", role: "Candidat centre", used: false },
-  { code: "MEMBRE-PMI-2026", role: "Membre effectif", used: false },
+const seedVouchers: VoucherRecord[] = [
+  { code: "PMIRDC-ACTIF-2026", role: "Volontaire actif", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
+  { code: "KMAJ-CENTRE-2026", role: "Candidat centre", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
+  { code: "MEMBRE-PMI-2026", role: "Membre effectif", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
 ];
+
+const GITHUB_PAGES_BASE = "/pmi-drc-kmaj-exam-platform";
+
+function assetPath(path: string) {
+  if (typeof window !== "undefined" && window.location.pathname.startsWith(GITHUB_PAGES_BASE)) {
+    return `${GITHUB_PAGES_BASE}${path}`;
+  }
+  return path;
+}
 
 const CAPM_ECO = {
   fundamentals: {
@@ -201,6 +235,7 @@ const copy = {
     emailResults: "Je souhaite recevoir mes résultats par email.",
     seeLots: "Voir les lots",
     clear: "Annuler",
+    accessMissingNameEmail: "Indiquez le nom et l'adresse email, ou connectez-vous avec un compte voucher valide.",
     accessRequired: "Accès requis : nom + email, ou compte avec voucher reconnu et mot de passe.",
     platformStructure: "Structure de la plateforme",
     selectedType: "Type choisi",
@@ -225,6 +260,15 @@ const copy = {
     trainerPassword: "Mot de passe formateur",
     enter: "Entrer",
     trainerDashboard: "Dashboard formateur",
+    accountManagement: "Vouchers et comptes utilisateur",
+    voucherRole: "Profil du voucher",
+    assignedTo: "Attribue a",
+    generateVoucher: "Generer un voucher",
+    createUserAccount: "Creer un compte utilisateur",
+    generatedVouchers: "Vouchers generes",
+    userAccounts: "Comptes utilisateur",
+    accountCreated: "Compte cree avec voucher",
+    copyVoucher: "Copier le voucher",
     attemptsLabel: "Tentatives",
     average: "Moyenne",
     tests: "Tests",
@@ -291,6 +335,7 @@ const copy = {
     emailResults: "I would like to receive my results by email.",
     seeLots: "See exam lots",
     clear: "Cancel",
+    accessMissingNameEmail: "Enter name and email address, or sign in with a valid voucher account.",
     accessRequired: "Required access: name + email, or a valid voucher account with password.",
     platformStructure: "Platform structure",
     selectedType: "Selected type",
@@ -315,6 +360,15 @@ const copy = {
     trainerPassword: "Trainer password",
     enter: "Enter",
     trainerDashboard: "Trainer dashboard",
+    accountManagement: "Vouchers and user accounts",
+    voucherRole: "Voucher profile",
+    assignedTo: "Assigned to",
+    generateVoucher: "Generate voucher",
+    createUserAccount: "Create user account",
+    generatedVouchers: "Generated vouchers",
+    userAccounts: "User accounts",
+    accountCreated: "Account created with voucher",
+    copyVoucher: "Copy voucher",
     attemptsLabel: "Attempts",
     average: "Average",
     tests: "Tests",
@@ -437,28 +491,23 @@ function initialCandidate(): Candidate {
 }
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>("fr");
+  const [candidate, setCandidate] = useState<Candidate>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()));
+  const [language, setLanguage] = useState<Language>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()).language ?? "fr");
   const [view, setView] = useState<"home" | "select" | "exam" | "results" | "trainer">("home");
-  const [candidate, setCandidate] = useState<Candidate>(initialCandidate);
   const [selectedLotId, setSelectedLotId] = useState(capmLot1.id);
   const [answers, setAnswers] = useState<Record<string, number[]>>({});
   const [highlighted, setHighlighted] = useState<string[]>([]);
   const [remainingSeconds, setRemainingSeconds] = useState(durationFor(capmLot1.questionCount));
-  const [attempts, setAttempts] = useState<Attempt[]>([]);
+  const [attempts, setAttempts] = useState<Attempt[]>(() => loadJson<Attempt[]>(STORAGE_ATTEMPTS, []));
   const [activeAttempt, setActiveAttempt] = useState<Attempt | null>(null);
   const [trainerPassword, setTrainerPassword] = useState("");
   const [trainerUnlocked, setTrainerUnlocked] = useState(false);
-  const [settings, setSettings] = useState({ appsScriptUrl: "", sheetName: "PMP Prep / DATABASE", trainerAccount: "admin@pmi-drcongo.org" });
-
-  useEffect(() => {
-    const storedCandidate = loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate());
-    const storedAttempts = loadJson<Attempt[]>(STORAGE_ATTEMPTS, []);
-    const storedSettings = loadJson(STORAGE_SETTINGS, settings);
-    setCandidate(storedCandidate);
-    setLanguage(storedCandidate.language ?? "fr");
-    setAttempts(storedAttempts);
-    setSettings(storedSettings);
-  }, []);
+  const [settings, setSettings] = useState(() => loadJson(STORAGE_SETTINGS, DEFAULT_SETTINGS));
+  const [voucherRecords, setVoucherRecords] = useState<VoucherRecord[]>(() => loadJson<VoucherRecord[]>(STORAGE_VOUCHERS, seedVouchers));
+  const [userAccounts, setUserAccounts] = useState<UserAccount[]>(() => loadJson<UserAccount[]>(STORAGE_USERS, []));
+  const [voucherForm, setVoucherForm] = useState({ role: "Volontaire actif", assignedTo: "" });
+  const [accountNotice, setAccountNotice] = useState("");
+  const [accessNotice, setAccessNotice] = useState("");
 
   const selectedLot = useMemo(() => lots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [selectedLotId]);
   const t = copy[language];
@@ -490,19 +539,85 @@ export default function Home() {
     const next = { ...candidate, ...patch };
     setCandidate(next);
     setLanguage(next.language);
+    setAccessNotice("");
     saveJson(STORAGE_CANDIDATE, next);
   }
 
   function canUseAccount() {
     if (!candidate.hasAccount) return true;
-    return vouchers.some((voucher) => voucher.code === candidate.voucher.trim());
+    const code = candidate.voucher.trim();
+    const account = userAccounts.find((user) => user.voucherCode === code);
+    if (account) {
+      return account.password === candidate.password && (!candidate.email || account.email.toLowerCase() === candidate.email.toLowerCase());
+    }
+    return voucherRecords.some((voucher) => voucher.code === code);
   }
 
   function startSelect() {
-    if (!canAccessLots) return;
-    if (candidate.hasAccount && (!candidate.password || !canUseAccount())) return;
+    if (!canAccessLots) {
+      setAccessNotice(t.accessMissingNameEmail);
+      return;
+    }
+    if (candidate.hasAccount && (!candidate.password || !canUseAccount())) {
+      setAccessNotice(t.voucherUnknown);
+      return;
+    }
     saveJson(STORAGE_CANDIDATE, candidate);
     setView("select");
+  }
+
+  function generateVoucher() {
+    const prefix = voucherForm.role.toUpperCase().replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 12) || "VOUCHER";
+    const code = `${prefix}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+    const next = [
+      {
+        code,
+        role: voucherForm.role,
+        status: voucherForm.assignedTo ? "assigned" as const : "available" as const,
+        assignedTo: voucherForm.assignedTo,
+        usedBy: "",
+        createdAt: new Date().toISOString(),
+        usedAt: "",
+      },
+      ...voucherRecords,
+    ];
+    setVoucherRecords(next);
+    saveJson(STORAGE_VOUCHERS, next);
+    setAccountNotice(`${t.copyVoucher}: ${code}`);
+  }
+
+  function createUserAccount() {
+    if (!candidate.name.trim() || !candidate.email.trim()) {
+      setAccountNotice(t.accessMissingNameEmail);
+      return;
+    }
+    const voucher = voucherRecords.find((item) => item.code === candidate.voucher.trim());
+    if (!voucher || !candidate.password.trim()) {
+      setAccountNotice(t.voucherUnknown);
+      return;
+    }
+    const account: UserAccount = {
+      name: candidate.name.trim(),
+      email: candidate.email.trim(),
+      organization: candidate.organization.trim(),
+      cohort: candidate.cohort.trim(),
+      role: voucher.role,
+      voucherCode: voucher.code,
+      password: candidate.password,
+      defaultLanguage: candidate.language,
+      createdAt: new Date().toISOString(),
+    };
+    const nextUsers = [account, ...userAccounts.filter((user) => user.email.toLowerCase() !== account.email.toLowerCase())];
+    const nextVouchers = voucherRecords.map((item) =>
+      item.code === voucher.code
+        ? { ...item, status: "used" as const, usedBy: account.email, usedAt: account.createdAt }
+        : item,
+    );
+    setUserAccounts(nextUsers);
+    setVoucherRecords(nextVouchers);
+    saveJson(STORAGE_USERS, nextUsers);
+    saveJson(STORAGE_VOUCHERS, nextVouchers);
+    setAccountNotice(`${t.accountCreated}: ${account.email}`);
   }
 
   function startExam(lot: ExamLot) {
@@ -625,14 +740,14 @@ export default function Home() {
       <header className="hero-shell">
         <div className="hero-top">
           <div className="brand-card">
-            <img src="/logo-pmi-drc.png" alt="Logo Chapitre PMI RDC" />
+            <img src={assetPath("/logo-pmi-drc.png")} alt="Logo Chapitre PMI RDC" />
             <div>
               <strong>PMI DRC Chapter</strong>
               <span>{t.chapterName}</span>
             </div>
           </div>
           <div className="brand-card">
-            <img src="/logo-kmaj.jpg" alt="Logo Centre K-Majuscule" />
+            <img src={assetPath("/logo-kmaj.jpg")} alt="Logo Centre K-Majuscule" />
             <div>
               <strong>K Majuscule</strong>
               <span>{t.centerName}</span>
@@ -654,19 +769,19 @@ export default function Home() {
 
       <section className="version-band">
         <a href="https://www.pmi.org/membership" target="_blank">
-          <img src="/logo-pmi-global.png" alt="" />
+          <img src={assetPath("/logo-pmi-global.png")} alt="" />
           {t.pmiMembership}
         </a>
         <a href="https://www.pmi.org/certifications" target="_blank">
-          <img src="/logo-pmi-global.png" alt="" />
+          <img src={assetPath("/logo-pmi-global.png")} alt="" />
           {t.pmiExam}
         </a>
         <a href="https://pmi-drcongo.org" target="_blank">
-          <img src="/logo-pmi-drc.png" alt="" />
+          <img src={assetPath("/logo-pmi-drc.png")} alt="" />
           {t.chapterLink}
         </a>
         <a href="https://www.kmajuscule.com" target="_blank">
-          <img src="/logo-kmaj.jpg" alt="" />
+          <img src={assetPath("/logo-kmaj.jpg")} alt="" />
           {t.centerLink}
         </a>
         <button onClick={() => setView("trainer")}>🔐 {t.trainer}</button>
@@ -702,13 +817,11 @@ export default function Home() {
             </div>
             <label className="check-row soft-check"><input type="checkbox" checked={candidate.sendEmail} onChange={(event) => updateCandidate({ sendEmail: event.target.checked })} /> {t.emailResults}</label>
             <div className="actions">
-              <button className="primary" onClick={startSelect} disabled={!canAccessLots}>▶ {t.seeLots}</button>
+              <button className="primary" onClick={startSelect}>▶ {t.seeLots}</button>
               <button onClick={() => setCandidate(initialCandidate())}>× {t.clear}</button>
               <button onClick={() => setView("trainer")}>🔐 {t.trainerShort}</button>
             </div>
-            {!canAccessLots && (
-              <p className="helper-note">{t.accessRequired}</p>
-            )}
+            <p className="helper-note">{accessNotice || (!canAccessLots ? t.accessRequired : "")}</p>
           </div>
 
           <div className="panel structure-panel">
@@ -727,7 +840,9 @@ export default function Home() {
                 <label>{t.password}<input type="password" value={candidate.password} onChange={(event) => updateCandidate({ password: event.target.value })} /></label>
               </div>
               <button onClick={() => alert(language === "fr" ? "Réinitialisation prévue via Apps Script : email avec lien sécurisé." : "Reset planned through Apps Script: email with secure link.")}>↻ {t.resetPassword}</button>
+              <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
             </div>
+            {accountNotice && <p className="helper-note">{accountNotice}</p>}
             {candidate.hasAccount && candidate.voucher && !canUseAccount() && <p className="error">{t.voucherUnknown}</p>}
           </div>
           </section>
@@ -859,6 +974,71 @@ export default function Home() {
                   }} /></label>
                 </div>
                 <p className="muted">Feuilles prévues : Candidates, TrainerAccounts, Vouchers, QuestionBank, Attempts, AttemptAnswers, SummaryReports, EmailQueue.</p>
+              </div>
+
+              <div className="panel wide">
+                <h2>{t.accountManagement}</h2>
+                <div className="form-grid">
+                  <label>{t.voucherRole}
+                    <select value={voucherForm.role} onChange={(event) => setVoucherForm({ ...voucherForm, role: event.target.value })}>
+                      <option>Volontaire actif</option>
+                      <option>Membre effectif</option>
+                      <option>Candidat centre</option>
+                      <option>Formateur</option>
+                    </select>
+                  </label>
+                  <label>{t.assignedTo}
+                    <input value={voucherForm.assignedTo} onChange={(event) => setVoucherForm({ ...voucherForm, assignedTo: event.target.value })} placeholder="nom ou email" />
+                  </label>
+                </div>
+                <div className="actions">
+                  <button className="primary" onClick={generateVoucher}>＋ {t.generateVoucher}</button>
+                  <button onClick={createUserAccount}>✓ {t.createUserAccount}</button>
+                </div>
+                {accountNotice && <p className="helper-note">{accountNotice}</p>}
+                <div className="account-admin-grid">
+                  <div>
+                    <h3>{t.generatedVouchers}</h3>
+                    <div className="table-wrap">
+                      <table>
+                        <thead><tr><th>Code</th><th>{t.voucherRole}</th><th>{t.assignedTo}</th><th>{t.status}</th><th>{t.date}</th></tr></thead>
+                        <tbody>
+                          {voucherRecords.map((voucher) => (
+                            <tr key={voucher.code}>
+                              <td><strong>{voucher.code}</strong></td>
+                              <td>{voucher.role}</td>
+                              <td>{voucher.assignedTo || "-"}</td>
+                              <td>{voucher.status}</td>
+                              <td>{voucher.createdAt.slice(0, 10)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>{t.userAccounts}</h3>
+                    <div className="table-wrap">
+                      <table>
+                        <thead><tr><th>{t.participant}</th><th>Email</th><th>{t.voucher}</th><th>{t.defaultLanguage}</th><th>{t.date}</th></tr></thead>
+                        <tbody>
+                          {userAccounts.map((user) => (
+                            <tr key={user.email}>
+                              <td>{user.name}</td>
+                              <td>{user.email}</td>
+                              <td>{user.voucherCode}</td>
+                              <td>{user.defaultLanguage.toUpperCase()}</td>
+                              <td>{user.createdAt.slice(0, 10)}</td>
+                            </tr>
+                          ))}
+                          {!userAccounts.length && (
+                            <tr><td colSpan={5}>-</td></tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="panel wide">

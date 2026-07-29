@@ -727,6 +727,17 @@ th {
   margin-top: 16px;
 }
 
+.account-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.account-admin-grid h3 {
+  margin-bottom: 12px;
+}
+
 @media (max-width: 980px) {
   main {
     padding: 14px 14px 116px;
@@ -741,7 +752,8 @@ th {
   .metric-grid,
   .lot-grid,
   .catalog-grid,
-  .participant-layout {
+  .participant-layout,
+  .account-admin-grid {
     grid-template-columns: 1fr;
   }
 
