@@ -8,7 +8,8 @@ test("exam platform source includes the requested core capabilities", async () =
   assert.match(page, /Centre K-Majuscule/);
   assert.match(page, /capmLot1Data/);
   assert.match(page, /TRAINER_PASSWORD = "221008"/);
-  assert.match(page, /Google Sheets/);
+  assert.match(page, /Supabase/);
+  assert.match(page, /supabaseSaveAttempt/);
   assert.match(page, /PMIRDC-ACTIF-2026/);
   assert.match(page, /durationFor/);
   assert.match(page, /Need improvement/);

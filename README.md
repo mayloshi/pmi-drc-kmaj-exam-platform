@@ -6,13 +6,36 @@ Plateforme bilingue d'examens blancs CAPM, PMP et gestion de projet general pour
 
 - Frontend: Vinext / React
 - Lot charge: CAPM 2026 - Lot 1 - Questions 1 a 50, en francais et en anglais
-- Stockage local temporaire: `localStorage` quand aucun endpoint Apps Script n'est configure
-- Base Google Sheets cible: `PMP Prep/DATABASE/PMI RDC K-Majuscule Exam Platform Database`
+- Stockage principal recommande: Supabase
+- Stockage local temporaire: `localStorage` quand Supabase n'est pas configure
+- Ancien stockage Google Sheets: conserve comme fallback Apps Script
 - Base initiale: vide, avec onglets et en-tetes uniquement
+
+## Base de donnees Supabase
+
+1. Creer un projet Supabase.
+2. Dans Authentication > Providers > Email, desactiver temporairement la confirmation email pour le prototype.
+3. Ouvrir SQL Editor.
+4. Coller et executer `supabase/schema.sql`.
+5. Dans le dashboard formateur de l'application, renseigner:
+   - `Supabase URL`
+   - `Supabase anon key`
+   - `Stockage principal`: `Supabase`
+
+Tables creees:
+
+- `profiles`
+- `vouchers`
+- `exam_lots`
+- `question_bank`
+- `attempts`
+- `attempt_answers`
+
+La base Supabase est initialement vide. Les vouchers seront crees depuis l'interface formateur.
 
 ## Base de donnees Google Sheets
 
-La base est creee dans Google Drive:
+Google Sheets reste disponible comme solution de secours. La base etait creee dans Google Drive:
 
 `PMP Prep/DATABASE/PMI RDC K-Majuscule Exam Platform Database`
 

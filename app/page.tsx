@@ -73,6 +73,7 @@ type VoucherRecord = {
 };
 
 type UserAccount = {
+  id?: string;
   name: string;
   email: string;
   organization: string;
@@ -85,8 +86,23 @@ type UserAccount = {
   createdAt: string;
 };
 
-const VERSION = "v0.1.4";
-const UPDATED_AT = "2026-07-30";
+type AppSettings = {
+  storageProvider: "supabase" | "google";
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+  appsScriptUrl: string;
+  sheetName: string;
+  trainerAccount: string;
+};
+
+type SupabaseAuthSession = {
+  access_token: string;
+  refresh_token?: string;
+  user?: { id: string; email?: string };
+};
+
+const VERSION = "v0.2.0";
+const UPDATED_AT = "2026-08-07";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -94,7 +110,15 @@ const STORAGE_CANDIDATE = "pmi-drc-kmaj-candidate";
 const STORAGE_SETTINGS = "pmi-drc-kmaj-settings";
 const STORAGE_VOUCHERS = "pmi-drc-kmaj-vouchers";
 const STORAGE_USERS = "pmi-drc-kmaj-users";
-const DEFAULT_SETTINGS = { appsScriptUrl: "", sheetName: "PMP Prep / DATABASE", trainerAccount: "admin@pmi-drcongo.org" };
+const STORAGE_SUPABASE_SESSION = "pmi-drc-kmaj-supabase-session";
+const DEFAULT_SETTINGS: AppSettings = {
+  storageProvider: "supabase",
+  supabaseUrl: "",
+  supabaseAnonKey: "",
+  appsScriptUrl: "",
+  sheetName: "PMP Prep / DATABASE",
+  trainerAccount: "admin@pmi-drcongo.org",
+};
 
 const seedVouchers: VoucherRecord[] = [
   { code: "PMIRDC-ACTIF-2026", role: "Volontaire actif", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
@@ -148,7 +172,7 @@ const APPROACHES = {
 const optionLetters = ["A", "B", "C", "D", "E", "F"];
 
 const capmLot1 = capmLot1Data as ExamLot;
-const lots: ExamLot[] = [
+const seedLots: ExamLot[] = [
   capmLot1,
   {
     id: "pmp-placeholder",
@@ -183,8 +207,8 @@ function lotTone(lot: ExamLot, index = 0) {
 function lotDescription(lot: ExamLot, language: Language) {
   if (!lot.questions.length) {
     return language === "fr"
-      ? "Lot prêt à recevoir les questions depuis Google Sheets."
-      : "Lot ready to receive questions from Google Sheets.";
+      ? "Lot prêt à recevoir les questions depuis Supabase."
+      : "Lot ready to receive questions from Supabase.";
   }
   if (lot.examType === "CAPM") {
     return language === "fr"
@@ -258,7 +282,7 @@ const copy = {
     chapterName: "Chapitre PMI RDC",
     centerName: "Centre K-Majuscule",
     generalPm: "Gestion de projet général",
-    trainerAccess: "Accès protégé. Les comptes formateurs sont prévus pour la version Google Sheets.",
+    trainerAccess: "Accès protégé. Les données formateur sont prévues pour Supabase.",
     trainerPassword: "Mot de passe formateur",
     enter: "Entrer",
     trainerDashboard: "Dashboard formateur",
@@ -363,7 +387,7 @@ const copy = {
     chapterName: "PMI DRC Chapter",
     centerName: "K-Majuscule Center",
     generalPm: "General project management",
-    trainerAccess: "Protected access. Trainer accounts are planned for the Google Sheets version.",
+    trainerAccess: "Protected access. Trainer data is designed for Supabase.",
     trainerPassword: "Trainer password",
     enter: "Enter",
     trainerDashboard: "Trainer dashboard",
@@ -501,34 +525,215 @@ function parseEmailList(value: string) {
 function normalizeVoucherRecord(row: Record<string, string>): VoucherRecord {
   const status = row.status === "used" || row.status === "assigned" ? row.status : "available";
   return {
-    code: row.code || row.voucherCode || "",
+    code: row.code || row.voucherCode || row.voucher_code || "",
     role: row.role || "",
     status,
-    assignedTo: row.assignedTo || "",
-    usedBy: row.usedBy || "",
-    createdAt: row.createdAt || "",
-    usedAt: row.usedAt || "",
+    assignedTo: row.assignedTo || row.assigned_to || "",
+    usedBy: row.usedBy || row.used_by || "",
+    createdAt: row.createdAt || row.created_at || "",
+    usedAt: row.usedAt || row.used_at || "",
   };
 }
 
 function normalizeUserAccount(row: Record<string, string>): UserAccount {
   return {
+    id: row.id || row.userId || row.user_id || "",
     name: row.name || "",
     email: row.email || "",
     organization: row.organization || "",
     cohort: row.cohort || "",
     role: row.role || "",
-    voucherCode: row.voucherCode || "",
+    voucherCode: row.voucherCode || row.voucher_code || "",
     password: row.password || "",
-    passwordHash: row.passwordHash || "",
-    defaultLanguage: row.defaultLanguage === "en" ? "en" : "fr",
-    createdAt: row.createdAt || "",
+    passwordHash: row.passwordHash || row.password_hash || "",
+    defaultLanguage: row.defaultLanguage === "en" || row.default_language === "en" ? "en" : "fr",
+    createdAt: row.createdAt || row.created_at || "",
   };
 }
 
 async function sha256(value: string) {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function cleanSupabaseUrl(url: string) {
+  return url.trim().replace(/\/+$/, "");
+}
+
+function isSupabaseConfigured(settings: AppSettings) {
+  return Boolean(cleanSupabaseUrl(settings.supabaseUrl) && settings.supabaseAnonKey.trim());
+}
+
+function supabaseHeaders(settings: AppSettings, token?: string, prefer?: string) {
+  const headers: Record<string, string> = {
+    apikey: settings.supabaseAnonKey.trim(),
+    Authorization: `Bearer ${token || settings.supabaseAnonKey.trim()}`,
+    "Content-Type": "application/json",
+  };
+  if (prefer) headers.Prefer = prefer;
+  return headers;
+}
+
+async function parseSupabaseResponse<T>(response: Response): Promise<T> {
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(text || response.statusText);
+  }
+  return text ? JSON.parse(text) as T : ([] as T);
+}
+
+function voucherToSupabase(voucher: VoucherRecord) {
+  return {
+    code: voucher.code,
+    role: voucher.role,
+    status: voucher.status,
+    assigned_to: voucher.assignedTo,
+    used_by: voucher.usedBy,
+    created_at: voucher.createdAt,
+    used_at: voucher.usedAt || null,
+  };
+}
+
+function profileToSupabase(user: UserAccount) {
+  return {
+    id: user.id,
+    name: user.name,
+    email: normalizeEmail(user.email),
+    organization: user.organization,
+    cohort: user.cohort,
+    role: user.role,
+    voucher_code: user.voucherCode,
+    default_language: user.defaultLanguage,
+    created_at: user.createdAt,
+  };
+}
+
+function attemptToSupabase(attempt: Attempt) {
+  return {
+    id: attempt.id,
+    candidate_name: attempt.candidate.name,
+    email: normalizeEmail(attempt.candidate.email),
+    organization: attempt.candidate.organization,
+    cohort: attempt.candidate.cohort,
+    has_account: attempt.candidate.hasAccount,
+    exam_type: attempt.candidate.examType,
+    lot_id: attempt.lotId,
+    lot_title: attempt.lotTitle,
+    started_at: attempt.startedAt,
+    submitted_at: attempt.submittedAt || null,
+    status: attempt.status,
+    score: attempt.score,
+    total: attempt.total,
+    percent: attempt.percent,
+    remaining_seconds: attempt.remainingSeconds,
+  };
+}
+
+function attemptAnswerRows(attempt: Attempt, lot: ExamLot) {
+  return lot.questions.map((question) => ({
+    attempt_id: attempt.id,
+    question_id: question.id,
+    answer_indexes: attempt.answers[question.id] || [],
+    is_correct: sameAnswer(attempt.answers[question.id] || [], question.correct),
+    highlighted: attempt.highlighted.includes(question.id),
+  }));
+}
+
+function normalizeSupabaseAttempt(row: Record<string, string | number | boolean | null>, answerRows: Record<string, unknown>[]): Attempt {
+  const attemptAnswers = answerRows.filter((answer) => answer.attempt_id === row.id);
+  const answers = Object.fromEntries(attemptAnswers.map((answer) => [
+    String(answer.question_id),
+    Array.isArray(answer.answer_indexes) ? answer.answer_indexes as number[] : [],
+  ]));
+  const highlighted = attemptAnswers
+    .filter((answer) => Boolean(answer.highlighted))
+    .map((answer) => String(answer.question_id));
+
+  return {
+    id: String(row.id),
+    candidate: {
+      name: String(row.candidate_name || ""),
+      email: String(row.email || ""),
+      organization: String(row.organization || ""),
+      cohort: String(row.cohort || ""),
+      examType: (row.exam_type === "PMP" || row.exam_type === "Gestion de projet" ? row.exam_type : "CAPM") as ExamType,
+      sendEmail: false,
+      hasAccount: Boolean(row.has_account),
+      voucher: "",
+      password: "",
+      language: "fr",
+    },
+    lotId: String(row.lot_id || ""),
+    lotTitle: String(row.lot_title || ""),
+    startedAt: String(row.started_at || ""),
+    submittedAt: row.submitted_at ? String(row.submitted_at) : undefined,
+    status: row.status === "saved" || row.status === "cancelled" ? row.status : "submitted",
+    answers,
+    highlighted,
+    score: Number(row.score || 0),
+    total: Number(row.total || 0),
+    percent: Number(row.percent || 0),
+    remainingSeconds: Number(row.remaining_seconds || 0),
+  };
+}
+
+function arrayFromJson(value: unknown): string[] {
+  if (Array.isArray(value)) return value.map(String);
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed.map(String) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function numberArrayFromJson(value: unknown): number[] {
+  if (Array.isArray(value)) return value.map(Number);
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed.map(Number) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function normalizeSupabaseLots(lotRows: Record<string, unknown>[], questionRows: Record<string, unknown>[]): ExamLot[] {
+  return lotRows.map((lot) => {
+    const questions = questionRows
+      .filter((question) => question.lot_id === lot.id)
+      .map((question): Question => {
+        const optionsFr = arrayFromJson(question.options_fr);
+        const optionsEn = arrayFromJson(question.options_en);
+        return {
+          id: String(question.id),
+          type: question.question_type === "multiple" ? "multiple" : "single",
+          prompt: { fr: String(question.prompt_fr || ""), en: String(question.prompt_en || "") },
+          options: optionsFr.map((option, index) => ({ fr: option, en: optionsEn[index] || option })),
+          correct: numberArrayFromJson(question.correct_indexes),
+          explanation: { fr: String(question.explanation_fr || ""), en: String(question.explanation_en || "") },
+          eco: { fr: String(question.eco_fr || ""), en: String(question.eco_en || "") },
+          performanceDomain: {
+            fr: String(question.performance_domain_fr || ""),
+            en: String(question.performance_domain_en || ""),
+          },
+          approach: { fr: String(question.approach_fr || ""), en: String(question.approach_en || "") },
+        };
+      });
+    return {
+      id: String(lot.id),
+      examType: (lot.exam_type === "PMP" || lot.exam_type === "Gestion de projet" ? lot.exam_type : "CAPM") as ExamType,
+      title: { fr: String(lot.title_fr || ""), en: String(lot.title_en || "") },
+      source: String(lot.source || "Supabase"),
+      questionCount: Number(lot.question_count || questions.length),
+      questions,
+    };
+  });
 }
 
 function candidateKey(candidate: Candidate) {
@@ -585,6 +790,7 @@ export default function Home() {
   const [candidate, setCandidate] = useState<Candidate>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()));
   const [language, setLanguage] = useState<Language>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()).language ?? "fr");
   const [view, setView] = useState<"home" | "select" | "exam" | "results" | "trainer">("home");
+  const [examLots, setExamLots] = useState<ExamLot[]>(seedLots);
   const [selectedLotId, setSelectedLotId] = useState(capmLot1.id);
   const [answers, setAnswers] = useState<Record<string, number[]>>({});
   const [highlighted, setHighlighted] = useState<string[]>([]);
@@ -593,7 +799,8 @@ export default function Home() {
   const [activeAttempt, setActiveAttempt] = useState<Attempt | null>(null);
   const [trainerPassword, setTrainerPassword] = useState("");
   const [trainerUnlocked, setTrainerUnlocked] = useState(false);
-  const [settings, setSettings] = useState(() => loadJson(STORAGE_SETTINGS, DEFAULT_SETTINGS));
+  const [settings, setSettings] = useState<AppSettings>(() => ({ ...DEFAULT_SETTINGS, ...loadJson<Partial<AppSettings>>(STORAGE_SETTINGS, {}) }));
+  const [supabaseSession, setSupabaseSession] = useState<SupabaseAuthSession | null>(() => loadJson<SupabaseAuthSession | null>(STORAGE_SUPABASE_SESSION, null));
   const [voucherRecords, setVoucherRecords] = useState<VoucherRecord[]>(() => loadJson<VoucherRecord[]>(STORAGE_VOUCHERS, seedVouchers));
   const [userAccounts, setUserAccounts] = useState<UserAccount[]>(() => loadJson<UserAccount[]>(STORAGE_USERS, []));
   const [voucherForm, setVoucherForm] = useState({ role: "Volontaire actif", assignedTo: "" });
@@ -601,13 +808,13 @@ export default function Home() {
   const [accessNotice, setAccessNotice] = useState("");
   const [syncStatus, setSyncStatus] = useState("");
 
-  const selectedLot = useMemo(() => lots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [selectedLotId]);
+  const selectedLot = useMemo(() => examLots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [examLots, selectedLotId]);
   const t = copy[language];
   const progress = selectedLot.questions.length ? Object.keys(answers).filter((id) => answers[id]?.length).length : 0;
   const duration = durationFor(selectedLot.questionCount || selectedLot.questions.length || 15);
   const timePercent = duration ? remainingSeconds / duration : 1;
   const currentScore = scoreAttempt(selectedLot, answers);
-  const visibleLots = lots.filter((lot) => lot.examType === candidate.examType);
+  const visibleLots = examLots.filter((lot) => lot.examType === candidate.examType);
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
     Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
@@ -636,7 +843,135 @@ export default function Home() {
     saveJson(STORAGE_CANDIDATE, next);
   }
 
+  async function supabaseRequest<T>(path: string, options: { method?: string; body?: unknown; token?: string; prefer?: string } = {}) {
+    if (!isSupabaseConfigured(settings)) {
+      throw new Error(language === "fr" ? "Supabase n'est pas configure." : "Supabase is not configured.");
+    }
+    const response = await fetch(`${cleanSupabaseUrl(settings.supabaseUrl)}${path}`, {
+      method: options.method || "GET",
+      headers: supabaseHeaders(settings, options.token || supabaseSession?.access_token, options.prefer),
+      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+    });
+    return parseSupabaseResponse<T>(response);
+  }
+
+  async function supabaseAuth<T>(path: string, body: unknown) {
+    if (!isSupabaseConfigured(settings)) {
+      throw new Error(language === "fr" ? "Supabase n'est pas configure." : "Supabase is not configured.");
+    }
+    const response = await fetch(`${cleanSupabaseUrl(settings.supabaseUrl)}${path}`, {
+      method: "POST",
+      headers: supabaseHeaders(settings),
+      body: JSON.stringify(body),
+    });
+    return parseSupabaseResponse<T>(response);
+  }
+
+  async function supabaseSignIn(email: string, password: string) {
+    const session = await supabaseAuth<SupabaseAuthSession>("/auth/v1/token?grant_type=password", {
+      email: normalizeEmail(email),
+      password,
+    });
+    setSupabaseSession(session);
+    saveJson(STORAGE_SUPABASE_SESSION, session);
+    return session;
+  }
+
+  async function supabaseGetProfile(userId: string, token: string) {
+    const rows = await supabaseRequest<Record<string, string>[]>(
+      `/rest/v1/profiles?select=*&id=eq.${encodeURIComponent(userId)}&limit=1`,
+      { token },
+    );
+    return rows[0] ? normalizeUserAccount(rows[0]) : null;
+  }
+
+  async function supabaseSaveVouchers(vouchers: VoucherRecord[]) {
+    await supabaseRequest("/rest/v1/vouchers?on_conflict=code", {
+      method: "POST",
+      body: vouchers.map(voucherToSupabase),
+      prefer: "resolution=merge-duplicates,return=representation",
+    });
+  }
+
+  async function supabaseFindVoucher(code: string) {
+    const rows = await supabaseRequest<Record<string, string>[]>(
+      `/rest/v1/vouchers?select=*&code=eq.${encodeURIComponent(normalizeVoucher(code))}&limit=1`,
+    );
+    return rows[0] ? normalizeVoucherRecord(rows[0]) : null;
+  }
+
+  async function supabaseCreateUserAccount(account: UserAccount, voucher: VoucherRecord) {
+    const auth = await supabaseAuth<SupabaseAuthSession>("/auth/v1/signup", {
+      email: normalizeEmail(account.email),
+      password: account.password,
+      data: {
+        name: account.name,
+        organization: account.organization,
+        cohort: account.cohort,
+        role: account.role,
+        voucher_code: account.voucherCode,
+        default_language: account.defaultLanguage,
+      },
+    });
+    const session = auth.access_token ? auth : await supabaseSignIn(account.email, account.password);
+    const userId = session.user?.id;
+    if (!userId) throw new Error(language === "fr" ? "Compte cree, mais session Supabase introuvable." : "Account created, but Supabase session is missing.");
+
+    const savedAccount = { ...account, id: userId, password: "" };
+    await supabaseRequest("/rest/v1/profiles?on_conflict=id", {
+      method: "POST",
+      token: session.access_token,
+      body: [profileToSupabase(savedAccount)],
+      prefer: "resolution=merge-duplicates,return=representation",
+    });
+    await supabaseRequest(`/rest/v1/vouchers?code=eq.${encodeURIComponent(voucher.code)}`, {
+      method: "PATCH",
+      token: session.access_token,
+      body: {
+        status: "used",
+        used_by: normalizeEmail(account.email),
+        used_at: account.createdAt,
+      },
+      prefer: "return=representation",
+    });
+    setSupabaseSession(session);
+    saveJson(STORAGE_SUPABASE_SESSION, session);
+    return savedAccount;
+  }
+
+  async function supabaseSaveAttempt(attempt: Attempt) {
+    await supabaseRequest("/rest/v1/attempts?on_conflict=id", {
+      method: "POST",
+      body: [attemptToSupabase(attempt)],
+      prefer: "resolution=merge-duplicates,return=representation",
+    });
+    await supabaseRequest(`/rest/v1/attempt_answers?attempt_id=eq.${encodeURIComponent(attempt.id)}`, {
+      method: "DELETE",
+    });
+    await supabaseRequest("/rest/v1/attempt_answers", {
+      method: "POST",
+      body: attemptAnswerRows(attempt, selectedLot),
+      prefer: "return=representation",
+    });
+  }
+
   async function validateAccountLogin() {
+    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      const session = await supabaseSignIn(candidate.email, candidate.password);
+      const profile = session.user?.id ? await supabaseGetProfile(session.user.id, session.access_token) : null;
+      if (profile) return profile;
+      return {
+        name: candidate.name || session.user?.email || "",
+        email: session.user?.email || candidate.email,
+        organization: candidate.organization,
+        cohort: candidate.cohort,
+        role: "Candidat",
+        voucherCode: candidate.voucher,
+        password: "",
+        defaultLanguage: candidate.language,
+        createdAt: new Date().toISOString(),
+      };
+    }
     const email = normalizeEmail(candidate.email);
     const account = userAccounts.find((user) => normalizeEmail(user.email) === email);
     if (!account) return null;
@@ -653,7 +988,12 @@ export default function Home() {
       setAccessNotice(t.accessMissingNameEmail);
       return;
     }
-    const account = candidate.hasAccount ? await validateAccountLogin() : null;
+    let account: UserAccount | null = null;
+    try {
+      account = candidate.hasAccount ? await validateAccountLogin() : null;
+    } catch {
+      account = null;
+    }
     if (candidate.hasAccount && (!candidate.password || !account)) {
       setAccessNotice(t.loginUnknown);
       return;
@@ -724,6 +1064,29 @@ export default function Home() {
 
   async function refreshRemoteData() {
     try {
+      if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+        const [remoteVouchers, remoteUsers, remoteAttempts, remoteAnswers, remoteLots, remoteQuestions] = await Promise.all([
+          supabaseRequest<Record<string, string>[]>("/rest/v1/vouchers?select=*&order=created_at.desc"),
+          supabaseRequest<Record<string, string>[]>("/rest/v1/profiles?select=*&order=created_at.desc"),
+          supabaseRequest<Record<string, string | number | boolean | null>[]>("/rest/v1/attempts?select=*&order=started_at.desc"),
+          supabaseRequest<Record<string, unknown>[]>("/rest/v1/attempt_answers?select=*"),
+          supabaseRequest<Record<string, unknown>[]>("/rest/v1/exam_lots?select=*&active=eq.true&order=created_at.asc"),
+          supabaseRequest<Record<string, unknown>[]>("/rest/v1/question_bank?select=*&active=eq.true&order=created_at.asc"),
+        ]);
+        const nextVouchers = remoteVouchers.map(normalizeVoucherRecord).filter((voucher) => voucher.code);
+        const nextUsers = remoteUsers.map(normalizeUserAccount).filter((user) => user.email);
+        const nextAttempts = remoteAttempts.map((attempt) => normalizeSupabaseAttempt(attempt, remoteAnswers));
+        const nextLots = normalizeSupabaseLots(remoteLots, remoteQuestions);
+        setVoucherRecords(nextVouchers);
+        setUserAccounts(nextUsers);
+        setAttempts(nextAttempts);
+        if (nextLots.length) setExamLots(nextLots);
+        saveJson(STORAGE_VOUCHERS, nextVouchers);
+        saveJson(STORAGE_USERS, nextUsers);
+        saveJson(STORAGE_ATTEMPTS, nextAttempts);
+        setSyncStatus(`supabase read: ${new Date().toISOString()}`);
+        return;
+      }
       const [remoteVouchers, remoteUsers] = await Promise.all([
         loadFromAppsScript<Record<string, string>[]>("vouchers"),
         loadFromAppsScript<Record<string, string>[]>("userAccounts"),
@@ -762,7 +1125,16 @@ export default function Home() {
     setVoucherRecords(next);
     saveJson(STORAGE_VOUCHERS, next);
     setAccountNotice(`${t.copyVoucher}: ${created.map((voucher) => voucher.code).join(", ")}`);
-    await postToAppsScript("saveVouchers", { vouchers: created });
+    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      try {
+        await supabaseSaveVouchers(created);
+        setSyncStatus(`supabase saveVouchers: ${new Date().toISOString()}`);
+      } catch (error) {
+        setSyncStatus(`supabase saveVouchers: ${error instanceof Error ? error.message : "sync error"}`);
+      }
+    } else {
+      await postToAppsScript("saveVouchers", { vouchers: created });
+    }
   }
 
   async function createUserAccount() {
@@ -775,8 +1147,20 @@ export default function Home() {
       return;
     }
     const code = normalizeVoucher(candidate.voucher);
-    const voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used");
+    let voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used") || null;
+    if (!voucher && settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      try {
+        voucher = await supabaseFindVoucher(code);
+      } catch (error) {
+        setAccountNotice(`Supabase: ${error instanceof Error ? error.message : "sync error"}`);
+        return;
+      }
+    }
     if (!voucher || !candidate.password.trim()) {
+      setAccountNotice(t.voucherUnknown);
+      return;
+    }
+    if (voucher.status === "used") {
       setAccountNotice(t.voucherUnknown);
       return;
     }
@@ -796,8 +1180,17 @@ export default function Home() {
       defaultLanguage: candidate.language,
       createdAt: new Date().toISOString(),
     };
+    let savedAccount = account;
+    try {
+      savedAccount = settings.storageProvider === "supabase" && isSupabaseConfigured(settings)
+        ? await supabaseCreateUserAccount(account, voucher)
+        : account;
+    } catch (error) {
+      setAccountNotice(`Supabase: ${error instanceof Error ? error.message : "sync error"}`);
+      return;
+    }
     const nextUsers = [
-      account,
+      savedAccount,
       ...userAccounts.filter((user) =>
         account.email
           ? normalizeEmail(user.email) !== normalizeEmail(account.email)
@@ -815,7 +1208,11 @@ export default function Home() {
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher.code });
     setAccountNotice(`${t.accountCreated}: ${account.email}`);
-    await postToAppsScript("saveUserAccount", { user: account, voucher: nextVouchers.find((item) => item.code === voucher.code) });
+    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      setSyncStatus(`supabase saveUserAccount: ${new Date().toISOString()}`);
+    } else {
+      await postToAppsScript("saveUserAccount", { user: account, voucher: nextVouchers.find((item) => item.code === voucher.code) });
+    }
   }
 
   function startExam(lot: ExamLot) {
@@ -838,7 +1235,16 @@ export default function Home() {
   }
 
   async function syncAttempt(attempt: Attempt) {
-    await postToAppsScript("saveAttempt", { attempt });
+    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      try {
+        await supabaseSaveAttempt(attempt);
+        setSyncStatus(`supabase saveAttempt: ${new Date().toISOString()}`);
+      } catch (error) {
+        setSyncStatus(`supabase saveAttempt: ${error instanceof Error ? error.message : "sync error"}`);
+      }
+    } else {
+      await postToAppsScript("saveAttempt", { attempt });
+    }
   }
 
   function submitAttempt(status: Attempt["status"]) {
@@ -991,7 +1397,7 @@ export default function Home() {
         <button onClick={goHome}>⌂ {t.home}</button>
         <button onClick={goTop}>↑ {t.top}</button>
         <button onClick={goExams}>▦ {t.exams}</button>
-        <button onClick={settings.appsScriptUrl.trim() ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
+        <button onClick={(isSupabaseConfigured(settings) || settings.appsScriptUrl.trim()) ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
       </nav>
 
       {view === "home" && (
@@ -1141,7 +1547,7 @@ export default function Home() {
               <div className="panel">
                 <div className="section-head">
                   <div>
-                    <p className="eyebrow">Source : Google Sheets</p>
+                    <p className="eyebrow">Source : {settings.storageProvider === "supabase" ? "Supabase" : "Google Sheets"}</p>
                     <h1>{t.trainerDashboard}</h1>
                   </div>
                   <button onClick={() => setView("home")}>⌂ {t.home}</button>
@@ -1149,19 +1555,39 @@ export default function Home() {
                 <div className="metric-grid">
                   <Metric label={t.attemptsLabel} value={String(attempts.length)} />
                   <Metric label={t.average} value={`${Math.round(attempts.reduce((sum, item) => sum + item.percent, 0) / Math.max(1, attempts.length))}%`} />
-                  <Metric label={t.tests} value={`${lots.length} standards + import`} />
+                  <Metric label={t.tests} value={`${examLots.length} standards + import`} />
                   <Metric label={t.syncStatus} value={syncStatus || "-"} />
                 </div>
                 <div className="actions">
                   <button onClick={exportCsv}>⇩ {t.exportCsv}</button>
-                  <button onClick={() => alert(language === "fr" ? "Import prévu : collez un JSON/CSV de questions dans la base Google Sheets via Apps Script." : "Import planned: paste a question JSON/CSV into the Google Sheets database through Apps Script.")}>＋ {t.uploadLot}</button>
-                  <button onClick={() => alert(language === "fr" ? "Autorisation de reprise prévue : modification du quota dans la feuille Attempts." : "Retake authorization planned: update the quota in the Attempts sheet.")}>↻ {t.allowRetake}</button>
+                  <button onClick={() => alert(language === "fr" ? "Import prevu : chargez les lots dans les tables Supabase exam_lots et question_bank." : "Import planned: upload lots into the Supabase exam_lots and question_bank tables.")}>＋ {t.uploadLot}</button>
+                  <button onClick={() => alert(language === "fr" ? "Autorisation de reprise prevue via les tables Supabase attempts et vouchers." : "Retake authorization planned through the Supabase attempts and vouchers tables.")}>↻ {t.allowRetake}</button>
                 </div>
               </div>
 
               <div className="panel">
-                <h2>{t.googleConnection}</h2>
+                <h2>{language === "fr" ? "Connexion stockage des donnees" : "Data storage connection"}</h2>
                 <div className="form-grid single">
+                  <label>{language === "fr" ? "Stockage principal" : "Primary storage"}
+                    <select value={settings.storageProvider} onChange={(event) => {
+                      const next = { ...settings, storageProvider: event.target.value as AppSettings["storageProvider"] };
+                      setSettings(next);
+                      saveJson(STORAGE_SETTINGS, next);
+                    }}>
+                      <option value="supabase">Supabase</option>
+                      <option value="google">Google Sheets / Apps Script</option>
+                    </select>
+                  </label>
+                  <label>Supabase URL<input value={settings.supabaseUrl} onChange={(event) => {
+                    const next = { ...settings, supabaseUrl: event.target.value };
+                    setSettings(next);
+                    saveJson(STORAGE_SETTINGS, next);
+                  }} placeholder="https://xxxx.supabase.co" /></label>
+                  <label>Supabase anon key<input value={settings.supabaseAnonKey} onChange={(event) => {
+                    const next = { ...settings, supabaseAnonKey: event.target.value };
+                    setSettings(next);
+                    saveJson(STORAGE_SETTINGS, next);
+                  }} placeholder="eyJhbGciOi..." /></label>
                   <label>{t.endpoint}<input value={settings.appsScriptUrl} onChange={(event) => {
                     const next = { ...settings, appsScriptUrl: event.target.value };
                     setSettings(next);
@@ -1173,7 +1599,10 @@ export default function Home() {
                     saveJson(STORAGE_SETTINGS, next);
                   }} /></label>
                 </div>
-                <p className="muted">Feuilles prévues : Candidates, TrainerAccounts, Vouchers, QuestionBank, Attempts, AttemptAnswers, SummaryReports, EmailQueue.</p>
+                <p className="muted">{language === "fr" ? "Supabase est le stockage recommande. Google Apps Script reste disponible seulement comme secours." : "Supabase is the recommended storage. Google Apps Script remains available only as fallback."}</p>
+                <div className="actions">
+                  <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
+                </div>
               </div>
 
               <div className="panel wide">
@@ -1244,7 +1673,7 @@ export default function Home() {
 
               <div className="panel wide">
                 <h2>{t.cumulativeEco}</h2>
-                <Aggregate attempts={attempts} language={language} group="eco" />
+                <Aggregate attempts={attempts} language={language} group="eco" lots={examLots} />
               </div>
               <div className="panel wide">
                 <h2>{t.attemptHistory} ({attempts.length})</h2>
@@ -1396,7 +1825,7 @@ function QuestionReview({ question, index, given, language }: { question: Questi
   );
 }
 
-function Aggregate({ attempts, language, group }: { attempts: Attempt[]; language: Language; group: "eco" | "performanceDomain" | "approach" }) {
+function Aggregate({ attempts, language, group, lots }: { attempts: Attempt[]; language: Language; group: "eco" | "performanceDomain" | "approach"; lots: ExamLot[] }) {
   const rows = new Map<string, { label: string; score: number; total: number }>();
   attempts.filter((attempt) => attempt.status === "submitted").forEach((attempt) => {
     const lot = lots.find((item) => item.id === attempt.lotId);
