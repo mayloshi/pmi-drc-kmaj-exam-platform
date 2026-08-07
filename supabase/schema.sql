@@ -96,6 +96,73 @@ create index if not exists attempts_email_idx on public.attempts (lower(email));
 create index if not exists attempts_cohort_idx on public.attempts (cohort);
 create index if not exists attempt_answers_attempt_id_idx on public.attempt_answers (attempt_id);
 
+create or replace function public.handle_new_exam_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  voucher text;
+begin
+  voucher := coalesce(new.raw_user_meta_data ->> 'voucher_code', '');
+
+  insert into public.profiles (
+    id,
+    name,
+    email,
+    organization,
+    cohort,
+    role,
+    voucher_code,
+    default_language,
+    active,
+    created_at
+  )
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data ->> 'name', new.email),
+    new.email,
+    coalesce(new.raw_user_meta_data ->> 'organization', ''),
+    coalesce(new.raw_user_meta_data ->> 'cohort', ''),
+    coalesce(new.raw_user_meta_data ->> 'role', 'Candidat'),
+    voucher,
+    coalesce(new.raw_user_meta_data ->> 'default_language', 'fr'),
+    true,
+    now()
+  )
+  on conflict (id) do update set
+    name = excluded.name,
+    email = excluded.email,
+    organization = excluded.organization,
+    cohort = excluded.cohort,
+    role = excluded.role,
+    voucher_code = excluded.voucher_code,
+    default_language = excluded.default_language,
+    active = excluded.active;
+
+  if voucher <> '' then
+    update public.vouchers
+    set status = 'used',
+        used_by = new.email,
+        used_at = now()
+    where code = voucher
+      and status <> 'used'
+      and (
+        coalesce(assigned_to, '') = ''
+        or lower(assigned_to) = lower(new.email)
+      );
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created_exam_profile on auth.users;
+create trigger on_auth_user_created_exam_profile
+after insert on auth.users
+for each row execute function public.handle_new_exam_user();
+
 alter table public.profiles enable row level security;
 alter table public.vouchers enable row level security;
 alter table public.exam_lots enable row level security;
@@ -156,11 +223,25 @@ on public.exam_lots for select
 to anon, authenticated
 using (active = true);
 
+drop policy if exists "exam_lots_trainer_write_from_static_app" on public.exam_lots;
+create policy "exam_lots_trainer_write_from_static_app"
+on public.exam_lots for all
+to anon, authenticated
+using (true)
+with check (true);
+
 drop policy if exists "question_bank_public_select" on public.question_bank;
 create policy "question_bank_public_select"
 on public.question_bank for select
 to anon, authenticated
 using (active = true);
+
+drop policy if exists "question_bank_trainer_write_from_static_app" on public.question_bank;
+create policy "question_bank_trainer_write_from_static_app"
+on public.question_bank for all
+to anon, authenticated
+using (true)
+with check (true);
 
 drop policy if exists "attempts_public_read_write" on public.attempts;
 create policy "attempts_public_read_write"

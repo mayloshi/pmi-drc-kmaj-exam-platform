@@ -87,22 +87,19 @@ type UserAccount = {
 };
 
 type AppSettings = {
-  storageProvider: "supabase" | "google";
   supabaseUrl: string;
   supabaseAnonKey: string;
-  appsScriptUrl: string;
-  sheetName: string;
   trainerAccount: string;
 };
 
 type SupabaseAuthSession = {
-  access_token: string;
+  access_token?: string;
   refresh_token?: string;
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.0";
-const UPDATED_AT = "2026-08-07";
+const VERSION = "v0.2.1";
+const UPDATED_AT = "2026-08-08";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -112,11 +109,8 @@ const STORAGE_VOUCHERS = "pmi-drc-kmaj-vouchers";
 const STORAGE_USERS = "pmi-drc-kmaj-users";
 const STORAGE_SUPABASE_SESSION = "pmi-drc-kmaj-supabase-session";
 const DEFAULT_SETTINGS: AppSettings = {
-  storageProvider: "supabase",
-  supabaseUrl: "",
-  supabaseAnonKey: "",
-  appsScriptUrl: "",
-  sheetName: "PMP Prep / DATABASE",
+  supabaseUrl: "https://wfsdsrmnxwxdebahznoq.supabase.co",
+  supabaseAnonKey: "sb_publishable_A6yU8ee1-QFB4iSF8eGQbQ_ikc65MPG",
   trainerAccount: "admin@pmi-drcongo.org",
 };
 
@@ -307,10 +301,7 @@ const copy = {
     exportCsv: "Export CSV",
     uploadLot: "Charger un lot",
     allowRetake: "Autoriser reprise",
-    googleConnection: "Connexion Google Sheets",
     syncStatus: "Statut sync",
-    endpoint: "Endpoint Apps Script",
-    folderBase: "Dossier / Base",
     cumulativeEco: "Performance cumulée - ECO",
     attemptHistory: "Historique des tentatives",
     date: "Date",
@@ -415,10 +406,7 @@ const copy = {
     exportCsv: "Export CSV",
     uploadLot: "Upload a lot",
     allowRetake: "Allow retake",
-    googleConnection: "Google Sheets connection",
     syncStatus: "Sync status",
-    endpoint: "Apps Script endpoint",
-    folderBase: "Folder / Database",
     cumulativeEco: "Cumulative performance - ECO",
     attemptHistory: "Attempt history",
     date: "Date",
@@ -563,7 +551,7 @@ async function sha256(value: string) {
 }
 
 function cleanSupabaseUrl(url: string) {
-  return url.trim().replace(/\/+$/, "");
+  return url.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/i, "");
 }
 
 function isSupabaseConfigured(settings: AppSettings) {
@@ -643,6 +631,41 @@ function attemptAnswerRows(attempt: Attempt, lot: ExamLot) {
     is_correct: sameAnswer(attempt.answers[question.id] || [], question.correct),
     highlighted: attempt.highlighted.includes(question.id),
   }));
+}
+
+function lotToSupabase(lot: ExamLot) {
+  return {
+    id: lot.id,
+    exam_type: lot.examType,
+    title_fr: lot.title.fr,
+    title_en: lot.title.en,
+    source: lot.source,
+    question_count: lot.questionCount || lot.questions.length,
+    active: true,
+  };
+}
+
+function questionToSupabase(question: Question, lot: ExamLot) {
+  return {
+    id: question.id,
+    lot_id: lot.id,
+    exam_type: lot.examType,
+    question_type: question.type,
+    prompt_fr: question.prompt.fr,
+    prompt_en: question.prompt.en,
+    options_fr: question.options.map((option) => option.fr),
+    options_en: question.options.map((option) => option.en),
+    correct_indexes: question.correct,
+    explanation_fr: question.explanation.fr,
+    explanation_en: question.explanation.en,
+    eco_fr: question.eco.fr,
+    eco_en: question.eco.en,
+    performance_domain_fr: question.performanceDomain.fr,
+    performance_domain_en: question.performanceDomain.en,
+    approach_fr: question.approach.fr,
+    approach_en: question.approach.en,
+    active: true,
+  };
 }
 
 function normalizeSupabaseAttempt(row: Record<string, string | number | boolean | null>, answerRows: Record<string, unknown>[]): Attempt {
@@ -878,6 +901,7 @@ export default function Home() {
       email: normalizeEmail(email),
       password,
     });
+    if (!session.access_token) throw new Error(language === "fr" ? "Session Supabase introuvable." : "Supabase session is missing.");
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
     return session;
@@ -919,9 +943,13 @@ export default function Home() {
         default_language: account.defaultLanguage,
       },
     });
+    const authUser = auth.user;
+    if (!auth.access_token && authUser?.id) {
+      return { ...account, id: authUser.id, password: "" };
+    }
     const session = auth.access_token ? auth : await supabaseSignIn(account.email, account.password);
     const userId = session.user?.id;
-    if (!userId) throw new Error(language === "fr" ? "Compte cree, mais session Supabase introuvable." : "Account created, but Supabase session is missing.");
+    if (!userId || !session.access_token) throw new Error(language === "fr" ? "Compte cree, mais session Supabase introuvable." : "Account created, but Supabase session is missing.");
 
     const savedAccount = { ...account, id: userId, password: "" };
     await supabaseRequest("/rest/v1/profiles?on_conflict=id", {
@@ -961,10 +989,66 @@ export default function Home() {
     });
   }
 
+  async function testSupabaseConnection() {
+    try {
+      if (!isSupabaseConfigured(settings)) {
+        setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
+        return;
+      }
+      const testVoucher: VoucherRecord = {
+        code: `DBTEST-${Date.now()}`,
+        role: "Test connexion",
+        status: "available",
+        assignedTo: "",
+        usedBy: "",
+        createdAt: new Date().toISOString(),
+        usedAt: "",
+      };
+      await supabaseSaveVouchers([testVoucher]);
+      const [vouchers, attemptsRows, questionRows] = await Promise.all([
+        supabaseRequest<Record<string, string>[]>("/rest/v1/vouchers?select=code,role,status&order=created_at.desc&limit=3"),
+        supabaseRequest<Array<{ id: string }>>("/rest/v1/attempts?select=id&limit=10000"),
+        supabaseRequest<Array<{ id: string }>>("/rest/v1/question_bank?select=id&limit=10000"),
+      ]);
+      const summary = {
+        testVoucher: testVoucher.code,
+        recentVouchers: vouchers.length,
+        attemptsRows: attemptsRows.length,
+        questionRows: questionRows.length,
+      };
+      setSyncStatus(`supabase test OK: ${JSON.stringify(summary)}`);
+    } catch (error) {
+      setSyncStatus(`supabase test ERROR: ${error instanceof Error ? error.message : "sync error"}`);
+    }
+  }
+
+  async function seedCapmLot1ToSupabase() {
+    try {
+      if (!isSupabaseConfigured(settings)) {
+        setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
+        return;
+      }
+      await supabaseRequest("/rest/v1/exam_lots?on_conflict=id", {
+        method: "POST",
+        body: [lotToSupabase(capmLot1)],
+        prefer: "resolution=merge-duplicates,return=representation",
+      });
+      await supabaseRequest("/rest/v1/question_bank?on_conflict=id", {
+        method: "POST",
+        body: capmLot1.questions.map((question) => questionToSupabase(question, capmLot1)),
+        prefer: "resolution=merge-duplicates,return=representation",
+      });
+      setExamLots(seedLots);
+      setSyncStatus(`supabase seed OK: ${capmLot1.questions.length} questions CAPM Lot 1`);
+    } catch (error) {
+      setSyncStatus(`supabase seed ERROR: ${error instanceof Error ? error.message : "sync error"}`);
+    }
+  }
+
   async function validateAccountLogin(profile: Candidate = candidate) {
-    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+    if (isSupabaseConfigured(settings)) {
       const session = await supabaseSignIn(profile.email, profile.password);
-      const accountProfile = session.user?.id ? await supabaseGetProfile(session.user.id, session.access_token) : null;
+      const accountProfile = session.user?.id && session.access_token ? await supabaseGetProfile(session.user.id, session.access_token) : null;
       if (accountProfile) return accountProfile;
       return {
         name: profile.name || session.user?.email || "",
@@ -1027,54 +1111,9 @@ export default function Home() {
     setView("select");
   }
 
-  async function postToAppsScript(action: string, payload: Record<string, unknown>) {
-    if (!settings.appsScriptUrl.trim()) {
-      setSyncStatus(language === "fr" ? "Endpoint Apps Script non configure." : "Apps Script endpoint is not configured.");
-      return false;
-    }
-    try {
-      await fetch(settings.appsScriptUrl.trim(), {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action, ...payload }),
-      });
-      setSyncStatus(`${action}: ${new Date().toISOString()}`);
-      return true;
-    } catch (error) {
-      setSyncStatus(`${action}: ${error instanceof Error ? error.message : "sync error"}`);
-      return false;
-    }
-  }
-
-  function loadFromAppsScript<T>(action: string): Promise<T> {
-    return new Promise((resolve, reject) => {
-      if (!settings.appsScriptUrl.trim()) {
-        reject(new Error(language === "fr" ? "Endpoint Apps Script non configure." : "Apps Script endpoint is not configured."));
-        return;
-      }
-      const callbackName = `pmiDrcKmaj_${action}_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-      const callbacks = window as unknown as Record<string, (payload: T) => void>;
-      const script = document.createElement("script");
-      const separator = settings.appsScriptUrl.includes("?") ? "&" : "?";
-      script.src = `${settings.appsScriptUrl}${separator}action=${encodeURIComponent(action)}&callback=${encodeURIComponent(callbackName)}&t=${Date.now()}`;
-      callbacks[callbackName] = (payload: T) => {
-        resolve(payload);
-        script.remove();
-        delete callbacks[callbackName];
-      };
-      script.onerror = () => {
-        script.remove();
-        delete callbacks[callbackName];
-        reject(new Error(`Unable to load ${action}`));
-      };
-      document.body.appendChild(script);
-    });
-  }
-
   async function refreshRemoteData() {
     try {
-      if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+      if (isSupabaseConfigured(settings)) {
         const [remoteVouchers, remoteUsers, remoteAttempts, remoteAnswers, remoteLots, remoteQuestions] = await Promise.all([
           supabaseRequest<Record<string, string>[]>("/rest/v1/vouchers?select=*&order=created_at.desc"),
           supabaseRequest<Record<string, string>[]>("/rest/v1/profiles?select=*&order=created_at.desc"),
@@ -1097,21 +1136,7 @@ export default function Home() {
         setSyncStatus(`supabase read: ${new Date().toISOString()}`);
         return;
       }
-      const [remoteVouchers, remoteUsers] = await Promise.all([
-        loadFromAppsScript<Record<string, string>[]>("vouchers"),
-        loadFromAppsScript<Record<string, string>[]>("userAccounts"),
-      ]);
-      const nextVouchers = remoteVouchers.map(normalizeVoucherRecord).filter((voucher) => voucher.code);
-      const nextUsers = remoteUsers.map(normalizeUserAccount).filter((user) => user.email);
-      if (nextVouchers.length) {
-        setVoucherRecords(nextVouchers);
-        saveJson(STORAGE_VOUCHERS, nextVouchers);
-      }
-      if (nextUsers.length) {
-        setUserAccounts(nextUsers);
-        saveJson(STORAGE_USERS, nextUsers);
-      }
-      setSyncStatus(`read: ${new Date().toISOString()}`);
+      setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
     } catch (error) {
       setSyncStatus(`read: ${error instanceof Error ? error.message : "sync error"}`);
     }
@@ -1135,15 +1160,13 @@ export default function Home() {
     setVoucherRecords(next);
     saveJson(STORAGE_VOUCHERS, next);
     setAccountNotice(`${t.copyVoucher}: ${created.map((voucher) => voucher.code).join(", ")}`);
-    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+    if (isSupabaseConfigured(settings)) {
       try {
         await supabaseSaveVouchers(created);
         setSyncStatus(`supabase saveVouchers: ${new Date().toISOString()}`);
       } catch (error) {
         setSyncStatus(`supabase saveVouchers: ${error instanceof Error ? error.message : "sync error"}`);
       }
-    } else {
-      await postToAppsScript("saveVouchers", { vouchers: created });
     }
   }
 
@@ -1158,7 +1181,7 @@ export default function Home() {
     }
     const code = normalizeVoucher(candidate.voucher);
     let voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used") || null;
-    if (!voucher && settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+    if (!voucher && isSupabaseConfigured(settings)) {
       try {
         voucher = await supabaseFindVoucher(code);
       } catch (error) {
@@ -1192,7 +1215,7 @@ export default function Home() {
     };
     let savedAccount = account;
     try {
-      savedAccount = settings.storageProvider === "supabase" && isSupabaseConfigured(settings)
+      savedAccount = isSupabaseConfigured(settings)
         ? await supabaseCreateUserAccount(account, voucher)
         : account;
     } catch (error) {
@@ -1218,10 +1241,8 @@ export default function Home() {
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher.code });
     setAccountNotice(`${t.accountCreated}: ${account.email}`);
-    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+    if (isSupabaseConfigured(settings)) {
       setSyncStatus(`supabase saveUserAccount: ${new Date().toISOString()}`);
-    } else {
-      await postToAppsScript("saveUserAccount", { user: account, voucher: nextVouchers.find((item) => item.code === voucher.code) });
     }
   }
 
@@ -1245,15 +1266,13 @@ export default function Home() {
   }
 
   async function syncAttempt(attempt: Attempt) {
-    if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
+    if (isSupabaseConfigured(settings)) {
       try {
         await supabaseSaveAttempt(attempt);
         setSyncStatus(`supabase saveAttempt: ${new Date().toISOString()}`);
       } catch (error) {
         setSyncStatus(`supabase saveAttempt: ${error instanceof Error ? error.message : "sync error"}`);
       }
-    } else {
-      await postToAppsScript("saveAttempt", { attempt });
     }
   }
 
@@ -1407,7 +1426,7 @@ export default function Home() {
         <button onClick={goHome}>⌂ {t.home}</button>
         <button onClick={goTop}>↑ {t.top}</button>
         <button onClick={goExams}>▦ {t.exams}</button>
-        <button onClick={(isSupabaseConfigured(settings) || settings.appsScriptUrl.trim()) ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
+        <button onClick={isSupabaseConfigured(settings) ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
       </nav>
 
       {view === "home" && (
@@ -1566,7 +1585,7 @@ export default function Home() {
               <div className="panel">
                 <div className="section-head">
                   <div>
-                    <p className="eyebrow">Source : {settings.storageProvider === "supabase" ? "Supabase" : "Google Sheets"}</p>
+                    <p className="eyebrow">Source : Supabase</p>
                     <h1>{t.trainerDashboard}</h1>
                   </div>
                   <button onClick={() => setView("home")}>⌂ {t.home}</button>
@@ -1585,18 +1604,8 @@ export default function Home() {
               </div>
 
               <div className="panel">
-                <h2>{language === "fr" ? "Connexion stockage des donnees" : "Data storage connection"}</h2>
+                <h2>{language === "fr" ? "Connexion Supabase" : "Supabase connection"}</h2>
                 <div className="form-grid single">
-                  <label>{language === "fr" ? "Stockage principal" : "Primary storage"}
-                    <select value={settings.storageProvider} onChange={(event) => {
-                      const next = { ...settings, storageProvider: event.target.value as AppSettings["storageProvider"] };
-                      setSettings(next);
-                      saveJson(STORAGE_SETTINGS, next);
-                    }}>
-                      <option value="supabase">Supabase</option>
-                      <option value="google">Google Sheets / Apps Script</option>
-                    </select>
-                  </label>
                   <label>Supabase URL<input value={settings.supabaseUrl} onChange={(event) => {
                     const next = { ...settings, supabaseUrl: event.target.value };
                     setSettings(next);
@@ -1607,19 +1616,11 @@ export default function Home() {
                     setSettings(next);
                     saveJson(STORAGE_SETTINGS, next);
                   }} placeholder="eyJhbGciOi..." /></label>
-                  <label>{t.endpoint}<input value={settings.appsScriptUrl} onChange={(event) => {
-                    const next = { ...settings, appsScriptUrl: event.target.value };
-                    setSettings(next);
-                    saveJson(STORAGE_SETTINGS, next);
-                  }} placeholder="https://script.google.com/macros/s/..." /></label>
-                  <label>{t.folderBase}<input value={settings.sheetName} onChange={(event) => {
-                    const next = { ...settings, sheetName: event.target.value };
-                    setSettings(next);
-                    saveJson(STORAGE_SETTINGS, next);
-                  }} /></label>
                 </div>
-                <p className="muted">{language === "fr" ? "Supabase est le stockage recommande. Google Apps Script reste disponible seulement comme secours." : "Supabase is the recommended storage. Google Apps Script remains available only as fallback."}</p>
+                <p className="muted">{language === "fr" ? "Le bouton de test ecrit un voucher DBTEST dans Supabase puis relit les tables. Si les tables manquent, le statut affichera l'erreur exacte." : "The test button writes a DBTEST voucher to Supabase and reads the tables back. If tables are missing, the status displays the exact error."}</p>
                 <div className="actions">
+                  <button className="primary" onClick={testSupabaseConnection}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
+                  <button onClick={seedCapmLot1ToSupabase}>＋ {language === "fr" ? "Charger CAPM Lot 1" : "Load CAPM Lot 1"}</button>
                   <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
                 </div>
               </div>
