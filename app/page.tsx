@@ -271,6 +271,9 @@ const copy = {
     trainerShort: "Formateur",
     platformStructureNote: "Les lots sont filtrés selon le type d'examen choisi. Les questions sont bilingues FR/EN selon la langue sélectionnée. Les domaines ECO, approches et performance domains ne s'affichent pas pendant l'examen.",
     accountWithVoucher: "Créer ou utiliser un compte avec voucher",
+    candidateAccount: "Compte candidat",
+    accountHelp: "Pour créer un compte, renseignez votre nom, email, voucher et mot de passe, puis cliquez sur Créer mon compte. Pour revenir avec un compte existant, renseignez email et mot de passe puis cliquez sur Se connecter.",
+    signIn: "Se connecter",
     resetPassword: "Réinitialiser le mot de passe",
     voucherUnknown: "Voucher non reconnu ou deja utilise.",
     loginUnknown: "Email ou mot de passe non reconnu.",
@@ -293,7 +296,7 @@ const copy = {
     assignedEmailsHelp: "Saisissez un email par ligne, ou separez-les par virgule/point-virgule.",
     generateVoucher: "Generer un voucher",
     generateVouchers: "Generer et attribuer",
-    createUserAccount: "Creer un compte utilisateur",
+    createUserAccount: "Créer mon compte",
     generatedVouchers: "Vouchers generes",
     userAccounts: "Comptes utilisateur",
     accountCreated: "Compte cree avec voucher",
@@ -376,6 +379,9 @@ const copy = {
     trainerShort: "Trainer",
     platformStructureNote: "Lots are filtered by the selected exam type. Questions are bilingual FR/EN based on the selected language. ECO domains, approaches, and performance domains are hidden during the exam.",
     accountWithVoucher: "Create or use an account with voucher",
+    candidateAccount: "Candidate account",
+    accountHelp: "To create an account, enter your name, email, voucher, and password, then click Create my account. To return with an existing account, enter email and password, then click Sign in.",
+    signIn: "Sign in",
     resetPassword: "Reset password",
     voucherUnknown: "Voucher not recognized or already used.",
     loginUnknown: "Email or password not recognized.",
@@ -398,7 +404,7 @@ const copy = {
     assignedEmailsHelp: "Enter one email per line, or separate emails with commas/semicolons.",
     generateVoucher: "Generate voucher",
     generateVouchers: "Generate and assign",
-    createUserAccount: "Create user account",
+    createUserAccount: "Create my account",
     generatedVouchers: "Generated vouchers",
     userAccounts: "User accounts",
     accountCreated: "Account created with voucher",
@@ -955,53 +961,57 @@ export default function Home() {
     });
   }
 
-  async function validateAccountLogin() {
+  async function validateAccountLogin(profile: Candidate = candidate) {
     if (settings.storageProvider === "supabase" && isSupabaseConfigured(settings)) {
-      const session = await supabaseSignIn(candidate.email, candidate.password);
-      const profile = session.user?.id ? await supabaseGetProfile(session.user.id, session.access_token) : null;
-      if (profile) return profile;
+      const session = await supabaseSignIn(profile.email, profile.password);
+      const accountProfile = session.user?.id ? await supabaseGetProfile(session.user.id, session.access_token) : null;
+      if (accountProfile) return accountProfile;
       return {
-        name: candidate.name || session.user?.email || "",
-        email: session.user?.email || candidate.email,
-        organization: candidate.organization,
-        cohort: candidate.cohort,
+        name: profile.name || session.user?.email || "",
+        email: session.user?.email || profile.email,
+        organization: profile.organization,
+        cohort: profile.cohort,
         role: "Candidat",
-        voucherCode: candidate.voucher,
+        voucherCode: profile.voucher,
         password: "",
-        defaultLanguage: candidate.language,
+        defaultLanguage: profile.language,
         createdAt: new Date().toISOString(),
       };
     }
-    const email = normalizeEmail(candidate.email);
+    const email = normalizeEmail(profile.email);
     const account = userAccounts.find((user) => normalizeEmail(user.email) === email);
     if (!account) return null;
-    if (account.password && account.password === candidate.password) return account;
+    if (account.password && account.password === profile.password) return account;
     if (account.passwordHash) {
-      const passwordHash = await sha256(candidate.password);
+      const passwordHash = await sha256(profile.password);
       if (passwordHash === account.passwordHash) return account;
     }
     return null;
   }
 
-  async function startSelect() {
-    if (!canAccessLots) {
+  async function startSelect(forceAccount = false) {
+    const profile = forceAccount ? { ...candidate, hasAccount: true } : candidate;
+    const profileCanAccessLots =
+      Boolean(!profile.hasAccount && profile.name.trim()) ||
+      Boolean(profile.hasAccount && profile.email.trim() && profile.password);
+    if (!profileCanAccessLots) {
       setAccessNotice(t.accessMissingNameEmail);
       return;
     }
     let account: UserAccount | null = null;
     try {
-      account = candidate.hasAccount ? await validateAccountLogin() : null;
+      account = profile.hasAccount ? await validateAccountLogin(profile) : null;
     } catch {
       account = null;
     }
-    if (candidate.hasAccount && (!candidate.password || !account)) {
+    if (profile.hasAccount && (!profile.password || !account)) {
       setAccessNotice(t.loginUnknown);
       return;
     }
-    if (candidate.hasAccount) {
+    if (profile.hasAccount) {
       if (account) {
         const nextCandidate = {
-          ...candidate,
+          ...profile,
           name: account.name,
           organization: account.organization,
           cohort: account.cohort,
@@ -1013,7 +1023,7 @@ export default function Home() {
         saveJson(STORAGE_CANDIDATE, nextCandidate);
       }
     }
-    if (!candidate.hasAccount) saveJson(STORAGE_CANDIDATE, candidate);
+    if (!profile.hasAccount) saveJson(STORAGE_CANDIDATE, profile);
     setView("select");
   }
 
@@ -1423,7 +1433,7 @@ export default function Home() {
             </div>
             <label className="check-row soft-check"><input type="checkbox" checked={candidate.sendEmail} onChange={(event) => updateCandidate({ sendEmail: event.target.checked })} /> {t.emailResults}</label>
             <div className="actions">
-              <button className="primary" onClick={startSelect}>▶ {t.seeLots}</button>
+              <button className="primary" onClick={() => startSelect()}>▶ {t.seeLots}</button>
               <button onClick={() => setCandidate(initialCandidate())}>× {t.clear}</button>
               <button onClick={() => setView("trainer")}>🔐 {t.trainerShort}</button>
             </div>
@@ -1440,13 +1450,22 @@ export default function Home() {
             </div>
             <p className="muted">{t.platformStructureNote}</p>
             <div className="account-strip">
-              <label className="check-row"><input type="checkbox" checked={candidate.hasAccount} onChange={(event) => updateCandidate({ hasAccount: event.target.checked })} /> {t.accountWithVoucher}</label>
+              <div className="account-heading">
+                <div>
+                  <h3>{t.candidateAccount}</h3>
+                  <p>{t.accountHelp}</p>
+                </div>
+                <label className="check-row"><input type="checkbox" checked={candidate.hasAccount} onChange={(event) => updateCandidate({ hasAccount: event.target.checked })} /> {t.accountWithVoucher}</label>
+              </div>
               <div className="form-grid">
                 <label>{t.voucher}<input value={candidate.voucher} onChange={(event) => updateCandidate({ voucher: event.target.value })} placeholder="PMIRDC-ACTIF-2026" /></label>
                 <label>{t.password}<input type="password" value={candidate.password} onChange={(event) => updateCandidate({ password: event.target.value })} /></label>
               </div>
-              <button onClick={() => alert(language === "fr" ? "Réinitialisation prévue via Apps Script : email avec lien sécurisé." : "Reset planned through Apps Script: email with secure link.")}>↻ {t.resetPassword}</button>
-              <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
+              <div className="actions">
+                <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
+                <button onClick={() => startSelect(true)}>▶ {t.signIn}</button>
+                <button onClick={() => alert(language === "fr" ? "Réinitialisation prévue via Supabase Auth : email avec lien sécurisé." : "Reset planned through Supabase Auth: email with secure link.")}>↻ {t.resetPassword}</button>
+              </div>
             </div>
             {accountNotice && <p className="helper-note">{accountNotice}</p>}
             {accessNotice && <p className="error">{accessNotice}</p>}
