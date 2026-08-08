@@ -86,6 +86,16 @@ type UserAccount = {
   createdAt: string;
 };
 
+type AttemptLimit = {
+  id: string;
+  identifier: string;
+  identifierType: "email" | "name" | "account";
+  maxAttempts: number;
+  active: boolean;
+  note: string;
+  createdAt: string;
+};
+
 type AppSettings = {
   supabaseUrl: string;
   supabaseAnonKey: string;
@@ -98,7 +108,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.1";
+const VERSION = "v0.2.2";
 const UPDATED_AT = "2026-08-08";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
@@ -107,6 +117,7 @@ const STORAGE_CANDIDATE = "pmi-drc-kmaj-candidate";
 const STORAGE_SETTINGS = "pmi-drc-kmaj-settings";
 const STORAGE_VOUCHERS = "pmi-drc-kmaj-vouchers";
 const STORAGE_USERS = "pmi-drc-kmaj-users";
+const STORAGE_ATTEMPT_LIMITS = "pmi-drc-kmaj-attempt-limits";
 const STORAGE_SUPABASE_SESSION = "pmi-drc-kmaj-supabase-session";
 const DEFAULT_SETTINGS: AppSettings = {
   supabaseUrl: "https://wfsdsrmnxwxdebahznoq.supabase.co",
@@ -668,6 +679,31 @@ function questionToSupabase(question: Question, lot: ExamLot) {
   };
 }
 
+function attemptLimitToSupabase(limit: AttemptLimit) {
+  return {
+    id: limit.id,
+    identifier: limit.identifier,
+    identifier_type: limit.identifierType,
+    max_attempts: limit.maxAttempts,
+    active: limit.active,
+    note: limit.note,
+    created_at: limit.createdAt,
+  };
+}
+
+function normalizeAttemptLimit(row: Record<string, unknown>): AttemptLimit {
+  const identifierType = row.identifier_type === "name" || row.identifier_type === "account" ? row.identifier_type : "email";
+  return {
+    id: String(row.id || crypto.randomUUID()),
+    identifier: String(row.identifier || ""),
+    identifierType,
+    maxAttempts: Math.max(0, Number(row.max_attempts || row.maxAttempts || 0)),
+    active: row.active !== false,
+    note: String(row.note || ""),
+    createdAt: String(row.created_at || row.createdAt || ""),
+  };
+}
+
 function normalizeSupabaseAttempt(row: Record<string, string | number | boolean | null>, answerRows: Record<string, unknown>[]): Attempt {
   const attemptAnswers = answerRows.filter((answer) => answer.attempt_id === row.id);
   const answers = Object.fromEntries(attemptAnswers.map((answer) => [
@@ -800,6 +836,22 @@ function hasGuestTriedLotThisMonth(candidate: Candidate, attempts: Attempt[], lo
   );
 }
 
+function matchesAttemptLimit(candidate: Candidate, limit: AttemptLimit) {
+  const identifier = limit.identifier.trim().toLowerCase();
+  if (!identifier || !limit.active) return false;
+  if (limit.identifierType === "email") return normalizeEmail(candidate.email) === identifier;
+  if (limit.identifierType === "account") return candidate.hasAccount && normalizeEmail(candidate.email) === identifier;
+  return candidate.name.trim().toLowerCase() === identifier;
+}
+
+function candidateMatchesAttempt(candidate: Candidate, attempt: Attempt) {
+  const email = normalizeEmail(candidate.email);
+  const attemptEmail = normalizeEmail(attempt.candidate.email);
+  if (email && attemptEmail && email === attemptEmail) return true;
+  const name = candidate.name.trim().toLowerCase();
+  return Boolean(name && name === attempt.candidate.name.trim().toLowerCase());
+}
+
 function initialCandidate(): Candidate {
   return {
     name: "",
@@ -833,6 +885,8 @@ export default function Home() {
   const [voucherRecords, setVoucherRecords] = useState<VoucherRecord[]>(() => loadJson<VoucherRecord[]>(STORAGE_VOUCHERS, seedVouchers));
   const [userAccounts, setUserAccounts] = useState<UserAccount[]>(() => loadJson<UserAccount[]>(STORAGE_USERS, []));
   const [voucherForm, setVoucherForm] = useState({ role: "Volontaire actif", assignedTo: "" });
+  const [attemptLimits, setAttemptLimits] = useState<AttemptLimit[]>(() => loadJson<AttemptLimit[]>(STORAGE_ATTEMPT_LIMITS, []));
+  const [limitForm, setLimitForm] = useState({ identifier: "", identifierType: "email" as AttemptLimit["identifierType"], maxAttempts: 2, note: "" });
   const [accountNotice, setAccountNotice] = useState("");
   const [accessNotice, setAccessNotice] = useState("");
   const [syncStatus, setSyncStatus] = useState("");
@@ -863,6 +917,12 @@ export default function Home() {
     const timer = window.setTimeout(() => setRemainingSeconds((value) => value - 1), 1000);
     return () => window.clearTimeout(timer);
   }, [view, remainingSeconds]);
+
+  useEffect(() => {
+    if (view === "trainer" && trainerUnlocked && isSupabaseConfigured(settings)) {
+      refreshRemoteData();
+    }
+  }, [view, trainerUnlocked]);
 
   function updateCandidate(patch: Partial<Candidate>) {
     const next = { ...candidate, ...patch };
@@ -1133,6 +1193,15 @@ export default function Home() {
         saveJson(STORAGE_VOUCHERS, nextVouchers);
         saveJson(STORAGE_USERS, nextUsers);
         saveJson(STORAGE_ATTEMPTS, nextAttempts);
+        try {
+          const remoteLimits = await supabaseRequest<Record<string, unknown>[]>("/rest/v1/attempt_limits?select=*&order=created_at.desc");
+          const nextLimits = remoteLimits.map(normalizeAttemptLimit).filter((limit) => limit.identifier);
+          setAttemptLimits(nextLimits);
+          saveJson(STORAGE_ATTEMPT_LIMITS, nextLimits);
+        } catch (error) {
+          setSyncStatus(`supabase read: ${new Date().toISOString()} | attempt_limits: ${error instanceof Error ? error.message : "not ready"}`);
+          return;
+        }
         setSyncStatus(`supabase read: ${new Date().toISOString()}`);
         return;
       }
@@ -1248,6 +1317,18 @@ export default function Home() {
 
   function startExam(lot: ExamLot) {
     if (!lot.questions.length) return;
+    const matchingLimit = attemptLimits.find((limit) => matchesAttemptLimit(candidate, limit));
+    if (matchingLimit) {
+      const usedAttempts = attempts.filter((attempt) => attempt.status !== "cancelled" && candidateMatchesAttempt(candidate, attempt)).length;
+      if (usedAttempts >= matchingLimit.maxAttempts) {
+        setAccessNotice(language === "fr"
+          ? `Limite atteinte pour ce candidat: ${usedAttempts}/${matchingLimit.maxAttempts} tentative(s).`
+          : `Limit reached for this candidate: ${usedAttempts}/${matchingLimit.maxAttempts} attempt(s).`);
+        setView("home");
+        window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+        return;
+      }
+    }
     if (!candidate.hasAccount && guestMonthlyLotCount >= 2 && !hasGuestTriedLotThisMonth(candidate, attempts, lot.id)) {
       setAccessNotice(language === "fr"
         ? "Accès ponctuel limité à 2 lots d'examen par mois. Connectez-vous avec un compte voucher pour continuer."
@@ -1274,6 +1355,108 @@ export default function Home() {
         setSyncStatus(`supabase saveAttempt: ${error instanceof Error ? error.message : "sync error"}`);
       }
     }
+  }
+
+  async function saveAttemptLimit() {
+    const identifier = limitForm.identifier.trim();
+    if (!identifier) {
+      setSyncStatus(language === "fr" ? "Limite: email, nom ou compte requis." : "Limit: email, name, or account is required.");
+      return;
+    }
+    const normalizedIdentifier = limitForm.identifierType === "name" ? identifier.toLowerCase() : normalizeEmail(identifier);
+    const limit: AttemptLimit = {
+      id: crypto.randomUUID(),
+      identifier: normalizedIdentifier,
+      identifierType: limitForm.identifierType,
+      maxAttempts: Math.max(0, Number(limitForm.maxAttempts || 0)),
+      active: true,
+      note: limitForm.note.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    const nextLimits = [limit, ...attemptLimits.filter((item) =>
+      !(item.identifierType === limit.identifierType && item.identifier.toLowerCase() === limit.identifier.toLowerCase()),
+    )];
+    setAttemptLimits(nextLimits);
+    saveJson(STORAGE_ATTEMPT_LIMITS, nextLimits);
+    setLimitForm({ identifier: "", identifierType: "email", maxAttempts: 2, note: "" });
+    if (isSupabaseConfigured(settings)) {
+      try {
+        await supabaseRequest("/rest/v1/attempt_limits?on_conflict=id", {
+          method: "POST",
+          prefer: "resolution=merge-duplicates",
+          body: [attemptLimitToSupabase(limit)],
+        });
+        setSyncStatus(`supabase saveLimit: ${new Date().toISOString()}`);
+      } catch (error) {
+        setSyncStatus(`supabase saveLimit: ${error instanceof Error ? error.message : "sync error"}`);
+      }
+    }
+  }
+
+  async function deleteAttempt(attempt: Attempt) {
+    if (!window.confirm(language === "fr" ? "Supprimer cette tentative ?" : "Delete this attempt?")) return;
+    const nextAttempts = attempts.filter((item) => item.id !== attempt.id);
+    setAttempts(nextAttempts);
+    saveJson(STORAGE_ATTEMPTS, nextAttempts);
+    if (isSupabaseConfigured(settings)) {
+      try {
+        await supabaseRequest(`/rest/v1/attempt_answers?attempt_id=eq.${encodeURIComponent(attempt.id)}`, { method: "DELETE" });
+        await supabaseRequest(`/rest/v1/attempts?id=eq.${encodeURIComponent(attempt.id)}`, { method: "DELETE" });
+        setSyncStatus(`supabase deleteAttempt: ${new Date().toISOString()}`);
+      } catch (error) {
+        setSyncStatus(`supabase deleteAttempt: ${error instanceof Error ? error.message : "sync error"}`);
+      }
+    }
+  }
+
+  function detailedAttemptText(attempt: Attempt) {
+    const lot = examLots.find((item) => item.id === attempt.lotId);
+    const lines = [
+      `${language === "fr" ? "Resultats detailles" : "Detailed results"} - ${attempt.candidate.name}`,
+      `${language === "fr" ? "Test" : "Test"}: ${attempt.lotTitle}`,
+      `Score: ${attempt.score}/${attempt.total} (${attempt.percent}%) - ${grade(attempt.percent).label}`,
+      `${language === "fr" ? "Date" : "Date"}: ${(attempt.submittedAt ?? attempt.startedAt).slice(0, 19)}`,
+      "",
+    ];
+    if (!lot) return lines.join("\n");
+    lot.questions.forEach((question, index) => {
+      const given = attempt.answers[question.id] ?? [];
+      lines.push(`${index + 1}. ${question.prompt[language]}`);
+      lines.push(`${language === "fr" ? "Votre reponse" : "Your answer"}: ${given.length ? given.map((item) => optionLetters[item]).join(", ") : copy[language].noAnswer}`);
+      lines.push(`${language === "fr" ? "Bonne reponse" : "Correct answer"}: ${question.correct.map((item) => optionLetters[item]).join(", ")}`);
+      lines.push(`${language === "fr" ? "Explication" : "Explanation"}: ${question.explanation[language]}`);
+      lines.push("");
+    });
+    return lines.join("\n");
+  }
+
+  async function sendDetailedResults(attempt: Attempt) {
+    const email = normalizeEmail(attempt.candidate.email);
+    if (!email) {
+      setSyncStatus(language === "fr" ? "Email impossible: ce candidat n'a pas d'adresse email." : "Email unavailable: this candidate has no email address.");
+      return;
+    }
+    const subject = `${language === "fr" ? "Resultats detailles" : "Detailed results"} - ${attempt.lotTitle}`;
+    const body = detailedAttemptText(attempt);
+    if (isSupabaseConfigured(settings)) {
+      try {
+        await supabaseRequest("/rest/v1/email_queue", {
+          method: "POST",
+          body: [{
+            attempt_id: attempt.id,
+            to_email: email,
+            subject,
+            payload_json: { body },
+            status: "queued",
+            created_at: new Date().toISOString(),
+          }],
+        });
+      } catch {
+        // The mailto fallback remains available if the optional queue table is not installed yet.
+      }
+    }
+    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSyncStatus(language === "fr" ? "Email detaille prepare." : "Detailed email prepared.");
   }
 
   function submitAttempt(status: Attempt["status"]) {
@@ -1306,6 +1489,9 @@ export default function Home() {
     setActiveAttempt(attempt);
     syncAttempt(attempt);
     setView(status === "submitted" ? "results" : "home");
+    if (status === "submitted") {
+      window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+    }
   }
 
   function toggleAnswer(question: Question, optionIndex: number) {
@@ -1692,6 +1878,48 @@ export default function Home() {
               </div>
 
               <div className="panel wide">
+                <h2>{language === "fr" ? "Limites des essais" : "Attempt limits"}</h2>
+                <div className="form-grid">
+                  <label>{language === "fr" ? "Email, nom ou compte" : "Email, name, or account"}
+                    <input value={limitForm.identifier} onChange={(event) => setLimitForm({ ...limitForm, identifier: event.target.value })} placeholder="candidat@email.com" />
+                  </label>
+                  <label>{language === "fr" ? "Type de recherche" : "Match type"}
+                    <select value={limitForm.identifierType} onChange={(event) => setLimitForm({ ...limitForm, identifierType: event.target.value as AttemptLimit["identifierType"] })}>
+                      <option value="email">Email</option>
+                      <option value="name">{language === "fr" ? "Nom" : "Name"}</option>
+                      <option value="account">{language === "fr" ? "Compte" : "Account"}</option>
+                    </select>
+                  </label>
+                  <label>{language === "fr" ? "Nombre maximal d'essais" : "Maximum attempts"}
+                    <input type="number" min="0" value={limitForm.maxAttempts} onChange={(event) => setLimitForm({ ...limitForm, maxAttempts: Number(event.target.value) })} />
+                  </label>
+                  <label>Note
+                    <input value={limitForm.note} onChange={(event) => setLimitForm({ ...limitForm, note: event.target.value })} placeholder={language === "fr" ? "Ex. reprise autorisee" : "Ex. retake authorized"} />
+                  </label>
+                </div>
+                <div className="actions">
+                  <button className="primary" onClick={saveAttemptLimit}>! {language === "fr" ? "Enregistrer la limite" : "Save limit"}</button>
+                </div>
+                <div className="table-wrap">
+                  <table>
+                    <thead><tr><th>{language === "fr" ? "Candidat" : "Candidate"}</th><th>Type</th><th>{language === "fr" ? "Limite" : "Limit"}</th><th>Note</th><th>{t.date}</th></tr></thead>
+                    <tbody>
+                      {attemptLimits.map((limit) => (
+                        <tr key={limit.id}>
+                          <td>{limit.identifier}</td>
+                          <td>{limit.identifierType}</td>
+                          <td>{limit.maxAttempts}</td>
+                          <td>{limit.note || "-"}</td>
+                          <td>{limit.createdAt.slice(0, 10)}</td>
+                        </tr>
+                      ))}
+                      {!attemptLimits.length && <tr><td colSpan={5}>-</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="panel wide">
                 <h2>{t.cumulativeEco}</h2>
                 <Aggregate attempts={attempts} language={language} group="eco" lots={examLots} />
               </div>
@@ -1712,9 +1940,16 @@ export default function Home() {
                           <td>{attempt.score}/{attempt.total}</td>
                           <td>{attempt.percent}%</td>
                           <td><Badge percent={attempt.percent} /></td>
-                          <td><button onClick={() => { setActiveAttempt(attempt); setSelectedLotId(attempt.lotId); setView("results"); }}>◉ {t.see}</button></td>
+                          <td>
+                            <div className="row-actions">
+                              <button onClick={() => { setActiveAttempt(attempt); setSelectedLotId(attempt.lotId); setView("results"); window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0); }}>o {t.see}</button>
+                              <button onClick={() => sendDetailedResults(attempt)}>@ Email</button>
+                              <button className="danger-button" onClick={() => deleteAttempt(attempt)}>x {language === "fr" ? "Supprimer" : "Delete"}</button>
+                            </div>
+                          </td>
                         </tr>
                       ))}
+                      {!attempts.length && <tr><td colSpan={10}>-</td></tr>}
                     </tbody>
                   </table>
                 </div>

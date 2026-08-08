@@ -90,11 +90,34 @@ create table if not exists public.attempt_answers (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.attempt_limits (
+  id uuid primary key default gen_random_uuid(),
+  identifier text not null,
+  identifier_type text not null check (identifier_type in ('email', 'name', 'account')),
+  max_attempts integer not null default 2,
+  active boolean not null default true,
+  note text default '',
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.email_queue (
+  id uuid primary key default gen_random_uuid(),
+  attempt_id uuid references public.attempts(id) on delete set null,
+  to_email text not null,
+  subject text not null,
+  payload_json jsonb not null default '{}'::jsonb,
+  status text not null default 'queued' check (status in ('queued', 'sent', 'failed')),
+  created_at timestamptz not null default now(),
+  sent_at timestamptz
+);
+
 create index if not exists profiles_email_idx on public.profiles (lower(email));
 create index if not exists vouchers_assigned_to_idx on public.vouchers (lower(assigned_to));
 create index if not exists attempts_email_idx on public.attempts (lower(email));
 create index if not exists attempts_cohort_idx on public.attempts (cohort);
 create index if not exists attempt_answers_attempt_id_idx on public.attempt_answers (attempt_id);
+create index if not exists attempt_limits_identifier_idx on public.attempt_limits (identifier_type, lower(identifier));
+create index if not exists email_queue_status_idx on public.email_queue (status, created_at);
 
 create or replace function public.handle_new_exam_user()
 returns trigger
@@ -169,6 +192,8 @@ alter table public.exam_lots enable row level security;
 alter table public.question_bank enable row level security;
 alter table public.attempts enable row level security;
 alter table public.attempt_answers enable row level security;
+alter table public.attempt_limits enable row level security;
+alter table public.email_queue enable row level security;
 
 -- Prototype policies for the current static GitHub Pages app.
 -- For stricter production security, replace trainer writes with Supabase Edge Functions.
@@ -253,6 +278,20 @@ with check (true);
 drop policy if exists "attempt_answers_public_read_write" on public.attempt_answers;
 create policy "attempt_answers_public_read_write"
 on public.attempt_answers for all
+to anon, authenticated
+using (true)
+with check (true);
+
+drop policy if exists "attempt_limits_public_read_write" on public.attempt_limits;
+create policy "attempt_limits_public_read_write"
+on public.attempt_limits for all
+to anon, authenticated
+using (true)
+with check (true);
+
+drop policy if exists "email_queue_public_insert_read" on public.email_queue;
+create policy "email_queue_public_insert_read"
+on public.email_queue for all
 to anon, authenticated
 using (true)
 with check (true);
