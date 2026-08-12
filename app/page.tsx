@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import capmLot1Data from "./capm-lot1.json";
+import capmLot2Data from "./capm-lot2.json";
 
 type Language = "fr" | "en";
 type ExamType = "CAPM" | "PMP" | "Gestion de projet";
@@ -108,8 +109,8 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.2";
-const UPDATED_AT = "2026-08-08";
+const VERSION = "v0.2.3";
+const UPDATED_AT = "2026-08-12";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -177,8 +178,10 @@ const APPROACHES = {
 const optionLetters = ["A", "B", "C", "D", "E", "F"];
 
 const capmLot1 = capmLot1Data as ExamLot;
+const capmLot2 = capmLot2Data as ExamLot;
 const seedLots: ExamLot[] = [
   capmLot1,
+  capmLot2,
   {
     id: "pmp-placeholder",
     examType: "PMP",
@@ -1082,24 +1085,25 @@ export default function Home() {
     }
   }
 
-  async function seedCapmLot1ToSupabase() {
+  async function seedCapmLotsToSupabase() {
     try {
       if (!isSupabaseConfigured(settings)) {
         setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
         return;
       }
+      const capmLots = [capmLot1, capmLot2];
       await supabaseRequest("/rest/v1/exam_lots?on_conflict=id", {
         method: "POST",
-        body: [lotToSupabase(capmLot1)],
+        body: capmLots.map(lotToSupabase),
         prefer: "resolution=merge-duplicates,return=representation",
       });
       await supabaseRequest("/rest/v1/question_bank?on_conflict=id", {
         method: "POST",
-        body: capmLot1.questions.map((question) => questionToSupabase(question, capmLot1)),
+        body: capmLots.flatMap((lot) => lot.questions.map((question) => questionToSupabase(question, lot))),
         prefer: "resolution=merge-duplicates,return=representation",
       });
       setExamLots(seedLots);
-      setSyncStatus(`supabase seed OK: ${capmLot1.questions.length} questions CAPM Lot 1`);
+      setSyncStatus(`supabase seed OK: ${capmLots.reduce((sum, lot) => sum + lot.questions.length, 0)} questions CAPM Lots 1-2`);
     } catch (error) {
       setSyncStatus(`supabase seed ERROR: ${error instanceof Error ? error.message : "sync error"}`);
     }
@@ -1806,7 +1810,7 @@ export default function Home() {
                 <p className="muted">{language === "fr" ? "Le bouton de test ecrit un voucher DBTEST dans Supabase puis relit les tables. Si les tables manquent, le statut affichera l'erreur exacte." : "The test button writes a DBTEST voucher to Supabase and reads the tables back. If tables are missing, the status displays the exact error."}</p>
                 <div className="actions">
                   <button className="primary" onClick={testSupabaseConnection}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
-                  <button onClick={seedCapmLot1ToSupabase}>＋ {language === "fr" ? "Charger CAPM Lot 1" : "Load CAPM Lot 1"}</button>
+                  <button onClick={seedCapmLotsToSupabase}>＋ {language === "fr" ? "Charger CAPM Lots 1-2" : "Load CAPM Lots 1-2"}</button>
                   <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
                 </div>
               </div>

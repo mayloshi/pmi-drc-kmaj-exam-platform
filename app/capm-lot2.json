@@ -1,0 +1,2280 @@
+{
+  "id": "capm-2026-lot-2-predictif-agile-questions-01-50",
+  "title": {
+    "fr": "CAPM 2026 - Lot 2 - Prédictif et Agile - Questions 1 à 50",
+    "en": "CAPM 2026 - Lot 2 - Predictive and Agile - Questions 1 to 50"
+  },
+  "examType": "CAPM",
+  "source": "CAPM 2026 Lot 2 Predictif et agile 50 questions.docx + CAPM_2026_Lot_2_Traduction_FR_Questions_01-50.docx",
+  "questionCount": 50,
+  "questions": [
+    {
+      "id": "L2Q1",
+      "type": "single",
+      "prompt": {
+        "fr": "Lorsque les dimensions des canaux creusés pour le nouveau projet de barrage ont été comparées au plan, un écart significatif a été constaté. Par conséquent, le chef de projet a dû tenir une réunion avec l’équipe afin de décider des prochaines étapes. À laquelle des zones d’intervention suivantes l’activité du chef de projet appartient-elle ?",
+        "en": "When the dimensions of the dug canals for the new dam project were compared to the plan, a significant variance was discovered. As a result, the project manager had to hold a meeting with the team to decide on the next steps. To which of the following focus areas does the project manager’s activity belong?"
+      },
+      "options": [
+        {
+          "fr": "Exécution",
+          "en": "Executing"
+        },
+        {
+          "fr": "Clôture",
+          "en": "Closing"
+        },
+        {
+          "fr": "Suivi et maîtrise",
+          "en": "Monitoring and Controlling"
+        },
+        {
+          "fr": "Inspection",
+          "en": "Inspecting"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "L’examen de la performance du projet par rapport aux plans fait partie de la zone d’intervention du suivi et de la maîtrise. Ces processus servent à suivre, ajuster et rendre compte de la performance du projet, ainsi qu’à mettre en œuvre des actions correctives lorsque cela est nécessaire afin de veiller à ce que le projet reste sur la bonne voie, tant sur le plan budgétaire que sur celui des délais (PMBOK, 8e édition, page 72). L’inspection n’est pas une zone d’intervention ; il s’agit plutôt d’une activité d’identification des risques.",
+        "en": "Reviewing the project performance in comparison to plans is part of the monitoring and controlling focus area. These processes are meant for tracking, adjusting, and reporting on the project performance, as well as implementing corrective actions when needed to ensure the project is on track, budget and time-wise (PMBOK 8th Edition, page 72). Inspecting is not a focus area, it’s rather a risk identification activity."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q2",
+      "type": "single",
+      "prompt": {
+        "fr": "Après avoir créé le diagramme de réseau, le chef de projet a identifié trois chemins critiques. Que devrait-il faire ensuite ?",
+        "en": "After creating the network diagram, the project manager identified three critical paths. What should the project manager do next?"
+      },
+      "options": [
+        {
+          "fr": "Approuver le diagramme de réseau et surveiller attentivement les trois chemins critiques.",
+          "en": "Approve the network diagram and monitor all three critical paths closely."
+        },
+        {
+          "fr": "Approuver le diagramme de réseau et concentrer le suivi sur le chemin le plus long.",
+          "en": "Approve the network diagram and focus on monitoring the longest path."
+        },
+        {
+          "fr": "Revoir le diagramme de réseau, puisqu’il ne devrait comporter qu’un seul chemin critique.",
+          "en": "Review the network diagram since it should only have one critical path."
+        },
+        {
+          "fr": "Revoir le diagramme de réseau, puisqu’il ne devrait pas comporter plus de deux chemins critiques.",
+          "en": "Review the network diagram since it shouldn’t have more than two critical paths."
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le chef de projet devrait approuver le diagramme de réseau et surveiller attentivement les trois chemins critiques. En théorie, le nombre de chemins critiques que peut comporter un diagramme de réseau n’est pas limité. Lorsqu’un projet comporte plusieurs chemins critiques, tous doivent avoir exactement la même durée.",
+        "en": "The project manager should approve the network diagram and closely monitor all three critical paths. Theoretically, there is no limit on how many critical paths a network diagram could have. If a project has more than one critical path, then all critical paths must have exactly the same length."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q3",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle technique est utilisée pour élaborer la WBS ?",
+        "en": "Which technique is used to develop the WBS?"
+      },
+      "options": [
+        {
+          "fr": "Décomposition du périmètre",
+          "en": "Scope decomposition"
+        },
+        {
+          "fr": "Estimation ascendante",
+          "en": "Bottom-up estimating"
+        },
+        {
+          "fr": "Planification par vagues successives",
+          "en": "Rolling wave planning"
+        },
+        {
+          "fr": "Analyse par liste de contrôle",
+          "en": "Checklist analysis"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "La décomposition du périmètre est une méthode de planification utilisée pour décomposer et subdiviser le projet et les livrables du périmètre en unités de travail plus petites et plus faciles à gérer. Le niveau de décomposition dépend de la complexité et de la taille du projet (PMBOK, 8e édition, page 163).",
+        "en": "Scope decomposition is a planning method used to decompose and subdivide the project and scope deliverables into more manageable, small work units. The decomposition level depends on the complexity and size of the project (PMBOK 8th edition, page 163)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q4",
+      "type": "single",
+      "prompt": {
+        "fr": "Lors d’une réunion sur l’état d’avancement du projet, le chef de projet a informé le sponsor de la performance du projet, en indiquant que le SPI est de 0,75 et le CPI de 1,05. Qu’est-ce que cela implique ?",
+        "en": "During a project status meeting, the project manager updated the sponsor on the project performance, indicating that the SPI is 0.75 and the CPI is 1.05. What does this imply?"
+      },
+      "options": [
+        {
+          "fr": "Le projet respecte l’échéancier, mais dépasse le budget",
+          "en": "The project is on schedule but over budget"
+        },
+        {
+          "fr": "Le projet est en retard sur l’échéancier, mais respecte le budget",
+          "en": "The project is behind schedule but within budget"
+        },
+        {
+          "fr": "Le projet respecte le budget et l’échéancier",
+          "en": "The project is within budget and on schedule"
+        },
+        {
+          "fr": "Le projet dépasse le budget et est en retard sur l’échéancier",
+          "en": "The project is over budget and behind schedule"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Un indice de performance de l’échéancier (SPI) inférieur à 1 indique que le projet est en retard sur l’échéancier. Un indice de performance des coûts (CPI) supérieur à 1 signifie que le projet respecte le budget prédéterminé (PMBOK, 8e édition, pages 208-209).",
+        "en": "A Schedule Performance Index (SPI) of less than 1 indicates that the project is behind schedule. A Cost Performance Index (CPI) greater than 1 means that the project is within the predetermined budget (PMBOK 8th Edition, pages 208-209)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q5",
+      "type": "single",
+      "prompt": {
+        "fr": "Un Business Analyst est affecté à un projet de développement d’une application mobile. Une semaine avant la date de livraison du produit, le client demande une modification d’une exigence business particulière. Que devrait faire le Business Analyst ?",
+        "en": "A Business Analyst is assigned to a Mobile App development project. One week prior to the product delivery date, the client requests a change to a specific business requirement. What should the Business Analyst do?"
+      },
+      "options": [
+        {
+          "fr": "Procéder à la mise en œuvre de la modification demandée",
+          "en": "Proceed with implementing the requested change"
+        },
+        {
+          "fr": "Soumettre la demande du client au comité de maîtrise des changements (CCB) pour examen",
+          "en": "Refer the client’s request to the Change Control Board (CCB) for review"
+        },
+        {
+          "fr": "Mesurer l’incidence de la modification demandée sur la date de livraison",
+          "en": "Measure the impact of the requested change on the delivery date"
+        },
+        {
+          "fr": "Livrer le produit, puis travailler sur la modification demandée",
+          "en": "Deliver the product and then work on the requested change"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Les demandes de changement doivent être examinées et discutées par le comité de maîtrise des changements (CCB) afin d’analyser leur incidence sur le projet, notamment sur sa date de livraison, puis d’être acceptées ou rejetées en conséquence. Le Business Analyst (BA) ne devrait pas procéder à la mise en œuvre du changement sans avoir préalablement présenté la demande au CCB et obtenu son approbation (PMBOK, 8e édition, pages 29-30).",
+        "en": "Change requests should be reviewed and discussed by the Change Control Board (CCB) to analyze their impact on the project, including its delivery date, and accordingly, get accepted or rejected. The Business Analyst (BA) should not proceed with implementing the change without presenting the request to the CCB and getting their approval first (PMBOK 8th Edition, pages 29-30)."
+      },
+      "eco": {
+        "fr": "Cadres d'analyse business",
+        "en": "Business Analysis Frameworks"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q6",
+      "type": "single",
+      "prompt": {
+        "fr": "Lors d’une réunion d’évaluation de la performance du projet, un chef de projet a présenté les chiffres suivants : AC = 4 000 $, PV = 5 000 $ et EV = 5 500 $. Qu’est-ce que cela indique au sujet du projet ?",
+        "en": "During a project performance review meeting, a project manager presented the following figures: AC = $4,000, PV = $5,000, and EV = $5,500. What does that indicate about the project?"
+      },
+      "options": [
+        {
+          "fr": "Le projet est en avance sur l’échéancier et en dessous du budget, puisque la SV et la CV sont toutes deux positives.",
+          "en": "The project is ahead of schedule and under budget since both the SV and CV are positive."
+        },
+        {
+          "fr": "Ces chiffres ne suffisent pas pour calculer le CPI et le SPI du projet.",
+          "en": "These figures are not enough to calculate the project’s CPI and SPI."
+        },
+        {
+          "fr": "Le chef de projet a probablement dépensé plus que ce qui avait été initialement prévu, puisque la CV est négative.",
+          "en": "The project manager has probably spent more than they initially planned to since the CV is negative."
+        },
+        {
+          "fr": "Le projet est en retard sur l’échéancier, puisque la SV est négative.",
+          "en": "The project is behind schedule since the SV is negative."
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "CV = EV – AC = 5 500 $ – 4 000 $ = 1 500 $. L’écart de coût (CV) est positif, ce qui signifie que le projet est en dessous du budget.\nSV = EV – PV = 5 500 $ – 5 000 $ = 500 $. L’écart de délais (SV) est positif, ce qui signifie que le projet est en avance sur l’échéancier (PMBOK, 8e édition, pages 207-208).",
+        "en": "CV = EV – AC = $5,500 – $4,000 = $1,500. The Cost Variance (CV) is positive, which means that the project is under budget.\nSV = EV – PV = $5,500 – $5,000 = $500. The Schedule Variance (SV) is positive, which means that the project is ahead of schedule (PMBOK 8th Edition, pages 207-208)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q7",
+      "type": "single",
+      "prompt": {
+        "fr": "Le chemin le plus long dans un diagramme de réseau est appelé :",
+        "en": "The longest path in a network diagram is known as:"
+      },
+      "options": [
+        {
+          "fr": "Chemin critique",
+          "en": "Critical Path"
+        },
+        {
+          "fr": "Chaîne critique",
+          "en": "Critical Chain"
+        },
+        {
+          "fr": "Marge",
+          "en": "Float"
+        },
+        {
+          "fr": "Marge libre",
+          "en": "Free Float"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Dans un diagramme de réseau, le chemin critique est le chemin comportant la plus longue série de tâches (PMBOK, 8e édition, page 267).\nOption B : la chaîne critique est également le chemin le plus long du diagramme de réseau, mais, contrairement au chemin critique, elle tient compte de la disponibilité des ressources en plus des dépendances techniques.\nOption C : les activités qui ne se trouvent pas sur le chemin critique disposent d’une certaine marge, également appelée marge totale, qui autorise un certain retard sans entraîner le report ou la modification de la date de fin du projet.\nOption D : la marge libre correspond à la durée pendant laquelle une activité peut être retardée sans retarder le début au plus tôt de l’activité qui lui succède immédiatement (PMBOK, 8e édition, page 161).",
+        "en": "Option D: Free float is the amount of time an activity can be delayed without delaying the early start of the immediate subsequent activity (PMBOK 8th Edition, page 161)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q8",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet est affecté à un projet de 12 mois doté d’un budget de 100 000 $. Six mois se sont écoulés et 60 000 $ ont été dépensés. Après un examen plus approfondi, le chef de projet constate que seulement 40 % du travail a été achevé jusqu’à présent. La valeur des 40 % de travail achevé est appelée :",
+        "en": "A project manager is assigned to a 12-month project that has a $100,000 budget. Six months have passed and $60,000 has been spent. On closer inspection, the project manager finds out that so far, only 40% of the work has been completed. The value of the completed 40% work is referred to as:"
+      },
+      "options": [
+        {
+          "fr": "Valeur planifiée",
+          "en": "Planned value"
+        },
+        {
+          "fr": "Valeur acquise",
+          "en": "Earned value"
+        },
+        {
+          "fr": "Coût réel",
+          "en": "Actual cost"
+        },
+        {
+          "fr": "Écart de coût",
+          "en": "Cost variance"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : la valeur planifiée est de 50 000 $ (50 % du budget).\nOption B : la valeur acquise désigne la valeur du travail accompli à ce jour (PMBOK, 8e édition, page 169). Si le projet est interrompu à ce stade, la valeur acquise indiquera la valeur que le projet a produite. Dans ce cas, la valeur acquise (EV) du projet est de 40 000 $, soit 40 % de la valeur totale du travail.\nOption C : le montant de 60 000 $ représente le coût réel (AC).\nOption D : l’écart de coût est de –20 000 $ (EV – AC).",
+        "en": "Option A: The planned value is $50,000 (50% of the budget).\nOption D: The cost variance is -$20,000 (EV - AC)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q9",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Parmi les affirmations suivantes, lesquelles sont vraies concernant les livrables d’un projet prédictif ? (Choisissez deux réponses.)",
+        "en": "Which of the following statements are true about the deliverables of a predictive project? (Select two)"
+      },
+      "options": [
+        {
+          "fr": "Les livrables du projet devraient être identifiés tout au long du cycle de vie du projet.",
+          "en": "Project deliverables should be identified throughout the project lifecycle."
+        },
+        {
+          "fr": "Les livrables du projet peuvent être des produits, des services ou tout autre type de résultat.",
+          "en": "Project deliverables can be products, services, or any other type of outcome."
+        },
+        {
+          "fr": "Une fois définis, les livrables du projet ne devraient plus être modifiés.",
+          "en": "Once defined, project deliverables should not be changed anymore."
+        },
+        {
+          "fr": "Les critères d’acceptation des livrables devraient être définis dans l’accord de projet.",
+          "en": "The acceptance criteria for deliverables should be outlined in the project agreement."
+        },
+        {
+          "fr": "Le chef de projet devrait approuver les livrables afin de clôturer le projet.",
+          "en": "The project manager should approve the deliverables in order to close the project."
+        }
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": {
+        "fr": "Les livrables du projet peuvent être des produits, des services ou tout autre type de résultat. Les critères d’acceptation devraient être décrits et convenus.\nOption A : dans une approche prédictive, les livrables du projet devraient être déterminés, décrits et convenus le plus tôt possible dans le projet afin d’éviter ultérieurement des changements coûteux.\nOption C : une modification est possible et devrait suivre le processus de demande de changement.\nOption E : les livrables du projet devraient être approuvés par le client, et non par le chef de projet, afin de clôturer le projet.",
+        "en": "Project deliverables can be products, services, or any other type of outcome. Acceptance criteria should be described and agreed upon.\nOption A: In a predictive approach, project deliverables should be determined, described, and agreed upon as early as possible in the project, to avoid any costly changes later on.\nOption C: The change is possible and should follow the change request process.\nOption E: Project deliverables should be approved by the customer, not the project manager, in order to close the project."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q10",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Parmi les affirmations suivantes, lesquelles décrivent les caractéristiques de l’approche prédictive du management de projet ? (Choisissez deux réponses.)",
+        "en": "Which of the following statements describes the characteristics of the predictive project management approach? (Select two)"
+      },
+      "options": [
+        {
+          "fr": "Le périmètre, les délais et les coûts sont établis au cours des premières phases du projet.",
+          "en": "Scope, time, and cost are established in the early phases of the project."
+        },
+        {
+          "fr": "Les changements sont limités autant que possible pendant l’exécution du projet.",
+          "en": "Change is limited as much as possible during project execution."
+        },
+        {
+          "fr": "Le périmètre est déterminé tôt dans le cycle de vie du projet, mais les délais et les coûts sont fréquemment ajustés.",
+          "en": "The scope is determined early in the project life cycle, but time and cost are frequently adjusted."
+        },
+        {
+          "fr": "Après une itération, les livrables disposent de fonctionnalités suffisantes pour être considérés comme achevés.",
+          "en": "After one iteration, deliverables have enough functionality to be deemed complete."
+        }
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": {
+        "fr": "Les méthodes prédictives mettent l’accent sur une analyse et une planification approfondies de l’avenir, tout en tenant compte des risques connus. Le périmètre, les délais et les coûts sont tous prédéterminés tôt dans le cycle de vie du projet. Les équipes prédictives mettent souvent en place un comité de maîtrise des changements (CCB) afin de veiller à ce que seuls les changements apportant de la valeur soient envisagés pour mise en œuvre.",
+        "en": "Predictive methods focus on thoroughly analyzing and planning the future while taking into account known risks. The scope, time, and cost are all predetermined early in the project life cycle. Predictive teams often establish a Change Control Board (CCB) to ensure that only valuable changes are considered for implementation."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q11",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans l’approche prédictive, lequel des termes suivants est utilisé à la fois pour l’échéancier et les coûts afin de définir la référence par rapport à laquelle les mesures seront effectuées ultérieurement pendant la phase de suivi et de maîtrise ?",
+        "en": "In the predictive approach, which of the following terms is used for both schedule and cost to define what you’ll measure against later in the monitoring and controlling phase?"
+      },
+      "options": [
+        {
+          "fr": "Écart",
+          "en": "Variance"
+        },
+        {
+          "fr": "Valeur attendue",
+          "en": "Expected value"
+        },
+        {
+          "fr": "Référence de base",
+          "en": "Baseline"
+        },
+        {
+          "fr": "Estimations",
+          "en": "Estimates"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les références de base des coûts et de l’échéancier sont utilisées pour évaluer la performance au cours des phases de suivi et de maîtrise (PMBOK, 8e édition, pages 47 et 60).",
+        "en": "Cost and schedule baselines are used to assess performance in the monitoring and controlling phases (PMBOK 8th Edition, pages 47 & 60)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q12",
+      "type": "single",
+      "prompt": {
+        "fr": "Le diagramme ci-dessous illustre la décomposition des livrables du projet en tâches plus petites.\n\nCe diagramme est appelé :",
+        "en": "The diagram below depicts the decomposition of project deliverables into smaller tasks.\n\nThis diagram is referred to as:"
+      },
+      "options": [
+        {
+          "fr": "Diagramme d’affinités",
+          "en": "Affinity diagram"
+        },
+        {
+          "fr": "Décomposition du produit",
+          "en": "Product breakdown"
+        },
+        {
+          "fr": "Feuille de route du produit",
+          "en": "Product roadmap"
+        },
+        {
+          "fr": "Structure de découpage du projet (WBS)",
+          "en": "Work breakdown structure"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Option A : les diagrammes d’affinités classent un grand nombre d’idées en groupes en vue de leur analyse et de leur examen.\nOption B : la décomposition du produit est une technique d’analyse du produit (PMI — Guide des groupes de processus, page 288).\nOption C : la feuille de route du produit présente la séquence prévue des livrables pendant toute la durée du projet.\nOption D : la WBS est une décomposition hiérarchique de l’ensemble du périmètre de travail nécessaire pour créer les livrables requis (PMBOK, 8e édition, page 38). Le travail planifié est inclus au niveau le plus bas des composants de la WBS, appelés lots de travail.",
+        "en": "Option C: The product roadmap demonstrates the anticipated sequence of deliverables throughout the project duration.\nOption D: The WBS is a hierarchical decomposition of the total scope of work to create the required deliverables (PMBOK 8th edition, page 38). The planned work is included in the lowest level of the WBS components, which are called work packages."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q13",
+      "type": "single",
+      "prompt": {
+        "fr": "Le SPI du projet est de 0,8, tandis que son CPI est de 1,1. Quelle devrait être la principale préoccupation du chef de projet ?",
+        "en": "The project SPI is 0.8, while the CPI is 1.1. What should be the project manager’s main concern?"
+      },
+      "options": [
+        {
+          "fr": "Aucune, le projet affiche une bonne performance",
+          "en": "​Nothing, the project is performing well​"
+        },
+        {
+          "fr": "Les coûts",
+          "en": "Cost​"
+        },
+        {
+          "fr": "L’échéancier",
+          "en": "Schedule"
+        },
+        {
+          "fr": "Les risques",
+          "en": "​Risk"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Puisque l’indice de performance de l’échéancier (SPI) est inférieur à 1,0, le projet est en retard sur l’échéancier. Par conséquent, le chef de projet devrait se préoccuper de l’échéancier du projet (PMBOK, 8e édition, page 209).\nOption B : puisque le CPI est de 1,1, le projet est en dessous du budget. Il respecte donc les prévisions sur le plan des coûts (PMBOK, 8e édition, page 208).\nOption D : rien dans la question n’indique que le chef de projet devrait se préoccuper des risques.",
+        "en": "Since the Schedule Performance Index (SPI) is less than 1.0, then the project is behind schedule. Consequently, the project manager should be concerned about the project schedule (PMBOK 8th Edition, page 209).\nOption B: Since CPI is 1.1, then the project is under budget. Thus, the project is on track cost-wise (PMBOK 8th Edition, page 208).\nOption D: There is no indication in the question that the project manager should be concerned about risks."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q14",
+      "type": "single",
+      "prompt": {
+        "fr": "Que devrait faire le chef de projet pour prévenir la dérive du périmètre et se concentrer sur la satisfaction des exigences du produit ?",
+        "en": "What should the project manager do to prevent scope creep and focus on fulfilling product requirements?"
+      },
+      "options": [
+        {
+          "fr": "Demander à l’équipe projet de négliger les petites exigences afin de se concentrer uniquement sur les exigences importantes.",
+          "en": "Ask the project team to overlook small requirements to focus solely on significant ones."
+        },
+        {
+          "fr": "Veiller à ce que toutes les modifications du périmètre soient autorisées au moyen d’un processus formel.",
+          "en": "Make sure that all alterations to the scope are authorized through a formal process."
+        },
+        {
+          "fr": "Empêcher les parties prenantes d’interagir directement avec l’équipe projet.",
+          "en": "Prevent stakeholders from directly engaging with the project team."
+        },
+        {
+          "fr": "La dérive du périmètre est inévitable dans un projet prédictif ; le chef de projet devrait donc adopter une approche agile.",
+          "en": "Scope creep is unavoidable in a predictive project, therefore the project manager should adopt an agile approach instead."
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : les exigences ne devraient pas être ignorées, qu’elles soient petites ou importantes.\nOption B : le chef de projet peut éviter la dérive du périmètre en respectant le processus de gestion des changements convenu. Les processus de gestion des changements doivent être établis dès le départ et être très clairs. Concrètement, lorsqu’un changement est proposé, il devrait être examiné, approuvé ou rejeté, puis intégré au plan de management du projet s’il est approuvé.\nOption C : il n’est souvent pas approprié d’empêcher les parties prenantes de communiquer avec l’équipe projet.\nOption D : tous les projets ne se prêtent pas à l’approche agile ; il n’est donc pas approprié de modifier l’approche de développement du projet dans le seul but de prévenir la dérive du périmètre.",
+        "en": "Option A: Requirements shouldn’t be skipped, small or big.\nOption D: Not all projects are fit for the agile approach, therefore it’s not appropriate to change the project’s development approach just to prevent scope creep."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q15",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet supervise un projet qui a récemment connu une performance irrégulière et un taux élevé de défauts. Au cours d’une réunion, le sponsor demande où en est actuellement le projet et souhaite obtenir une vue d’ensemble de la performance du travail. Lequel des documents suivants le chef de projet devrait-il envoyer au sponsor ?",
+        "en": "A project manager is overseeing a project that has recently experienced inconsistent performance and a high defect rate. During a meeting, the sponsor asks where the project is currently standing, requesting an overview of work performance. Which of the following documents should the project manager send to the sponsor?"
+      },
+      "options": [
+        {
+          "fr": "Rapport qualité",
+          "en": "Quality report"
+        },
+        {
+          "fr": "Rapport d’avancement",
+          "en": "​Status report"
+        },
+        {
+          "fr": "Rapport sur les risques",
+          "en": "​Risk report"
+        },
+        {
+          "fr": "Plan de management du projet",
+          "en": "Project management plan"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Le rapport d’avancement est un rapport sur la performance du travail qui contient des informations sur la progression et l’état du projet (PMBOK, 8e édition, page 142). Le sponsor a demandé des informations sur la performance du travail afin de mieux comprendre la situation du projet et de prendre de meilleures décisions. Un rapport d’avancement peut inclure des informations sur la valeur acquise (EV), les courbes de tendance et les prévisions, les graphiques d’épuisement des réserves, ainsi que des synthèses des défauts et des risques, entre autres.\nOptions A et C : même si le projet présente un niveau de risque élevé et rencontre des problèmes de qualité, le sponsor n’a pas explicitement demandé un rapport détaillé sur les risques ou la qualité.\nOption D : le plan de management du projet n’est pas un document de reporting ; il s’agit d’un document de planification élaboré pendant la phase de planification du projet (PMBOK, 8e édition, page 126).",
+        "en": "The status report is a work performance report that includes information on the project's progress and status (PMBOK 8th edition, page 142). The sponsor asked for work performance information to help them gain insight into the project situation and make better decisions. A status report can include information about Earned Value (EV), trend lines and forecasts, reserve burndown charts, defect and risk summaries, etc.\nOptions A & C: Even though the project is at high risk and is encountering quality issues, the sponsor didn’t explicitly request a detailed risk or quality report.\nOption D: The project management plan is not a reporting document; it’s a planning document that is elaborated in the project planning phase (PMBOK 8th Edition, page 126)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q16",
+      "type": "single",
+      "prompt": {
+        "fr": "Qu’est-ce que la valeur acquise ?",
+        "en": "What is Earned Value?"
+      },
+      "options": [
+        {
+          "fr": "La différence entre le coût budgété du travail réalisé et son coût réel.",
+          "en": "The difference between the budgeted cost of the performed work and its actual cost."
+        },
+        {
+          "fr": "La valeur de la main-d’œuvre utilisée sur le projet jusqu’à la date actuelle.",
+          "en": "The value of the labor used on the project up to the current date."
+        },
+        {
+          "fr": "Une technique permettant de déterminer la part du budget qui aurait dû être dépensée en fonction du travail réalisé à ce jour.",
+          "en": "A technique to determine how much of the budget should have been spent based on the work done so far."
+        },
+        {
+          "fr": "Le montant dépensé jusqu’à présent pour le projet.",
+          "en": "The amount of money that has been spent so far on the project."
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "La valeur acquise (EV) est la méthode utilisée pour mesurer la part du budget alloué qui aurait dû être dépensée compte tenu du travail réalisé à ce jour (PMBOK, 8e édition, page 169). Cette technique permet au chef de projet de calculer l’écart de coût (CV), qui correspond à la différence entre le coût budgété du travail réalisé (EV) et son coût réel, afin de déterminer si le projet est en dessous ou au-dessus du budget. Le montant dépensé jusqu’à présent représente le coût réel (AC).",
+        "en": "Earned Value (EV) is the method used to measure how much of the allocated budget should have been spent in view of the work realized to date (PMBOK 8th edition, page 169). This technique allows the project manager to calculate the Cost Variance (CV), which is the difference between the budgeted cost of the performed work (EV) and its actual cost, to eventually find out whether the project is under or over budget. The amount of money that has been spent so far represents the Actual Cost (AC)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Finance",
+        "en": "Finance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q17",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel élément pourrait être considéré comme la base permettant d’identifier les problèmes actuels ou futurs afin d’appuyer la décision relative aux demandes de changement ?",
+        "en": "What could be considered as the foundation for identifying current or future issues to support the decision of change requests?"
+      },
+      "options": [
+        {
+          "fr": "Maîtrise intégrée des changements",
+          "en": "Integrated Change Control"
+        },
+        {
+          "fr": "Référence de base du périmètre",
+          "en": "Scope baseline"
+        },
+        {
+          "fr": "Informations sur la performance du travail",
+          "en": "Work performance information"
+        },
+        {
+          "fr": "Registre des problèmes",
+          "en": "Issue log"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : la maîtrise intégrée des changements consiste à examiner toutes les demandes de changement, à les approuver ou à les rejeter, et à veiller à ce que les changements soient intégrés de manière fluide. Ce processus porte sur la gestion des demandes de changement plutôt que sur l’identification des problèmes actuels ou futurs (PMBOK, 8e édition, page 174).\nOption B : la référence de base du périmètre comprend l’énoncé approuvé du périmètre du projet et la structure de découpage du projet (WBS). Elle sert de référence pour comparer la performance réelle au périmètre planifié, mais elle n’est pas spécifiquement utilisée pour identifier les problèmes (PMBOK, 8e édition, page 38).\nOption C : les informations sur la performance du travail comprennent des données sur la performance du projet, telles que l’état des livrables, l’échéancier et les coûts. Elles peuvent aider à identifier les problèmes actuels ou futurs en comparant la performance réelle à la référence de base (PMBOK, 8e édition, page 144).\nOption D : le registre des problèmes consigne les problèmes identifiés et leur état ; il ne sert pas de base pour prévoir ou identifier des problèmes futurs. Il est utilisé pour suivre et gérer les problèmes existants, et non pour en anticiper de nouveaux (PMBOK, 8e édition, page 123).",
+        "en": "Option B: The scope baseline includes the approved project scope statement and work breakdown structure (WBS). It serves as a reference for comparing current performance to planned scope, but it is not specifically used for identifying issues (PMBOK 8th Edition, page 38).\nOption D: The issue log is a record of identified issues and their status; it does not serve as the foundation for predicting or identifying future issues. It is used to track and manage existing issues, rather than to anticipate new ones (PMBOK 8th Edition, page 123)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q18",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel outil ou quelle technique est utilisé pour valider le périmètre d’un projet ?",
+        "en": "Which tool or technique is used to validate the scope of a project?"
+      },
+      "options": [
+        {
+          "fr": "Ateliers facilités",
+          "en": "Facilitated workshops"
+        },
+        {
+          "fr": "Revues",
+          "en": "Reviews"
+        },
+        {
+          "fr": "Inspection",
+          "en": "Inspection"
+        },
+        {
+          "fr": "Audits",
+          "en": "Audits"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : les ateliers facilités sont utilisés pour définir le périmètre du projet, et non pour le valider.\nOption B : les revues peuvent servir à vérifier l’avancement, mais elles ne sont pas spécifiquement destinées à la validation du périmètre.\nOption C : l’inspection est la technique utilisée pour valider le périmètre en mesurant, en examinant et en testant les livrables afin de veiller à ce qu’ils respectent les critères définis (PMBOK, 8e édition, page 174).\nOption D : les audits sont généralement utilisés pour veiller au respect des processus et des procédures ; ils ne constituent pas un outil de validation du périmètre (PMBOK, 8e édition, page 148).",
+        "en": "Option B: Reviews can be used to check progress but are not specifically for scope validation.\nOption D: Audits are typically used to ensure compliance with processes and procedures, they aren’t a scope validation tool (PMBOK 8th Edition, page 148)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q19",
+      "type": "single",
+      "prompt": {
+        "fr": "La subdivision des livrables et du travail du projet en composants plus petits et plus faciles à gérer est liée à :",
+        "en": "Subdividing project deliverables and project work into smaller, more manageable parts is related to:"
+      },
+      "options": [
+        {
+          "fr": "Élaborer l’échéancier",
+          "en": "Develop Schedule"
+        },
+        {
+          "fr": "Élaborer la structure du périmètre",
+          "en": "Develop Scope Structure"
+        },
+        {
+          "fr": "Estimer les ressources",
+          "en": "Estimate Resources"
+        },
+        {
+          "fr": "Définir le périmètre",
+          "en": "Define Scope"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : élaborer l’échéancier consiste à planifier le calendrier des activités du projet (PMBOK, 8e édition, page 49).\nOption B : élaborer la structure du périmètre est le processus qui consiste à subdiviser les livrables et le travail du projet en composants plus petits et plus faciles à gérer (PMBOK, 8e édition, page 40).\nOption C : estimer les ressources consiste à estimer les ressources nécessaires pour réaliser les activités du projet (PMBOK, 8e édition, page 80).\nOption D : définir le périmètre consiste à déterminer le travail requis, mais n’implique pas sa décomposition (PMBOK, 8e édition, page 39).",
+        "en": "Option A: Develop Schedule involves planning the timing of project activities (PMBOK 8th Edition, page 49).\nOption D: Define Scope involves defining what work is required but does not involve breaking it down (PMBOK 8th Edition, page 39)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q20",
+      "type": "single",
+      "prompt": {
+        "fr": "Une partie prenante exprime un besoin que le chef de projet ne connaissait pas. Quel processus de gestion des parties prenantes le chef de projet a-t-il probablement omis ?",
+        "en": "A stakeholder expresses a need that is unknown to the project manager. Which stakeholder management process did the project manager likely skip?"
+      },
+      "options": [
+        {
+          "fr": "Planifier l’engagement des parties prenantes",
+          "en": "Plan Stakeholder Engagement"
+        },
+        {
+          "fr": "Identifier les parties prenantes",
+          "en": "Identify Stakeholders"
+        },
+        {
+          "fr": "Gérer l’engagement des parties prenantes",
+          "en": "Manage Stakeholder Engagement"
+        },
+        {
+          "fr": "Surveiller l’engagement des parties prenantes",
+          "en": "Monitor Stakeholder Engagement"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : planifier l’engagement des parties prenantes consiste à élaborer des stratégies d’engagement des parties prenantes, et non à les identifier (PMBOK, 8e édition, page 70).\nOption B : le chef de projet a probablement omis une étape du processus Identifier les parties prenantes, puisque ce processus consiste à déterminer qui sont les parties prenantes et quels pourraient être leurs besoins (PMBOK, 8e édition, page 70).\nOption C : gérer l’engagement des parties prenantes consiste à communiquer et à travailler avec les parties prenantes, mais suppose qu’elles ont déjà été identifiées (PMBOK, 8e édition, page 70).\nOption D : surveiller l’engagement des parties prenantes consiste à surveiller les relations et l’implication des parties prenantes, et non à procéder à leur identification initiale (PMBOK, 8e édition, page 70).",
+        "en": "Option A: Plan Stakeholder Engagement involves developing strategies for engaging stakeholders, not identifying them (PMBOK 8th Edition, page 70).\nOption D: Monitor Stakeholder Engagement involves monitoring relationships and stakeholder involvement, not initial identification (PMBOK 8th Edition, page 70)."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Stakeholders",
+        "en": "Stakeholders"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q21",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Une activité a un début au plus tôt (DTO) au jour 5, un début au plus tard (DTA) au jour 12, une fin au plus tôt (FTO) au jour 10 et une fin au plus tard (FTA) au jour 17. Parmi les affirmations suivantes, lesquelles sont correctes concernant cette activité ? (Choisissez deux réponses.)",
+        "en": "An activity has an Early Start (ES) on day 5, a Late Start (LS) on day 12, an Early Finish (EF) on day 10, and a Late Finish (LF) on day 17. Which of the following statements are correct regarding this activity? (Select two)"
+      },
+      "options": [
+        {
+          "fr": "L’activité se trouve sur le chemin critique.",
+          "en": "The activity is on the critical path"
+        },
+        {
+          "fr": "L’activité ne se trouve pas sur le chemin critique.",
+          "en": "The activity is not on the critical path"
+        },
+        {
+          "fr": "L’activité possède une marge.",
+          "en": "The activity has a float"
+        },
+        {
+          "fr": "L’activité comporte un décalage avec retard.",
+          "en": "The activity has a lag"
+        }
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": {
+        "fr": "Puisqu’elle possède une marge de 7 jours, cette activité ne se trouve pas sur le chemin critique. La marge de cette activité peut être calculée en soustrayant le début au plus tôt (jour 5) du début au plus tard (jour 12), ou en soustrayant la fin au plus tôt (jour 10) de la fin au plus tard (jour 17). Puisque la marge de l’activité est supérieure à zéro, elle ne se trouve pas sur le chemin critique. Rappelez-vous que les activités du chemin critique ont une marge nulle (PMBOK, 8e édition, pages 160–161).\nOption D : le décalage avec retard correspond à la durée pendant laquelle une activité successeur doit être retardée par rapport à une activité prédécesseur (PMBOK, 8e édition, page 180). Cependant, puisque la situation décrite ne fournit aucune information sur une activité successeur, il ne s’agit pas d’un décalage avec retard.",
+        "en": "Since it has a 7-day float, this activity is not on the critical path. The float of this activity can be calculated by subtracting the Early Start (day 5) from the Late Start (day 12) or by subtracting the Early Finish (day 10) from the Late Finish (day 17). Since the float of the activity is greater than zero, then it’s not on the critical path. Remember that critical path activities have zero float (PMBOK 8th Edition, pages 160-161).\nOption D: Lag time is the amount of time whereby a successor activity is required to be delayed with respect to a predecessor activity (PMBOK 8th Edition, page 180). However, since the described scenario doesn’t have any information about the successor activity, it does not consist of a lag."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q22",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle situation illustre le mieux l’influence de la gouvernance organisationnelle sur la gouvernance du projet ?",
+        "en": "Which scenario best illustrates organizational governance influencing project governance?"
+      },
+      "options": [
+        {
+          "fr": "Un chef de projet crée une WBS détaillée pour maîtriser le périmètre du projet.",
+          "en": "A project manager creates a detailed WBS to control project scope"
+        },
+        {
+          "fr": "Un comité exécutif impose à tous les projets le respect des lois nationales sur la protection des données.",
+          "en": "An executive committee mandates compliance with national data protection laws for all projects"
+        },
+        {
+          "fr": "Une équipe projet choisit un outil de communication pour les réunions quotidiennes debout.",
+          "en": "A project team selects a communication tool for daily stand-up meetings"
+        },
+        {
+          "fr": "Un sponsor de projet approuve une demande de changement ayant une incidence sur l’échéancier du projet.",
+          "en": "A project sponsor approves a change request affecting the project schedule"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : la création d’une WBS est une activité de gestion de projet, et non une fonction de gouvernance organisationnelle.\nOption B : la gouvernance organisationnelle impose des exigences légales, réglementaires et de conformité qui influencent directement la manière dont les projets sont gouvernés et exécutés (PMBOK, 8e édition, page 8).\nOption C : le choix d’un outil de communication quotidienne est une décision prise au niveau de l’exécution du projet.\nOption D : l’approbation d’une demande de changement relève de la gouvernance du projet, et non de la gouvernance organisationnelle.",
+        "en": "Option A: Creating a WBS is a project management activity, not an organizational governance function.\nOption D: Approving a change request is part of project governance, not organizational governance."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q23",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel élément de gouvernance aide à clarifier la responsabilisation et la communication au sein d’un projet ?",
+        "en": "Which governance element helps clarify accountability and communication within a project?"
+      },
+      "options": [
+        {
+          "fr": "Méthode du chemin critique (CPM)",
+          "en": "Critical Path Method (CPM)"
+        },
+        {
+          "fr": "Matrice RACI",
+          "en": "RACI matrix"
+        },
+        {
+          "fr": "Référence de base des coûts",
+          "en": "Cost baseline"
+        },
+        {
+          "fr": "Registre des risques",
+          "en": "Risk register"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : la méthode du chemin critique (CPM) est une technique d’élaboration de l’échéancier, et non une structure de gouvernance.\nOption B : les matrices RACI sont des outils de gouvernance utilisés pour définir les rôles, les responsabilités et les protocoles de communication (PMBOK, 8e édition, page 8).\nOption C : la référence de base des coûts est un outil de mesure de la performance, et non un mécanisme de gouvernance.\nOption D : le registre des risques documente les risques, mais ne définit ni la responsabilisation ni le pouvoir décisionnel.",
+        "en": "Option A: The Critical Path Method (CPM) is a scheduling technique, not a governance structure.\nOption D: The risk register documents risks but does not define accountability or decision-making authority."
+      },
+      "eco": {
+        "fr": "Principes fondamentaux du management de projet et concepts clés",
+        "en": "Project Management Fundamentals and Core Concepts"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q24",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle mesure de la performance est utilisée pour évaluer l’ampleur d’un écart dans un projet ?",
+        "en": "What performance measurement is used to assess the magnitude of variance in a project?"
+      },
+      "options": [
+        {
+          "fr": "Analyse de la valeur acquise",
+          "en": "Earned Value analysis"
+        },
+        {
+          "fr": "Analyse des écarts",
+          "en": "Variance analysis"
+        },
+        {
+          "fr": "Indice de performance des coûts (CPI)",
+          "en": "Cost Performance Index (CPI)"
+        },
+        {
+          "fr": "Indice de performance de l’échéancier (SPI)",
+          "en": "Schedule Performance Index (SPI)"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : la valeur acquise est une technique plus générale de mesure de la performance, mais elle n’est pas propre à l’écart (PMBOK, 8e édition, page 169).\nOption B : l’analyse des écarts est utilisée pour évaluer l’ampleur d’un écart dans un projet en comparant la performance planifiée à la performance réelle (PMBOK, 8e édition, page 211).\nOption C : l’indice de performance des coûts (CPI) mesure l’efficacité des coûts, et non l’écart (PMBOK, 8e édition, page 267).\nOption D : l’indice de performance de l’échéancier (SPI) mesure l’efficacité de l’échéancier, et non l’écart (PMBOK, 8e édition, page 273).",
+        "en": "Option A: Earned Value is a broader performance measurement technique, but not specific to variance (PMBOK 8th Edition, page 169).\nOption D: The Schedule Performance Index (SPI) measures schedule efficiency, not variance (PMBOK 8th Edition, page 273)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q25",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet calcule les dates de début et de fin au plus tôt et au plus tard d’une nouvelle activité du projet. L’activité est représentée comme suit :\n\nQuelle est la marge de cette activité ?",
+        "en": "A project manager calculates the early & late start and finish dates of a new project activity. The activity has the following representation:\n\nWhat is this activity's float?"
+      },
+      "options": [
+        {
+          "fr": "16",
+          "en": "16"
+        },
+        {
+          "fr": "8",
+          "en": "8"
+        },
+        {
+          "fr": "12",
+          "en": "12"
+        },
+        {
+          "fr": "24",
+          "en": "24"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "La marge, la marge totale ou la marge d’une activité représente la durée pendant laquelle une activité peut être retardée sans entraîner de retard de la date d’achèvement du projet. Sur un chemin critique, la marge totale est nulle. Vous pouvez calculer la marge d’une activité en soustrayant sa date de début au plus tôt de sa date de début au plus tard : 12 − 4 = 8 jours, ou en soustrayant sa date de fin au plus tôt de sa date de fin au plus tard : 28 − 20 = 8 jours (PMBOK, 8e édition, pages 160–161).",
+        "en": "Float, Total float, Slack, or activity float represents how long an activity can be delayed without causing a delay in the project completion date. On a critical path, the total float is zero. You can calculate an activity float by subtracting the Early Start date of the activity from its Late Start date: (12 - 4 = 8 days), or by subtracting the Early Finish date of the activity from its Late Finish date (28 - 20 = 8 days) (PMBOK 8th Edition, pages 160-161)."
+      },
+      "eco": {
+        "fr": "Méthodologies prédictives et méthodologies basées sur la planification",
+        "en": "Predictive, Plan-Based Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Predictive",
+        "en": "Predictive"
+      }
+    },
+    {
+      "id": "L2Q26",
+      "type": "single",
+      "prompt": {
+        "fr": "Le triangle des contraintes Agile diffère du triangle traditionnel parce qu’il permet :",
+        "en": "The Agile triangle of constraints is different from the traditional triangle because it allows:"
+      },
+      "options": [
+        {
+          "fr": "Au budget de varier tandis que le périmètre et le délai sont fixes.",
+          "en": "Budget to vary while scope and time are fixed"
+        },
+        {
+          "fr": "Au budget et au délai de varier tandis que le périmètre est fixe.",
+          "en": "Budget and time to vary while the scope is fixed"
+        },
+        {
+          "fr": "Au périmètre et au délai de varier tandis que le budget est fixe.",
+          "en": "Scope and time to vary while the budget is fixed"
+        },
+        {
+          "fr": "Au périmètre de varier tandis que le budget et le délai sont fixes.",
+          "en": "Scope to vary while budget and time are fixed"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Contrairement aux approches prédictives, les projets qui suivent des approches adaptatives ont des ressources et des échéanciers fixes, ainsi qu’un périmètre flexible. Alors que le périmètre peut changer dans les projets Agile, les équipes s’engagent sur des itérations de travail fixes appelées sprints lorsqu’elles mettent en œuvre le cadre Scrum (PMBOK, 8e édition, page 61).",
+        "en": "Unlike predictive approaches, projects that follow adaptive approaches have fixed resources and schedules and flexible scope. While the scope might change in agile projects, teams commit to fixed work iterations known as sprints, when implementing a scrum framework (PMBOK 8th Edition, page 61)."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q27",
+      "type": "single",
+      "prompt": {
+        "fr": "Une organisation a décidé d’adopter l’approche Agile pour son nouveau projet. Que devrait-elle s’attendre à obtenir à la fin du premier sprint ?",
+        "en": "An organization has decided to adopt the agile approach for its new project. What should they expect to get at the conclusion of the first sprint?"
+      },
+      "options": [
+        {
+          "fr": "Un plan pour le sprint suivant",
+          "en": "A plan for the subsequent sprint"
+        },
+        {
+          "fr": "Un incrément de produit potentiellement livrable",
+          "en": "A potentially releasable product increment"
+        },
+        {
+          "fr": "Un produit minimum viable (MVP)",
+          "en": "A Minimum Viable Product (MVP)"
+        },
+        {
+          "fr": "Une structure de découpage du projet (WBS)",
+          "en": "A Work Breakdown Structure (WBS)"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : le plan du sprint suivant est un résultat de l’événement de planification du sprint.\nOption B : l’approche Agile utilise des itérations, également appelées sprints, au cours de chacune desquelles un incrément de produit potentiellement livrable est produit (Agile Practice Guide, page 101).\nOption C : un produit minimum viable (MVP) est une version initiale du produit ne comportant que les fonctionnalités de base, destinée à recueillir des retours ou à valider l’idée du produit (PMBOK, 8e édition, pages 45 et 269). Plusieurs sprints peuvent être nécessaires pour que le produit atteigne le stade de MVP.\nOption D : une WBS est une technique de planification utilisée dans l’approche prédictive (PMBOK, 8e édition, page 42).",
+        "en": "Option A: The plan for the subsequent sprint is the output of the sprint planning event.\nOption D: A WBS is a planning technique used in the predictive approach (PMBOK 8th Edition, page 42)."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q28",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans les projets qui suivent le cadre Scrum, laquelle des questions suivantes ne sera pas posée aux membres de l’équipe pendant les réunions quotidiennes debout ?",
+        "en": "In projects following the Scrum framework, which of the following questions won’t be asked to team members during daily stand-ups?"
+      },
+      "options": [
+        {
+          "fr": "Qu’avez-vous terminé depuis la dernière réunion quotidienne debout ?",
+          "en": "What have you completed since the last stand-up?"
+        },
+        {
+          "fr": "Que terminerez-vous d’ici la prochaine réunion quotidienne debout ?",
+          "en": "What will you complete until the next stand-up?"
+        },
+        {
+          "fr": "Que devons-nous terminer en tant qu’équipe ?",
+          "en": "What do we need to finish as a team?"
+        },
+        {
+          "fr": "Y a-t-il des obstacles ?",
+          "en": "Are there any impediments?"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Contrairement à l’approche Agile fondée sur le flux, qui met l’accent sur le débit de l’équipe, l’approche Agile fondée sur les itérations met l’accent sur la responsabilisation au moyen de trois questions standard :\n• Qu’est-ce qui a été terminé hier ?\n• Qu’est-ce qui sera terminé aujourd’hui ?\n• Y a-t-il des blocages ou des obstacles ? (PMBOK, 8e édition, page 162)",
+        "en": "In contrast with flow-based Agile which focuses on the team’s throughput, iteration-based Agile focuses on accountability through three standard questions:\nWhat was completed yesterday?\nWhat will be completed today?\nAre there any blockers or impediments? (PMBOK 8th Edition, page 162)"
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q29",
+      "type": "single",
+      "prompt": {
+        "fr": "Le Product Owner et l’équipe projet préparent et mettent actuellement à jour les user stories pour les prochaines itérations. Quelle activité cette situation décrit-elle ?",
+        "en": "The product owner and the project team are currently preparing and updating user stories for the next iterations. What activity does this depict?"
+      },
+      "options": [
+        {
+          "fr": "Backlog refinement",
+          "en": "Backlog refinement"
+        },
+        {
+          "fr": "Management de l’échéancier",
+          "en": "Schedule management"
+        },
+        {
+          "fr": "Management de projet",
+          "en": "Project management"
+        },
+        {
+          "fr": "Sprint Review",
+          "en": "Sprint Review"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Le backlog refinement consiste à préparer les stories de la prochaine itération. Afin de veiller à ce que le backlog contienne les bons éléments pour la prochaine itération, le Product Owner, avec l’équipe, devrait examiner et prioriser les éléments du backlog, en veillant à ce que les éléments placés en tête soient prêts à être traités (PMBOK, 8e édition, page 149). Cette activité peut prendre la forme d’une réunion formelle planifiée ou d’une tâche régulière et continue.",
+        "en": "Backlog refinement involves preparing the next iteration’s stories. In order to make sure the backlog contains the right items for the next iteration, the product owner, along with the team, should review and prioritize backlog items, ensuring that top items are ready to be worked on (PMBOK 8th edition, page 149). This activity can take place as a formal planned meeting or as a regular ongoing task."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q30",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet anime une réunion avec son équipe projet et les principales parties prenantes afin de prioriser tous les éléments du Product Backlog en fonction de leur valeur métier et de leur niveau de risque. À quel emplacement chaque catégorie d’éléments devrait-elle être placée dans le Product Backlog, de haut en bas ?",
+        "en": "A project manager is facilitating a meeting with his project team and key stakeholders to prioritize all product backlog items based on their business value and risk level. Where should each category of items be placed in the product backlog (from top to bottom)?"
+      },
+      "options": [
+        {
+          "fr": "A, B, C, D",
+          "en": "A, B, C, D"
+        },
+        {
+          "fr": "B, A, D, C",
+          "en": "B, A, D, C"
+        },
+        {
+          "fr": "A, B, D, C",
+          "en": "A, B, D, C"
+        },
+        {
+          "fr": "D, C, B, A",
+          "en": "D, C, B, A"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Les éléments ayant une valeur élevée et un risque élevé devraient être placés en haut, car leur réalisation plus précoce génère davantage de nouvelles connaissances, ce qui élimine l’incertitude et réduit les échecs coûteux ultérieurs. « Les éléments à haut risque devraient être explorés et mis en œuvre en premier afin d’éviter de reporter le risque en fin de projet. Si un élément à haut risque doit entraîner l’échec du produit ou de son développement — un problème qui ne peut être résolu — les équipes Scrum le découvrent tôt. Si quelque chose doit échouer, il vaut mieux échouer tôt, à moindre coût, puis passer à une nouvelle opportunité porteuse de valeur. » (Agile Project Management for Dummies, page 178).\nLes éléments ayant une valeur élevée et un risque faible devraient être traités ensuite. Ces éléments sont excellents pour obtenir des gains rapides. L’équipe projet peut ensuite envisager de travailler sur les éléments ayant une valeur faible et un risque faible. Enfin, les éléments ayant une valeur faible et un risque élevé devraient être reportés et placés au bas du Product Backlog, puisqu’ils ne valent pas l’effort requis. En résumé, l’ordre correct est : A, B, D, puis C, de haut en bas.",
+        "en": "Items of high value and high risk should be on top, as completing them sooner generates more new knowledge, which eliminates uncertainty and reduces costly failures later on. “High-risk items should be explored and implemented first to avoid rear-loading the risk. If a high-risk item will cause the product or its development to fail (an issue that cannot be resolved), Scrum teams learn about it early. If something is going to fail, you want to fail early, fail cheap, and move on to a new opportunity that has value.” (Agile Project Management for Dummies, Page 178).\nItems of high value and low risk should be tackled next. These items are great for achieving quick wins. The project team can then consider working on low-value and low-risk items. Finally, items of low value and high risk should be put off and placed at the bottom of the product backlog since they are not worth the effort. To sum up, the right order is: A, B, D, and then C from top to bottom."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q31",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans un projet Agile, combien de membres une équipe projet devrait-elle compter ?",
+        "en": "In an Agile project, how many members a project team should include?"
+      },
+      "options": [
+        {
+          "fr": "1 à 5 membres",
+          "en": "1 to 5 members"
+        },
+        {
+          "fr": "3 à 9 membres",
+          "en": "3 to 9 members"
+        },
+        {
+          "fr": "10 à 15 membres",
+          "en": "10 to 15 members"
+        },
+        {
+          "fr": "Il n’existe aucun nombre standard",
+          "en": "There is no standard number"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Il est recommandé qu’une équipe Agile compte de 3 à 9 membres. Étant donné que la qualité de la communication se détériore à mesure que la taille de l’équipe augmente, les organisations Agile privilégient les petites équipes. Par exemple, il est préférable d’avoir deux équipes de cinq personnes plutôt qu’une seule équipe de dix personnes.",
+        "en": "It’s recommended that an agile team should include 3 to 9 members. Since the level of communication deteriorates as the team size increases, Agile organizations favor smaller teams. For instance, it’s better to have two teams of five people than one team of ten."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q32",
+      "type": "single",
+      "prompt": {
+        "fr": "Un chef de projet choisit une approche de développement pour un nouveau projet. Laquelle des raisons suivantes inciterait le chef de projet à opter pour une approche adaptative plutôt que pour une approche prédictive ?",
+        "en": "A project manager is choosing a development approach for a new project. Which of the following reasons would motivate the project manager to opt for an adaptive approach instead of a predictive one?"
+      },
+      "options": [
+        {
+          "fr": "Les demandes de changement suivent le processus de maîtrise des changements de l’organisation.",
+          "en": "Change requests go through the organization’s change control process"
+        },
+        {
+          "fr": "Les demandes de changement sont utilisées pour effectuer une planification fréquente.",
+          "en": "Change requests are used for frequent planning"
+        },
+        {
+          "fr": "Les demandes de changement sont automatiquement approuvées.",
+          "en": "Change requests are automatically approved"
+        },
+        {
+          "fr": "Les demandes de changement sont mises en œuvre dès leur réception.",
+          "en": "Change requests are implemented as soon as they have been received"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Contrairement à l’approche prédictive, qui exige que les demandes de changement suivent le processus de maîtrise des changements de l’organisation, l’approche adaptative accueille favorablement les changements et les utilise pour effectuer une planification fréquente. Au cours de chaque itération, l’équipe se concentre sur la production d’un sous-ensemble des fonctionnalités du produit, tout en affinant et en repriorisant continuellement les éléments du Product Backlog afin de répondre aux exigences nouvelles ou modifiées (PMBOK, 8e édition, page 30).\nOptions C et D : les demandes de changement ne sont pas automatiquement approuvées ; elles sont d’abord discutées avec le Product Owner, puis priorisées dans les itérations suivantes conformément à ses recommandations.",
+        "en": "Unlike the predictive approach which requires change requests to go through the organization’s change control process, the adaptive approach welcomes changes and uses them for frequent planning. During each iteration, the team focuses on producing a subset of the product’s features, while continuously refining and reprioritizing the product backlog items to meet new or modified requirements (PMBOK 8th Edition, page 30).\nOptions C & D: Change requests are not automatically approved; instead, they are discussed with the product owner first, and then they get prioritized in subsequent iterations as per their recommendations."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q33",
+      "type": "single",
+      "prompt": {
+        "fr": "Lequel des sujets suivants peut être abordé lors d’une réunion de rétrospective ?",
+        "en": "Which of the following topics can be discussed in a retrospective meeting?"
+      },
+      "options": [
+        {
+          "fr": "Comment décomposer une user story complexe en tâches gérables",
+          "en": "How to decompose a complex user story into manageable tasks"
+        },
+        {
+          "fr": "Quelles user stories devraient être priorisées lors du prochain sprint",
+          "en": "Which user stories should be prioritized in the next sprint"
+        },
+        {
+          "fr": "Comment corriger la régression d’une fonctionnalité du produit",
+          "en": "How to fix the regression of a product feature"
+        },
+        {
+          "fr": "Si l’horaire de la réunion quotidienne debout convient à tous les membres de l’équipe",
+          "en": "Whether the standup timing is suitable for all team members"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Au cours de la rétrospective du sprint, le chef de projet devrait déterminer ce qui s’est bien passé pendant le sprint et ce qui pourrait être fait différemment lors du prochain sprint. L’horaire de la réunion quotidienne debout constitue un sujet possible. Si les membres de l’équipe manifestent leur insatisfaction à l’égard de l’horaire actuel, la réunion de rétrospective est l’événement approprié pour discuter de ce problème (PMBOK, 8e édition, page 194).\nOptions A et B : la réunion de planification du sprint est la réunion appropriée pour discuter des tâches qui devraient être priorisées lors du prochain sprint et de la manière de décomposer les user stories en tâches gérables.\nOption C : les réunions consacrées à l’équipe projet et les réunions de Backlog refinement devraient traiter les sujets liés au développement du produit, notamment la recherche de moyens de corriger les régressions.",
+        "en": "During the sprint retrospective, the project manager should identify what went well during the sprint and what can be done differently in the next sprint. A possible topic is the timing of the standup. If team members are showing dissatisfaction with the current schedule, then the retrospective meeting is the right event to discuss the issue (PMBOK 8th Edition, page 194).\nOption A & B: The sprint planning meeting is the right meeting for discussing which tasks should be prioritized in the next sprint and how to decompose user stories into manageable tasks.\nOption C: Dedicated project team meetings and Backlog refinement meetings should address topics related to the product development, including finding ways on how to fix the regressions."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q34",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans une approche de développement Agile, que signifie une équipe pluridisciplinaire ?",
+        "en": "In an agile development approach, what does a cross-functional team mean?"
+      },
+      "options": [
+        {
+          "fr": "Des personnes qui déterminent collectivement la meilleure manière d’atteindre l’objectif du sprint",
+          "en": "Individuals who collectively determine the best way to accomplish the goal of the sprint"
+        },
+        {
+          "fr": "Des personnes qui participent à l’orientation du produit",
+          "en": "Individuals who take part in guiding the product direction"
+        },
+        {
+          "fr": "Des personnes qui possèdent les compétences nécessaires pour produire un produit fonctionnel",
+          "en": "Individuals who possess the necessary skills to produce a functioning product"
+        },
+        {
+          "fr": "Des personnes chargées d’autoriser et de distribuer les affectations de travail",
+          "en": "Individuals who are in charge of authorizing and releasing work assignments"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Une équipe pluridisciplinaire doit posséder les compétences nécessaires pour créer un produit ou un service de manière autonome, sans dépendre de membres extérieurs à l’équipe.\nOption A : dans une équipe auto-organisée, les personnes déterminent collectivement la meilleure manière d’atteindre l’objectif du sprint.",
+        "en": "A cross-functional team must possess the necessary competencies for creating a product or a service independently, without relying on other members outside of the team.\nOption A: A self-organizing team is when individuals collectively determine the best way to accomplish the sprint goal."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q35",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Quels types de backlog sont couramment utilisés dans les projets adaptatifs et Agile ? (Choisissez trois réponses.)",
+        "en": "What backlog types are commonly used in adaptive and agile projects? (Select three)"
+      },
+      "options": [
+        {
+          "fr": "Product Backlog",
+          "en": "Product backlog"
+        },
+        {
+          "fr": "Backlog d’itération",
+          "en": "Iteration backlog"
+        },
+        {
+          "fr": "Backlog de release",
+          "en": "Release backlog"
+        },
+        {
+          "fr": "Backlog de refinement",
+          "en": "Refinement backlog"
+        },
+        {
+          "fr": "Backlog de travail",
+          "en": "Work backlog"
+        }
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": {
+        "fr": "Les types de backlog couramment utilisés dans les projets adaptatifs et Agile comprennent le Product Backlog, le backlog d’itération et le backlog de release (PMBOK, 8e édition, pages 114–115).\nOption D : le terme correct est « Backlog refinement » ; il s’agit d’un événement visant à affiner le Product Backlog, et non d’un type de backlog.\nOption E : le backlog de travail est un terme inventé qui n’est pas couramment utilisé dans les projets adaptatifs et Agile.",
+        "en": "The types of backlogs commonly used in adaptive and agile projects include Product backlog, Iteration backlog, and Release backlog (PMBOK 8th Edition, page 114-115)\n\nOption D: The correct term is “Backlog Refinement”; it’s an event to refine the product backlog, not a backlog type.\nOption E: Work backlog is a made-up term, not commonly used in adaptive and agile projects."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q36",
+      "type": "single",
+      "prompt": {
+        "fr": "Quand un sprint est-il considéré comme terminé ?",
+        "en": "When is a Sprint considered complete?"
+      },
+      "options": [
+        {
+          "fr": "Lorsque tous les éléments du Product Backlog sont terminés",
+          "en": "When all product backlog items are completed"
+        },
+        {
+          "fr": "Lorsque toutes les tâches du sprint sont terminées",
+          "en": "When all the tasks in the sprint are completed"
+        },
+        {
+          "fr": "Lorsque la durée limitée définie pour le sprint prend fin",
+          "en": "When the sprint’s defined timebox ends"
+        },
+        {
+          "fr": "Lorsque tous les éléments du Product Backlog répondent à la Definition of Done (DoD)",
+          "en": "When all product backlog items meet the Definition of Done (DoD)"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Un sprint est considéré comme terminé uniquement lorsqu’il atteint la fin de sa durée limitée (timebox), qui est généralement de 1 à 4 semaines. Dans certains cas, le sprint prend fin sans que toutes les tâches affectées aient été terminées ; l’achèvement de toutes les tâches ne peut donc pas constituer le critère de fin du sprint.",
+        "en": "A sprint is considered complete only when it reaches the end of its duration/timebox, which is usually 1 to 4 weeks. In some cases, the sprint ends without finishing all of the assigned tasks, so this can’t be the criteria for sprint completion."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q37",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans une approche Agile, où les exigences du produit devraient-elles être documentées ?",
+        "en": "Using an Agile approach, where should product requirements be documented?"
+      },
+      "options": [
+        {
+          "fr": "Dans le registre des exigences",
+          "en": "In the requirements log"
+        },
+        {
+          "fr": "Dans le Product Backlog",
+          "en": "In the product backlog"
+        },
+        {
+          "fr": "Dans la charte d’équipe",
+          "en": "In the team charter"
+        },
+        {
+          "fr": "Dans la WBS",
+          "en": "In the WBS"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Les exigences du produit sont documentées dans le backlog sous la forme de user stories. Les user stories du backlog sont ensuite continuellement priorisées et affinées (PMBOK, 8e édition, page 114). La WBS n’est utilisée que dans l’approche prédictive.",
+        "en": "Product requirements are documented under the backlog as user stories. The backlog user stories are then continuously prioritized and refined (PMBOK 8th Edition, page 114). The WBS is only used in the predictive approach."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q38",
+      "type": "single",
+      "prompt": {
+        "fr": "En règle générale, un sprint Scrum Agile dure ____________.",
+        "en": "Typically, an agile scrum sprint is ____________ long."
+      },
+      "options": [
+        {
+          "fr": "3 à 5 jours",
+          "en": "3-5 days"
+        },
+        {
+          "fr": "1 semaine",
+          "en": "1 week"
+        },
+        {
+          "fr": "2 à 4 semaines",
+          "en": "2-4 weeks"
+        },
+        {
+          "fr": "5 à 8 semaines",
+          "en": "5-8 weeks"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Un sprint doit être suffisamment long pour permettre à l’équipe de terminer toutes les stories incluses. Selon une règle de Scrum, un sprint ne devrait jamais dépasser un mois. La durée d’un sprint dépend de la taille et de la complexité du projet ainsi que des capacités de l’équipe. En moyenne, une équipe de 3 à 9 membres travaillant sur un seul projet met de 2 à 4 semaines pour terminer un sprint.",
+        "en": "A Sprint has to be long enough for the team to finish all included stories. As per a Scrum rule, a Sprint should never exceed one month. The duration of a sprint depends on the project size and complexity as well as the team’s capacities. It takes 2 to 4 weeks on average to complete a sprint with a team of 3-9 members working on a single project."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q39",
+      "type": "single",
+      "prompt": {
+        "fr": "Une équipe pluridisciplinaire devrait toujours veiller à se concentrer sur :",
+        "en": "A cross-functional team should always make sure to focus on:"
+      },
+      "options": [
+        {
+          "fr": "La livraison fréquente",
+          "en": "Delivering frequently"
+        },
+        {
+          "fr": "Une planification exacte",
+          "en": "Planning accurately"
+        },
+        {
+          "fr": "L’amélioration de la qualité",
+          "en": "Improving quality"
+        },
+        {
+          "fr": "La livraison de valeur",
+          "en": "Delivering value"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "La livraison de valeur devrait toujours constituer la priorité absolue de l’équipe Agile, car elle correspond à l’un des principes du Manifeste Agile : « un logiciel opérationnel plus qu’une documentation exhaustive ». Du point de vue du client, la valeur représente le bénéfice retiré de l’utilisation d’un produit ou d’un service.",
+        "en": "Delivering value should always be the agile team’s top priority as it represents one of the agile manifesto principles: “working software over comprehensive documentation”. From the client’s perspective, value represents the benefit derived from using a product or a service."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q40",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle est la principale distinction entre Agile et Scrum ?",
+        "en": "What is the primary distinction between Agile and Scrum?"
+      },
+      "options": [
+        {
+          "fr": "Agile est un ensemble de valeurs et de principes, tandis que Scrum ne présente qu’un ensemble de valeurs.",
+          "en": "Agile is a set of values and principles, while Scrum only presents a set of values."
+        },
+        {
+          "fr": "Agile est un ensemble de valeurs, de principes et de pratiques, tandis que Scrum ne comprend qu’un ensemble de valeurs et de principes.",
+          "en": "Agile is a set of values, principles, and practices, while Scrum only involves a set of values and principles."
+        },
+        {
+          "fr": "Agile est un ensemble de valeurs et de principes, tandis que Scrum représente un ensemble de valeurs, de principes et de pratiques.",
+          "en": "Agile is a set of values and principles, while Scrum represents a set of values, principles, and practices."
+        },
+        {
+          "fr": "Agile est un cadre, tandis que Scrum est une philosophie.",
+          "en": "Agile is a framework, while Scrum is a philosophy."
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "À première vue, Agile et Scrum semblent similaires, car ils reposent tous deux sur un processus itératif, des interactions fréquentes avec le client et une prise de décision collaborative. La principale distinction entre Agile et Scrum réside dans le fait qu’Agile est une philosophie de management de projet qui utilise un ensemble fondamental de valeurs ou de principes, tandis que Scrum est une pratique Agile spécifique utilisée pour faciliter un projet. Bien que Scrum soit une approche au sein d’Agile, Agile n’implique pas nécessairement Scrum, puisqu’Agile englobe un large éventail d’approches. Scrum repose sur un petit ensemble de valeurs, de principes et de pratiques fondamentaux qui, ensemble, constituent le cadre Scrum.",
+        "en": "On the surface, Agile and Scrum look similar as they both rely on an iterative process, frequent client interaction, and collaborative decision-making. The primary distinction between Agile and Scrum is that Agile is a project management philosophy that utilizes a core set of values or principles, while Scrum is a specific Agile practice used to facilitate a project. Although Scrum is an approach within Agile, Agile does not necessarily imply Scrum since Agile encompasses a wide range of approaches. Scrum is based on a small set of core values, principles, and practices (collectively forming the Scrum framework)."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q41",
+      "type": "multiple",
+      "prompt": {
+        "fr": "Quel est le rôle du Product Owner dans un projet Agile ? (Choisissez deux réponses.)",
+        "en": "The role of the product owner in an Agile project is: (Select two)"
+      },
+      "options": [
+        {
+          "fr": "Gérer le Sprint Backlog",
+          "en": "Manage the sprint backlog"
+        },
+        {
+          "fr": "Soutenir l’équipe",
+          "en": "Support the team"
+        },
+        {
+          "fr": "Gérer le Product Backlog",
+          "en": "Manage the product backlog"
+        },
+        {
+          "fr": "Représenter l’entreprise, le client ou les utilisateurs finaux",
+          "en": "Represent the business, customer, or end-users"
+        },
+        {
+          "fr": "Éliminer les obstacles",
+          "en": "Remove impediments"
+        }
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": {
+        "fr": "Le Product Owner représente l’entreprise, le client ou l’utilisateur final, puisqu’il est considéré comme la voix du client. Il est responsable de la gestion du Product Backlog en maximisant la valeur produite par l’équipe et en veillant à ce que les stories répondent aux besoins de l’utilisateur et respectent la Definition of Done (DoD) (PMBOK, 8e édition, page 24).\nOption A : l’équipe Agile gère le Sprint Backlog.\nOptions B et E : le chef de projet Agile est responsable de soutenir l’équipe et d’éliminer les obstacles.",
+        "en": "The product owner represents the business, customer, or end-user as they’re regarded as the voice of the customer. The Product Owner is responsible for managing the product backlog by maximizing the value produced by the team and ensuring that the stories meet the user’s needs and comply with the Definition of Done (DoD) (PMBOK 8th edition, page 24).\nOption A: The Agile team manages the sprint backlog.\nOptions B & E: The Agile project manager is responsible for supporting the team and removing impediments."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q42",
+      "type": "single",
+      "prompt": {
+        "fr": "Une partie prenante clé demande au chef de projet d’ajouter de toute urgence une nouvelle user story afin d’améliorer le produit. Comment le chef de projet devrait-il répondre à cette demande ?",
+        "en": "A key stakeholder requested the project manager to urgently add a new user story to improve the product. How should the project manager respond to this request?"
+      },
+      "options": [
+        {
+          "fr": "Accepter la demande de la partie prenante et inclure la user story dans le Sprint Backlog.",
+          "en": "Accept the stakeholder’s request and include the user story in the sprint backlog."
+        },
+        {
+          "fr": "Ajouter la user story au Product Backlog et l’inclure dans le prochain sprint afin d’éviter de perturber l’équipe.",
+          "en": "Add the user story to the product backlog and include it in the next sprint to avoid disrupting the team."
+        },
+        {
+          "fr": "Ajouter la user story au Product Backlog et laisser le Product Owner déterminer sa priorité.",
+          "en": "Add the user story to the product backlog and let the product owner determine its priority."
+        },
+        {
+          "fr": "Refuser la demande de la partie prenante, puisque la tenue à jour et l’affinement du Product Backlog relèvent de la responsabilité du Product Owner.",
+          "en": "Decline the stakeholder’s request since it’s the product owner’s responsibility to maintain and refine the product backlog."
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Le chef de projet devrait ajouter la user story au Product Backlog et laisser le Product Owner décider de sa priorité. Lorsqu’une nouvelle exigence est reçue, elle devrait être ajoutée au Product Backlog — et non au Sprint Backlog — puis priorisée par le Product Owner en vue de sa mise en œuvre. La tenue à jour et l’affinement du Product Backlog relèvent de la responsabilité du Product Owner. Cela étant, toute partie prenante peut formuler une demande et toute personne participant au projet peut créer une user story ; cette responsabilité n’est pas réservée au seul Product Owner.",
+        "en": "The project manager should add the user story to the product backlog and let the product owner decide its priority. When a new requirement is received, it should be added to the product backlog (not the sprint backlog) and then prioritized by the product owner in order to be implemented. It is the responsibility of the product owner to maintain and refine the product backlog. This being said, a request can be made by any stakeholder and a user story can be created by anyone involved in the project and not just the product owner."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q43",
+      "type": "single",
+      "prompt": {
+        "fr": "Afin d’évaluer la position de chaque membre de l’équipe à l’égard d’une décision donnée, un chef de projet utilise la technique de vote « Fist of Five ». Lorsque l’équipe commence à voter, un membre lève cinq doigts. Que signifie ce geste ?",
+        "en": "To gauge each team member's stance on a particular decision, a project manager uses the Fist of five voting technique. When the team starts voting, one member raises five fingers. What does this mean?"
+      },
+      "options": [
+        {
+          "fr": "Le membre de l’équipe souhaite intervenir afin de discuter davantage de la décision.",
+          "en": "The team member wants to intervene in order to further discuss the decision"
+        },
+        {
+          "fr": "Le membre de l’équipe est totalement opposé à la décision.",
+          "en": "The team member is totally against the decision"
+        },
+        {
+          "fr": "Le membre de l’équipe soutient totalement la décision.",
+          "en": "The team member totally supports the decision"
+        },
+        {
+          "fr": "Le membre de l’équipe souhaite s’abstenir de participer au vote.",
+          "en": "The team member wants to refrain from taking part in the voting"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Le « Fist of Five », également appelé « Fist to Five », est une technique de vote utilisée par les équipes Agile pour les aider à parvenir à un consensus lors de réunions ou de séances de prise de décision. La méthode s’applique comme suit : le facilitateur énonce la décision ou l’action sur laquelle l’équipe doit voter, puis demande à chaque participant de lever un nombre de doigts correspondant à son niveau de soutien à la décision énoncée. Un poing fermé signifie une opposition totale, tandis que cinq doigts indiquent un soutien total à la décision. Tant que tous les participants ne lèvent pas au moins trois doigts, le vote se poursuit en plusieurs tours afin de parvenir à un consensus.",
+        "en": "The Fist of five or Fist to five is a voting technique that agile teams use to help them achieve consensus during decision-making meetings or sessions. This method is used as follows: The facilitator states the decision or action the team is going to vote on and then asks each one of the attendees to hold up a number of fingers that corresponds to their level of support for the stated decision. A closed fist signifies full objection, whereas five fingers mean full support for the decision. Until everyone holds up three or more fingers, the voting goes through multiple rounds to achieve consensus."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q44",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans le schéma ci-dessous, quels concepts ou approches correspondent respectivement aux positions A, B, C et D ?",
+        "en": "In the graph below, what concepts or approaches correspond respectively to positions A, B, C, and D?"
+      },
+      "options": [
+        {
+          "fr": "Agile, Scrum, Kanban, Lean",
+          "en": "Agile, Scrum, Kanban, Lean"
+        },
+        {
+          "fr": "Agile, Scrum, Lean, Kanban",
+          "en": "Agile, Scrum, Lean, Kanban"
+        },
+        {
+          "fr": "Lean, Scrum, Agile, Kanban",
+          "en": "Lean, Scrum, Agile, Kanban"
+        },
+        {
+          "fr": "Lean, Kanban, Agile, Scrum",
+          "en": "Lean, Kanban, Agile, Scrum"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "A. Lean : un ensemble de concepts qui comprend l’élimination du gaspillage, l’amplification de l’apprentissage et la livraison aussi rapide que possible.\nB. Kanban : un sous-ensemble du Lean qui désigne également un cadre de travail au sein d’Agile.\nC. Agile : un sous-ensemble du Lean et un concept générique englobant plusieurs cadres de travail.\nD. Scrum : l’un des cadres de travail Agile.\nRemarque : lors de l’examen réel, ce type de question se présente généralement sous la forme d’un exercice « glisser-déposer ».",
+        "en": "A. Lean: a set of concepts that includes eliminating waste, amplifying learning, and delivering as fast as possible.\nB. Kanban: a subset of lean which also refers to a framework within agile.\nC. Agile: a subset of lean and an umbrella for several frameworks.\nD. Scrum: one of the agile frameworks.\nPlease note that in the real exam such a question usually comes in the form of “drag & drop”."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q45",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel est un élément clé de la livraison précoce de valeur dans les projets Agile ?",
+        "en": "What is a key element of delivering value early in Agile projects?"
+      },
+      "options": [
+        {
+          "fr": "Une planification initiale détaillée",
+          "en": "Detailed upfront planning"
+        },
+        {
+          "fr": "Une documentation à haute fréquence",
+          "en": "High-frequency documentation"
+        },
+        {
+          "fr": "De petites livraisons fréquentes de produits opérationnels",
+          "en": "Small, frequent deliveries of working products"
+        },
+        {
+          "fr": "Un développement en une seule phase",
+          "en": "Single-phase development"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : Agile privilégie la planification adaptative plutôt qu’une planification initiale détaillée. Dans Agile, la planification se déroule au fil des itérations plutôt que d’être entièrement réalisée au début du projet, ce qui permet de conserver de la flexibilité à mesure que le projet évolue.\nOption B : conformément au Manifeste Agile, Agile valorise « un logiciel opérationnel plus qu’une documentation exhaustive ». L’accent est mis sur la livraison de produits fonctionnels plutôt que sur un temps excessif consacré à la documentation.\nOption C : les approches Agile mettent l’accent sur la livraison fréquente de petits incréments opérationnels du produit. Cela permet aux équipes d’obtenir du feedback, de s’adapter et d’apporter des améliorations tout en livrant continuellement de la valeur.\nOption D : les approches Agile utilisent des méthodes itératives et incrémentales plutôt que de réaliser le projet en une seule phase.",
+        "en": "Option B: Agile values \"working software over comprehensive documentation\" as per the Agile Manifesto. The focus is on delivering functional products rather than spending too much time on documentation.\nOption D: Agile approaches use iterative and incremental methods rather than completing the project in a single phase."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Gouvernance",
+        "en": "Governance"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q46",
+      "type": "single",
+      "prompt": {
+        "fr": "Quel facteur clé aide les équipes Agile à livrer à une vitesse maximale ?",
+        "en": "What is a key factor that helps agile teams deliver at maximum speed?"
+      },
+      "options": [
+        {
+          "fr": "Le multitâche",
+          "en": "Multitasking"
+        },
+        {
+          "fr": "L’intégration continue",
+          "en": "Continuous integration"
+        },
+        {
+          "fr": "Les approbations formelles",
+          "en": "Formal sign-offs"
+        },
+        {
+          "fr": "Une atténuation stricte des risques",
+          "en": "Strict risk mitigation"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : le multitâche ralentit généralement la progression. Les équipes Agile cherchent à se concentrer sur le travail en limitant le travail en cours et en favorisant la collaboration, plutôt qu’en répartissant leur attention entre plusieurs tâches.\nOption B : l’intégration continue consiste à incorporer fréquemment les contributions individuelles dans l’ensemble du projet, puis à tester de nouveau l’intégralité du produit afin de vérifier que l’intégration a réussi (Guide pratique Agile, page 56).\nOption C : les approches Agile privilégient des processus légers, le feedback continu et la flexibilité plutôt que les approbations formelles. Celles-ci peuvent entraîner des retards, car elles nécessitent souvent des validations hiérarchiques.\nOption D : pour atténuer les risques, Agile met l’accent sur le développement itératif, le feedback et l’adaptation, plutôt que sur une gestion des risques stricte et définie intégralement en amont.",
+        "en": "Option A: Multitasking typically slows down progress. Agile teams aim for focused work by limiting work in progress and encouraging collaboration rather than splitting focus among multiple tasks.\nOption D: Agile focuses on iterative development, feedback, and adaptation to mitigate risks rather than strict, upfront risk management."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "resources and Risks",
+        "en": "Resources and Risks"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q47",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle incidence la gestion du périmètre dans les projets adaptatifs a-t-elle sur la création de la WBS ?",
+        "en": "How does scope management in adaptive projects impact the creation of WBS?"
+      },
+      "options": [
+        {
+          "fr": "La WBS est remplacée par un Backlog refinement continu.",
+          "en": "WBS is replaced by ongoing backlog refinement"
+        },
+        {
+          "fr": "Une WBS détaillée est créée au début.",
+          "en": "Detailed WBS is created at the start"
+        },
+        {
+          "fr": "La WBS est statique et n’est pas modifiée.",
+          "en": "WBS is static and not modified"
+        },
+        {
+          "fr": "Une WBS exacte est créée à la fin du projet.",
+          "en": "An accurate WBS is created at the end of the project"
+        }
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": {
+        "fr": "Dans les projets Agile, le périmètre évolue continuellement. Au lieu de créer dès le départ une structure de découpage du projet (WBS) statique, le périmètre est géré au moyen du backlog, qui est continuellement affiné.\nOption B : la création d’une WBS détaillée dès le départ est caractéristique d’un projet prédictif. Les projets Agile privilégient au contraire un Backlog refinement continu plutôt qu’une gestion détaillée du périmètre en amont.\nOption D : les projets Agile visent à livrer des incréments de valeur tout au long du projet. Attendre la clôture du projet pour définir le périmètre contredit l’approche de livraison itérative d’Agile.",
+        "en": "In agile projects, scope evolves continuously. Rather than creating a static Work Breakdown Structure (WBS) at the start, the scope is managed through the backlog, which is refined continuously.\nOption B: Creating a detailed WBS at the start is typical in a predictive project. Agile projects, on the other hand, favor ongoing backlog refinement rather than upfront detailed scope management.\nOption D: Agile projects focus on delivering increments of value throughout the project. Waiting until project closure to define scope contradicts Agile's iterative delivery approach."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Scope",
+        "en": "Scope"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q48",
+      "type": "single",
+      "prompt": {
+        "fr": "Quelle est la mesure clé de la progression dans une approche Agile fondée sur les itérations ?",
+        "en": "What is the key measure of progress in iteration-based agile?"
+      },
+      "options": [
+        {
+          "fr": "Le délai de livraison (lead time)",
+          "en": "Lead time"
+        },
+        {
+          "fr": "Le temps de cycle (cycle time)",
+          "en": "Cycle time"
+        },
+        {
+          "fr": "Les itérations terminées",
+          "en": "Completed iterations"
+        },
+        {
+          "fr": "Les éléments de travail terminés à la fin de chaque itération",
+          "en": "Completed work items at the end of each iteration"
+        }
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": {
+        "fr": "Option A : le délai de livraison (lead time) mesure le temps écoulé entre la demande d’une fonctionnalité et sa livraison (PMBOK, 8e édition, page 213).\nOption B : le temps de cycle (cycle time) désigne la durée nécessaire pour réaliser une tâche individuelle du début à la fin (PMBOK, 8e édition, page 213).\nOption C : bien que l’achèvement des itérations soit important, Agile se concentre sur la livraison de produits ou de fonctionnalités opérationnels.\nOption D : dans une approche Agile fondée sur les itérations, la progression est principalement mesurée par le nombre d’éléments de travail ou de fonctionnalités terminés à la fin de chaque itération. Cette approche est conforme au principe du Manifeste Agile selon lequel « un logiciel opérationnel est la principale mesure d’avancement ».",
+        "en": "Option C: While completing iterations is important, the focus in agile is on delivering working products or features.\nOption D: In iteration-based agile, progress is measured primarily by the number of work items or features that are completed at the end of each iteration. This approach aligns with the Agile Manifesto's principle that \"working software is the primary measure of progress.\""
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q49",
+      "type": "single",
+      "prompt": {
+        "fr": "Comment le travail en cours est-il géré différemment dans une approche Agile fondée sur le flux par rapport à une approche Agile fondée sur les itérations ?",
+        "en": "How is work-in-progress managed differently in flow-based agile compared to iteration-based agile?"
+      },
+      "options": [
+        {
+          "fr": "Le travail en cours est identique dans les deux approches.",
+          "en": "WIP is the same in both approaches"
+        },
+        {
+          "fr": "L’approche Agile fondée sur le flux utilise des limites du travail en cours pour gérer les tâches.",
+          "en": "Flow-based agile uses WIP limits to manage tasks"
+        },
+        {
+          "fr": "L’approche Agile fondée sur les itérations utilise des colonnes pour gérer le travail.",
+          "en": "Iteration-based agile uses columns to manage work"
+        },
+        {
+          "fr": "L’approche Agile fondée sur le flux ne gère pas le travail en cours.",
+          "en": "Flow-based agile does not manage WIP"
+        }
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": {
+        "fr": "Option A : l’approche Agile fondée sur les itérations n’utilise pas de limites explicites du travail en cours, mais vise à terminer un ensemble de tâches au cours d’une itération.\nOption B : dans une approche Agile fondée sur le flux, telle que Kanban, les équipes gèrent le travail en limitant le nombre de tâches pouvant être en cours à un moment donné (PMBOK, 8e édition, page 213).\nOption C : bien que l’approche Agile fondée sur les itérations puisse utiliser des colonnes sur les tableaux de tâches, elle vise principalement à réaliser un périmètre défini au cours d’une itération.\nOption D : l’approche Agile fondée sur le flux, notamment Kanban, gère explicitement le travail au moyen de limites du travail en cours afin de maintenir le flux et de réduire la surcharge.",
+        "en": "Option A: Iteration-based agile does not use explicit WIP limits but focuses on completing a set of tasks within an iteration\nOption D: Flow-based agile, especially in Kanban, manages work explicitly through WIP limits to maintain flow and reduce overload."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    },
+    {
+      "id": "L2Q50",
+      "type": "single",
+      "prompt": {
+        "fr": "Dans quelle méthodologie l’équipe travaille-t-elle continuellement sur l’élément ayant la priorité la plus élevée, sans utiliser d’itérations limitées dans le temps ?",
+        "en": "In which methodology does the team continuously work on the highest priority item, without the use of timeboxed iterations?"
+      },
+      "options": [
+        {
+          "fr": "Scrumban",
+          "en": "Scrumban"
+        },
+        {
+          "fr": "XP",
+          "en": "XP"
+        },
+        {
+          "fr": "Kanban",
+          "en": "Kanban"
+        },
+        {
+          "fr": "Scrum",
+          "en": "Scrum"
+        }
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": {
+        "fr": "Option A : Scrumban combine des éléments de Scrum et de Kanban ; il conserve certaines pratiques de Scrum, comme les itérations limitées dans le temps, notamment pour la planification ou les rétrospectives.\nOption B : XP utilise des itérations limitées dans le temps et met l’accent sur des releases et des itérations fréquentes.\nOption C : dans Kanban, il n’existe pas d’itérations fixes limitées dans le temps comme dans Scrum ou XP. Les équipes travaillent continuellement sur les éléments du backlog ayant la priorité la plus élevée, en mettant l’accent sur la limitation du travail en cours et l’amélioration du flux.\nOption D : Scrum est organisé autour d’itérations de durée fixe appelées sprints, qui sont toujours limitées dans le temps — généralement de deux à quatre semaines.",
+        "en": "Option B: XP uses timeboxed iterations and emphasizes frequent releases and iterations.\nOption D: Scrum is centered around fixed-length iterations called sprints, which are always timeboxed (usually 2-4 weeks)."
+      },
+      "eco": {
+        "fr": "Cadres de travail/méthodologies agiles",
+        "en": "Agile Frameworks/Methodologies"
+      },
+      "performanceDomain": {
+        "fr": "Schedule",
+        "en": "Schedule"
+      },
+      "approach": {
+        "fr": "Agile",
+        "en": "Agile"
+      }
+    }
+  ]
+}
