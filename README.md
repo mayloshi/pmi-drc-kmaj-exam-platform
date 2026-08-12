@@ -78,3 +78,34 @@ Mot de passe formateur de demonstration:
 ```
 
 Pour la production, remplacer ce mecanisme par des comptes formateurs stockes dans `TrainerAccounts` avec mot de passe hache.
+
+## Envoi automatique des emails
+
+Le dossier `supabase/functions/send-email-queue` contient une fonction Supabase Edge Function qui lit `email_queue`, envoie les emails via Resend, puis marque chaque email `sent` ou `failed`.
+
+Adresse expediteur configuree:
+
+```text
+k.majuscule@pmi-drcongo.org
+```
+
+Etapes d'activation:
+
+1. Verifier le domaine `pmi-drcongo.org` dans Resend.
+2. Creer une cle API Resend.
+3. Dans Supabase, ajouter les secrets:
+
+```text
+RESEND_API_KEY=...
+MAIL_FROM=k.majuscule@pmi-drcongo.org
+SUPABASE_SERVICE_ROLE_KEY=...
+EMAIL_BATCH_SIZE=20
+```
+
+4. Deployer la fonction:
+
+```text
+supabase functions deploy send-email-queue --no-verify-jwt
+```
+
+5. Planifier l'envoi automatique avec `supabase/email-queue-cron.sql` apres avoir remplace `PROJECT_REF` et `SUPABASE_ANON_KEY`.
