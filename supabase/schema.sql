@@ -11,6 +11,7 @@ create table if not exists public.profiles (
   organization text default '',
   cohort text default '',
   role text not null default 'Candidat',
+  category text not null default 'formation' check (category in ('formation', 'volontaire', 'membre', 'partenaire')),
   voucher_code text default '',
   default_language text not null default 'fr' check (default_language in ('fr', 'en')),
   active boolean not null default true,
@@ -20,11 +21,31 @@ create table if not exists public.profiles (
 create table if not exists public.vouchers (
   code text primary key,
   role text not null,
+  category text not null default 'formation' check (category in ('formation', 'volontaire', 'membre', 'partenaire')),
+  validity_months integer not null default 4,
+  access_percent integer not null default 100,
   status text not null default 'available' check (status in ('available', 'assigned', 'used')),
   assigned_to text default '',
   used_by text default '',
   created_at timestamptz not null default now(),
+  expires_at timestamptz,
   used_at timestamptz
+);
+
+alter table public.profiles add column if not exists category text not null default 'formation';
+alter table public.vouchers add column if not exists category text not null default 'formation';
+alter table public.vouchers add column if not exists validity_months integer not null default 4;
+alter table public.vouchers add column if not exists access_percent integer not null default 100;
+alter table public.vouchers add column if not exists expires_at timestamptz;
+
+create table if not exists public.voucher_settings (
+  category text primary key check (category in ('formation', 'volontaire', 'membre', 'partenaire')),
+  label_fr text not null,
+  label_en text not null,
+  validity_months integer not null,
+  access_percent integer not null,
+  prefix text not null,
+  updated_at timestamptz not null default now()
 );
 
 create table if not exists public.exam_lots (
@@ -113,11 +134,20 @@ create table if not exists public.email_queue (
 
 create index if not exists profiles_email_idx on public.profiles (lower(email));
 create index if not exists vouchers_assigned_to_idx on public.vouchers (lower(assigned_to));
+create index if not exists vouchers_category_status_idx on public.vouchers (category, status);
 create index if not exists attempts_email_idx on public.attempts (lower(email));
 create index if not exists attempts_cohort_idx on public.attempts (cohort);
 create index if not exists attempt_answers_attempt_id_idx on public.attempt_answers (attempt_id);
 create index if not exists attempt_limits_identifier_idx on public.attempt_limits (identifier_type, lower(identifier));
 create index if not exists email_queue_status_idx on public.email_queue (status, created_at);
+
+insert into public.voucher_settings (category, label_fr, label_en, validity_months, access_percent, prefix)
+values
+  ('formation', 'Participant formation', 'Training participant', 4, 100, 'FORMATION'),
+  ('volontaire', 'Volontaire', 'Volunteer', 3, 60, 'VOLONTAIRE'),
+  ('membre', 'Membre', 'Member', 12, 60, 'MEMBRE'),
+  ('partenaire', 'Partenaire', 'Partner', 3, 50, 'PARTENAIRE')
+on conflict (category) do nothing;
 
 create or replace function public.handle_new_exam_user()
 returns trigger
@@ -137,6 +167,7 @@ begin
     organization,
     cohort,
     role,
+    category,
     voucher_code,
     default_language,
     active,
@@ -149,6 +180,7 @@ begin
     coalesce(new.raw_user_meta_data ->> 'organization', ''),
     coalesce(new.raw_user_meta_data ->> 'cohort', ''),
     coalesce(new.raw_user_meta_data ->> 'role', 'Candidat'),
+    coalesce(new.raw_user_meta_data ->> 'category', 'formation'),
     voucher,
     coalesce(new.raw_user_meta_data ->> 'default_language', 'fr'),
     true,
@@ -160,6 +192,7 @@ begin
     organization = excluded.organization,
     cohort = excluded.cohort,
     role = excluded.role,
+    category = excluded.category,
     voucher_code = excluded.voucher_code,
     default_language = excluded.default_language,
     active = excluded.active;
@@ -188,6 +221,7 @@ for each row execute function public.handle_new_exam_user();
 
 alter table public.profiles enable row level security;
 alter table public.vouchers enable row level security;
+alter table public.voucher_settings enable row level security;
 alter table public.exam_lots enable row level security;
 alter table public.question_bank enable row level security;
 alter table public.attempts enable row level security;
@@ -241,6 +275,13 @@ using (
   )
 )
 with check (status = 'used');
+
+drop policy if exists "voucher_settings_public_read_write" on public.voucher_settings;
+create policy "voucher_settings_public_read_write"
+on public.voucher_settings for all
+to anon, authenticated
+using (true)
+with check (true);
 
 drop policy if exists "exam_lots_public_select" on public.exam_lots;
 create policy "exam_lots_public_select"

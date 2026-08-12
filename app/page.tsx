@@ -7,6 +7,7 @@ import capmLot2Data from "./capm-lot2.json";
 type Language = "fr" | "en";
 type ExamType = "CAPM" | "PMP" | "Gestion de projet";
 type QuestionType = "single" | "multiple";
+type VoucherCategory = "formation" | "volontaire" | "membre" | "partenaire";
 
 type LocalizedText = {
   fr: string;
@@ -39,6 +40,7 @@ type Candidate = {
   email: string;
   organization: string;
   cohort: string;
+  category: VoucherCategory;
   examType: ExamType;
   sendEmail: boolean;
   hasAccount: boolean;
@@ -66,10 +68,14 @@ type Attempt = {
 type VoucherRecord = {
   code: string;
   role: string;
+  category: VoucherCategory;
+  validityMonths: number;
+  accessPercent: number;
   status: "available" | "assigned" | "used";
   assignedTo: string;
   usedBy: string;
   createdAt: string;
+  expiresAt: string;
   usedAt: string;
 };
 
@@ -80,6 +86,7 @@ type UserAccount = {
   organization: string;
   cohort: string;
   role: string;
+  category: VoucherCategory;
   voucherCode: string;
   password: string;
   passwordHash?: string;
@@ -109,8 +116,9 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.4";
+const VERSION = "v0.2.5";
 const UPDATED_AT = "2026-08-12";
+const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -120,16 +128,33 @@ const STORAGE_VOUCHERS = "pmi-drc-kmaj-vouchers";
 const STORAGE_USERS = "pmi-drc-kmaj-users";
 const STORAGE_ATTEMPT_LIMITS = "pmi-drc-kmaj-attempt-limits";
 const STORAGE_SUPABASE_SESSION = "pmi-drc-kmaj-supabase-session";
+const STORAGE_VOUCHER_SETTINGS = "pmi-drc-kmaj-voucher-settings";
 const DEFAULT_SETTINGS: AppSettings = {
   supabaseUrl: "https://wfsdsrmnxwxdebahznoq.supabase.co",
   supabaseAnonKey: "sb_publishable_A6yU8ee1-QFB4iSF8eGQbQ_ikc65MPG",
   trainerAccount: "admin@pmi-drcongo.org",
 };
 
+type VoucherSetting = {
+  category: VoucherCategory;
+  labelFr: string;
+  labelEn: string;
+  validityMonths: number;
+  accessPercent: number;
+  prefix: string;
+};
+
+const DEFAULT_VOUCHER_SETTINGS: VoucherSetting[] = [
+  { category: "formation", labelFr: "Participant formation", labelEn: "Training participant", validityMonths: 4, accessPercent: 100, prefix: "FORMATION" },
+  { category: "volontaire", labelFr: "Volontaire", labelEn: "Volunteer", validityMonths: 3, accessPercent: 60, prefix: "VOLONTAIRE" },
+  { category: "membre", labelFr: "Membre", labelEn: "Member", validityMonths: 12, accessPercent: 60, prefix: "MEMBRE" },
+  { category: "partenaire", labelFr: "Partenaire", labelEn: "Partner", validityMonths: 3, accessPercent: 50, prefix: "PARTENAIRE" },
+];
+
 const seedVouchers: VoucherRecord[] = [
-  { code: "PMIRDC-ACTIF-2026", role: "Volontaire actif", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
-  { code: "KMAJ-CENTRE-2026", role: "Candidat centre", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
-  { code: "MEMBRE-PMI-2026", role: "Membre effectif", status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, usedAt: "" },
+  { code: "PMIRDC-ACTIF-2026", role: "Volontaire", category: "volontaire", validityMonths: 3, accessPercent: 60, status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, expiresAt: "", usedAt: "" },
+  { code: "KMAJ-FORMATION-2026", role: "Participant formation", category: "formation", validityMonths: 4, accessPercent: 100, status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, expiresAt: "", usedAt: "" },
+  { code: "MEMBRE-PMI-2026", role: "Membre", category: "membre", validityMonths: 12, accessPercent: 60, status: "available", assignedTo: "", usedBy: "", createdAt: UPDATED_AT, expiresAt: "", usedAt: "" },
 ];
 
 const GITHUB_PAGES_BASE = "/pmi-drc-kmaj-exam-platform";
@@ -264,6 +289,7 @@ const copy = {
     email: "Adresse email",
     org: "Entreprise / Organisation",
     cohort: "Cohorte",
+    category: "Nature du candidat",
     examType: "Type d'examen",
     emailResults: "Je souhaite recevoir mes résultats par email.",
     seeLots: "Voir les lots",
@@ -280,10 +306,10 @@ const copy = {
     platformStructureNote: "Les lots sont filtrés selon le type d'examen choisi. Les questions sont bilingues FR/EN selon la langue sélectionnée. Les domaines ECO, approches et performance domains ne s'affichent pas pendant l'examen.",
     accountWithVoucher: "Créer ou utiliser un compte avec voucher",
     candidateAccount: "Compte candidat",
-    accountHelp: "Pour créer un compte, renseignez votre nom, email, voucher et mot de passe, puis cliquez sur Créer mon compte. Pour revenir avec un compte existant, renseignez email et mot de passe puis cliquez sur Se connecter.",
+    accountHelp: "Pour creer un compte, renseignez votre nom, email, nature et mot de passe. Le voucher est associe automatiquement si le formateur l'a deja attribue a votre email.",
     signIn: "Se connecter",
     resetPassword: "Réinitialiser le mot de passe",
-    voucherUnknown: "Voucher non reconnu ou deja utilise.",
+    voucherUnknown: "Aucun voucher actif n'est lie a ce compte. Acces limite applique.",
     loginUnknown: "Email ou mot de passe non reconnu.",
     selectLot: "Sélection du lot",
     editInfo: "Modifier mes informations",
@@ -298,7 +324,10 @@ const copy = {
     enter: "Entrer",
     trainerDashboard: "Dashboard formateur",
     accountManagement: "Vouchers et comptes utilisateur",
+    voucherSettings: "Parametrage voucher",
     voucherRole: "Profil du voucher",
+    validityMonths: "Duree de vie (mois)",
+    accessPercent: "Acces aux lots (%)",
     assignedTo: "Attribue a",
     assignedEmails: "Emails a attribuer",
     assignedEmailsHelp: "Saisissez un email par ligne, ou separez-les par virgule/point-virgule.",
@@ -307,7 +336,17 @@ const copy = {
     createUserAccount: "Créer mon compte",
     generatedVouchers: "Vouchers generes",
     userAccounts: "Comptes utilisateur",
-    accountCreated: "Compte cree avec voucher",
+    accountCreated: "Compte cree",
+    accountCreatedNoVoucher: "Compte cree sans voucher lie. Une notification a ete preparee pour l'administrateur.",
+    voucherAssignedEmail: "Email d'attribution prepare pour le candidat.",
+    restrictedAccess: "Sans compte ou sans voucher lie, l'acces est limite a un seul lot de moins de 100 questions pendant 3 mois.",
+    voucherAccessDenied: "Ce voucher ne donne pas acces a ce lot. Demandez une extension au formateur.",
+    voucherExpired: "Le voucher lie a ce compte est expire.",
+    profileDashboard: "Profil candidat",
+    readiness: "Preparation examen",
+    ready: "Pret",
+    notReady: "Pas encore pret",
+    qualifyingLots: "Lots valides au 1er essai",
     copyVoucher: "Copier le voucher",
     attemptsLabel: "Tentatives",
     average: "Moyenne",
@@ -369,6 +408,7 @@ const copy = {
     email: "Email address",
     org: "Company / Organization",
     cohort: "Cohort",
+    category: "Candidate category",
     examType: "Exam type",
     emailResults: "I would like to receive my results by email.",
     seeLots: "See exam lots",
@@ -385,10 +425,10 @@ const copy = {
     platformStructureNote: "Lots are filtered by the selected exam type. Questions are bilingual FR/EN based on the selected language. ECO domains, approaches, and performance domains are hidden during the exam.",
     accountWithVoucher: "Create or use an account with voucher",
     candidateAccount: "Candidate account",
-    accountHelp: "To create an account, enter your name, email, voucher, and password, then click Create my account. To return with an existing account, enter email and password, then click Sign in.",
+    accountHelp: "To create an account, enter your name, email, category, and password. The voucher is linked automatically if the trainer already assigned it to your email.",
     signIn: "Sign in",
     resetPassword: "Reset password",
-    voucherUnknown: "Voucher not recognized or already used.",
+    voucherUnknown: "No active voucher is linked to this account. Restricted access applies.",
     loginUnknown: "Email or password not recognized.",
     selectLot: "Lot selection",
     editInfo: "Edit my information",
@@ -403,7 +443,10 @@ const copy = {
     enter: "Enter",
     trainerDashboard: "Trainer dashboard",
     accountManagement: "Vouchers and user accounts",
+    voucherSettings: "Voucher settings",
     voucherRole: "Voucher profile",
+    validityMonths: "Validity (months)",
+    accessPercent: "Lot access (%)",
     assignedTo: "Assigned to",
     assignedEmails: "Emails to assign",
     assignedEmailsHelp: "Enter one email per line, or separate emails with commas/semicolons.",
@@ -412,7 +455,17 @@ const copy = {
     createUserAccount: "Create my account",
     generatedVouchers: "Generated vouchers",
     userAccounts: "User accounts",
-    accountCreated: "Account created with voucher",
+    accountCreated: "Account created",
+    accountCreatedNoVoucher: "Account created without a linked voucher. A notification was prepared for the administrator.",
+    voucherAssignedEmail: "Voucher assignment email prepared for the candidate.",
+    restrictedAccess: "Without an account or linked voucher, access is limited to one lot under 100 questions for 3 months.",
+    voucherAccessDenied: "This voucher does not grant access to this lot. Ask the trainer for an extension.",
+    voucherExpired: "The voucher linked to this account is expired.",
+    profileDashboard: "Candidate profile",
+    readiness: "Exam readiness",
+    ready: "Ready",
+    notReady: "Not ready yet",
+    qualifyingLots: "First-attempt qualifying lots",
     copyVoucher: "Copy voucher",
     attemptsLabel: "Attempts",
     average: "Average",
@@ -530,27 +583,67 @@ function parseEmailList(value: string) {
   return [...new Set(value.split(/[\n,;]+/).map((email) => normalizeEmail(email)).filter(Boolean))];
 }
 
-function normalizeVoucherRecord(row: Record<string, string>): VoucherRecord {
+function voucherSettingLabel(setting: VoucherSetting, language: Language) {
+  return language === "fr" ? setting.labelFr : setting.labelEn;
+}
+
+function voucherSettingFor(category: VoucherCategory, settings: VoucherSetting[] = DEFAULT_VOUCHER_SETTINGS) {
+  return settings.find((item) => item.category === category) ?? DEFAULT_VOUCHER_SETTINGS[0];
+}
+
+function voucherCategoryFromRole(role: string): VoucherCategory {
+  const value = role.toLowerCase();
+  if (value.includes("volont")) return "volontaire";
+  if (value.includes("membre")) return "membre";
+  if (value.includes("partenaire")) return "partenaire";
+  return "formation";
+}
+
+function normalizeVoucherCategory(value: unknown, role = ""): VoucherCategory {
+  if (value === "formation" || value === "volontaire" || value === "membre" || value === "partenaire") return value;
+  return voucherCategoryFromRole(role);
+}
+
+function addMonths(date: Date, months: number) {
+  const next = new Date(date);
+  next.setMonth(next.getMonth() + months);
+  return next;
+}
+
+function isExpired(date: string) {
+  return Boolean(date && new Date(date).getTime() < Date.now());
+}
+
+function normalizeVoucherRecord(row: Record<string, string | number | null>): VoucherRecord {
   const status = row.status === "used" || row.status === "assigned" ? row.status : "available";
+  const role = String(row.role || "");
+  const category = normalizeVoucherCategory(row.category, role);
+  const defaultSetting = voucherSettingFor(category);
   return {
-    code: row.code || row.voucherCode || row.voucher_code || "",
-    role: row.role || "",
+    code: String(row.code || row.voucherCode || row.voucher_code || ""),
+    role: role || defaultSetting.labelFr,
+    category,
+    validityMonths: Number(row.validityMonths || row.validity_months || defaultSetting.validityMonths),
+    accessPercent: Number(row.accessPercent || row.access_percent || defaultSetting.accessPercent),
     status,
-    assignedTo: row.assignedTo || row.assigned_to || "",
-    usedBy: row.usedBy || row.used_by || "",
-    createdAt: row.createdAt || row.created_at || "",
-    usedAt: row.usedAt || row.used_at || "",
+    assignedTo: String(row.assignedTo || row.assigned_to || ""),
+    usedBy: String(row.usedBy || row.used_by || ""),
+    createdAt: String(row.createdAt || row.created_at || ""),
+    expiresAt: String(row.expiresAt || row.expires_at || ""),
+    usedAt: String(row.usedAt || row.used_at || ""),
   };
 }
 
 function normalizeUserAccount(row: Record<string, string>): UserAccount {
+  const role = row.role || "";
   return {
     id: row.id || row.userId || row.user_id || "",
     name: row.name || "",
     email: row.email || "",
     organization: row.organization || "",
     cohort: row.cohort || "",
-    role: row.role || "",
+    role,
+    category: normalizeVoucherCategory(row.category, role),
     voucherCode: row.voucherCode || row.voucher_code || "",
     password: row.password || "",
     passwordHash: row.passwordHash || row.password_hash || "",
@@ -594,10 +687,14 @@ function voucherToSupabase(voucher: VoucherRecord) {
   return {
     code: voucher.code,
     role: voucher.role,
+    category: voucher.category,
+    validity_months: voucher.validityMonths,
+    access_percent: voucher.accessPercent,
     status: voucher.status,
     assigned_to: voucher.assignedTo,
     used_by: voucher.usedBy,
     created_at: voucher.createdAt,
+    expires_at: voucher.expiresAt || null,
     used_at: voucher.usedAt || null,
   };
 }
@@ -610,6 +707,7 @@ function profileToSupabase(user: UserAccount) {
     organization: user.organization,
     cohort: user.cohort,
     role: user.role,
+    category: user.category,
     voucher_code: user.voucherCode,
     default_language: user.defaultLanguage,
     created_at: user.createdAt,
@@ -694,6 +792,31 @@ function attemptLimitToSupabase(limit: AttemptLimit) {
   };
 }
 
+function voucherSettingToSupabase(setting: VoucherSetting) {
+  return {
+    category: setting.category,
+    label_fr: setting.labelFr,
+    label_en: setting.labelEn,
+    validity_months: setting.validityMonths,
+    access_percent: setting.accessPercent,
+    prefix: setting.prefix,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+function normalizeVoucherSetting(row: Record<string, unknown>): VoucherSetting {
+  const category = normalizeVoucherCategory(row.category);
+  const fallback = voucherSettingFor(category);
+  return {
+    category,
+    labelFr: String(row.label_fr || row.labelFr || fallback.labelFr),
+    labelEn: String(row.label_en || row.labelEn || fallback.labelEn),
+    validityMonths: Number(row.validity_months || row.validityMonths || fallback.validityMonths),
+    accessPercent: Number(row.access_percent || row.accessPercent || fallback.accessPercent),
+    prefix: String(row.prefix || fallback.prefix),
+  };
+}
+
 function normalizeAttemptLimit(row: Record<string, unknown>): AttemptLimit {
   const identifierType = row.identifier_type === "name" || row.identifier_type === "account" ? row.identifier_type : "email";
   return {
@@ -724,6 +847,7 @@ function normalizeSupabaseAttempt(row: Record<string, string | number | boolean 
       email: String(row.email || ""),
       organization: String(row.organization || ""),
       cohort: String(row.cohort || ""),
+      category: "formation",
       examType: (row.exam_type === "PMP" || row.exam_type === "Gestion de projet" ? row.exam_type : "CAPM") as ExamType,
       sendEmail: false,
       hasAccount: Boolean(row.has_account),
@@ -839,6 +963,63 @@ function hasGuestTriedLotThisMonth(candidate: Candidate, attempts: Attempt[], lo
   );
 }
 
+function candidateLinkedVoucher(candidate: Candidate, vouchers: VoucherRecord[], users: UserAccount[]) {
+  const email = normalizeEmail(candidate.email);
+  const account = users.find((user) => email && normalizeEmail(user.email) === email);
+  const code = normalizeVoucher(candidate.voucher || account?.voucherCode || "");
+  const voucher = code
+    ? vouchers.find((item) => normalizeVoucher(item.code) === code)
+    : vouchers.find((item) =>
+        email &&
+        item.status === "used" &&
+        normalizeEmail(item.usedBy) === email,
+      ) || vouchers.find((item) =>
+        email &&
+        item.status !== "used" &&
+        normalizeEmail(item.assignedTo) === email,
+      );
+  if (!voucher || isExpired(voucher.expiresAt)) return null;
+  if (email && voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== email) return null;
+  if (email && voucher.usedBy && normalizeEmail(voucher.usedBy) !== email) return null;
+  return voucher;
+}
+
+function allowedLotsForVoucher(lots: ExamLot[], voucher: VoucherRecord) {
+  const allowedCount = Math.max(1, Math.ceil(lots.length * Math.min(100, Math.max(0, voucher.accessPercent)) / 100));
+  return lots.slice(0, allowedCount);
+}
+
+function hasRestrictedAttemptInLastThreeMonths(candidate: Candidate, attempts: Attempt[]) {
+  const floor = addMonths(new Date(), -3).getTime();
+  return attempts.some((attempt) =>
+    attempt.status !== "cancelled" &&
+    (!attempt.candidate.hasAccount || !attempt.candidate.voucher) &&
+    isSameGuest(candidate, attempt) &&
+    new Date(attempt.startedAt).getTime() >= floor,
+  );
+}
+
+function readinessSummary(attempts: Attempt[], examType: ExamType) {
+  const submitted = attempts
+    .filter((attempt) => attempt.status === "submitted" && attempt.candidate.examType === examType)
+    .sort((a, b) => new Date(a.startedAt).getTime() - new Date(b.startedAt).getTime());
+  const firstByLot = new Map<string, Attempt>();
+  submitted.forEach((attempt) => {
+    if (!firstByLot.has(attempt.lotId)) firstByLot.set(attempt.lotId, attempt);
+  });
+  const threshold = examType === "PMP" ? 75 : examType === "CAPM" ? 80 : 70;
+  const qualifying = [...firstByLot.values()].filter((attempt) => attempt.percent >= threshold);
+  return {
+    submitted: submitted.length,
+    lots: new Set(submitted.map((attempt) => attempt.lotId)).size,
+    best: submitted.length ? Math.max(...submitted.map((attempt) => attempt.percent)) : 0,
+    average: submitted.length ? Math.round(submitted.reduce((sum, attempt) => sum + attempt.percent, 0) / submitted.length) : 0,
+    threshold,
+    qualifyingLots: qualifying.length,
+    ready: qualifying.length >= 2,
+  };
+}
+
 function matchesAttemptLimit(candidate: Candidate, limit: AttemptLimit) {
   const identifier = limit.identifier.trim().toLowerCase();
   if (!identifier || !limit.active) return false;
@@ -861,6 +1042,7 @@ function initialCandidate(): Candidate {
     email: "",
     organization: "",
     cohort: "",
+    category: "formation",
     examType: "CAPM",
     sendEmail: false,
     hasAccount: false,
@@ -871,8 +1053,8 @@ function initialCandidate(): Candidate {
 }
 
 export default function Home() {
-  const [candidate, setCandidate] = useState<Candidate>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()));
-  const [language, setLanguage] = useState<Language>(() => loadJson<Candidate>(STORAGE_CANDIDATE, initialCandidate()).language ?? "fr");
+  const [candidate, setCandidate] = useState<Candidate>(() => ({ ...initialCandidate(), ...loadJson<Partial<Candidate>>(STORAGE_CANDIDATE, {}) }));
+  const [language, setLanguage] = useState<Language>(() => loadJson<Partial<Candidate>>(STORAGE_CANDIDATE, {}).language ?? "fr");
   const [view, setView] = useState<"home" | "select" | "exam" | "results" | "trainer">("home");
   const [examLots, setExamLots] = useState<ExamLot[]>(seedLots);
   const [selectedLotId, setSelectedLotId] = useState(capmLot1.id);
@@ -887,7 +1069,8 @@ export default function Home() {
   const [supabaseSession, setSupabaseSession] = useState<SupabaseAuthSession | null>(() => loadJson<SupabaseAuthSession | null>(STORAGE_SUPABASE_SESSION, null));
   const [voucherRecords, setVoucherRecords] = useState<VoucherRecord[]>(() => loadJson<VoucherRecord[]>(STORAGE_VOUCHERS, seedVouchers));
   const [userAccounts, setUserAccounts] = useState<UserAccount[]>(() => loadJson<UserAccount[]>(STORAGE_USERS, []));
-  const [voucherForm, setVoucherForm] = useState({ role: "Volontaire actif", assignedTo: "" });
+  const [voucherSettings, setVoucherSettings] = useState<VoucherSetting[]>(() => loadJson<VoucherSetting[]>(STORAGE_VOUCHER_SETTINGS, DEFAULT_VOUCHER_SETTINGS));
+  const [voucherForm, setVoucherForm] = useState({ category: "formation" as VoucherCategory, assignedTo: "" });
   const [attemptLimits, setAttemptLimits] = useState<AttemptLimit[]>(() => loadJson<AttemptLimit[]>(STORAGE_ATTEMPT_LIMITS, []));
   const [limitForm, setLimitForm] = useState({ identifier: "", identifierType: "email" as AttemptLimit["identifierType"], maxAttempts: 2, note: "" });
   const [accountNotice, setAccountNotice] = useState("");
@@ -904,12 +1087,12 @@ export default function Home() {
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
     Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
-  const guestMonthlyLotCount = countGuestMonthlyLots(candidate, attempts);
   const candidateAttempts = attempts.filter((attempt) => {
     const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
     const sameName = candidate.name && attempt.candidate.name.toLowerCase() === candidate.name.toLowerCase();
     return sameEmail || sameName;
   });
+  const candidateReadiness = readinessSummary(candidateAttempts, candidate.examType);
 
   useEffect(() => {
     if (view !== "exam") return;
@@ -993,7 +1176,29 @@ export default function Home() {
     return rows[0] ? normalizeVoucherRecord(rows[0]) : null;
   }
 
-  async function supabaseCreateUserAccount(account: UserAccount, voucher: VoucherRecord) {
+  async function supabaseFindVoucherForEmail(email: string, category: VoucherCategory) {
+    const rows = await supabaseRequest<Record<string, string | number | null>[]>(
+      `/rest/v1/vouchers?select=*&assigned_to=eq.${encodeURIComponent(normalizeEmail(email))}&category=eq.${encodeURIComponent(category)}&status=neq.used&order=created_at.desc&limit=1`,
+    );
+    return rows[0] ? normalizeVoucherRecord(rows[0]) : null;
+  }
+
+  async function queueEmail(toEmail: string, subject: string, body: string, attemptId: string | null = null) {
+    if (!isSupabaseConfigured(settings) || !toEmail.trim()) return;
+    await supabaseRequest("/rest/v1/email_queue", {
+      method: "POST",
+      body: [{
+        attempt_id: attemptId,
+        to_email: normalizeEmail(toEmail),
+        subject,
+        payload_json: { body },
+        status: "queued",
+        created_at: new Date().toISOString(),
+      }],
+    });
+  }
+
+  async function supabaseCreateUserAccount(account: UserAccount, voucher: VoucherRecord | null) {
     const auth = await supabaseAuth<SupabaseAuthSession>("/auth/v1/signup", {
       email: normalizeEmail(account.email),
       password: account.password,
@@ -1002,6 +1207,7 @@ export default function Home() {
         organization: account.organization,
         cohort: account.cohort,
         role: account.role,
+        category: account.category,
         voucher_code: account.voucherCode,
         default_language: account.defaultLanguage,
       },
@@ -1021,16 +1227,18 @@ export default function Home() {
       body: [profileToSupabase(savedAccount)],
       prefer: "resolution=merge-duplicates,return=representation",
     });
-    await supabaseRequest(`/rest/v1/vouchers?code=eq.${encodeURIComponent(voucher.code)}`, {
-      method: "PATCH",
-      token: session.access_token,
-      body: {
-        status: "used",
-        used_by: normalizeEmail(account.email),
-        used_at: account.createdAt,
-      },
-      prefer: "return=representation",
-    });
+    if (voucher) {
+      await supabaseRequest(`/rest/v1/vouchers?code=eq.${encodeURIComponent(voucher.code)}`, {
+        method: "PATCH",
+        token: session.access_token,
+        body: {
+          status: "used",
+          used_by: normalizeEmail(account.email),
+          used_at: account.createdAt,
+        },
+        prefer: "return=representation",
+      });
+    }
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
     return savedAccount;
@@ -1061,10 +1269,14 @@ export default function Home() {
       const testVoucher: VoucherRecord = {
         code: `DBTEST-${Date.now()}`,
         role: "Test connexion",
+        category: "formation",
+        validityMonths: 4,
+        accessPercent: 100,
         status: "available",
         assignedTo: "",
         usedBy: "",
         createdAt: new Date().toISOString(),
+        expiresAt: addMonths(new Date(), 4).toISOString(),
         usedAt: "",
       };
       await supabaseSaveVouchers([testVoucher]);
@@ -1120,6 +1332,7 @@ export default function Home() {
         organization: profile.organization,
         cohort: profile.cohort,
         role: "Candidat",
+        category: profile.category,
         voucherCode: profile.voucher,
         password: "",
         defaultLanguage: profile.language,
@@ -1163,9 +1376,25 @@ export default function Home() {
           name: account.name,
           organization: account.organization,
           cohort: account.cohort,
+          category: account.category,
           language: account.defaultLanguage,
           voucher: account.voucherCode,
         };
+        if (isSupabaseConfigured(settings) && account.voucherCode) {
+          try {
+            const linkedVoucher = await supabaseFindVoucher(account.voucherCode);
+            if (linkedVoucher) {
+              const nextVouchers = [
+                linkedVoucher,
+                ...voucherRecords.filter((voucher) => normalizeVoucher(voucher.code) !== normalizeVoucher(linkedVoucher.code)),
+              ];
+              setVoucherRecords(nextVouchers);
+              saveJson(STORAGE_VOUCHERS, nextVouchers);
+            }
+          } catch {
+            // Account login can continue; access rules will use local data if the live voucher lookup fails.
+          }
+        }
         setCandidate(nextCandidate);
         setLanguage(nextCandidate.language);
         saveJson(STORAGE_CANDIDATE, nextCandidate);
@@ -1198,6 +1427,18 @@ export default function Home() {
         saveJson(STORAGE_USERS, nextUsers);
         saveJson(STORAGE_ATTEMPTS, nextAttempts);
         try {
+          const remoteSettings = await supabaseRequest<Record<string, unknown>[]>("/rest/v1/voucher_settings?select=*&order=category.asc");
+          if (remoteSettings.length) {
+            const nextSettings = DEFAULT_VOUCHER_SETTINGS.map((fallback) =>
+              remoteSettings.map(normalizeVoucherSetting).find((setting) => setting.category === fallback.category) ?? fallback,
+            );
+            setVoucherSettings(nextSettings);
+            saveJson(STORAGE_VOUCHER_SETTINGS, nextSettings);
+          }
+        } catch {
+          // Older databases may not have voucher_settings yet; the default rules remain active.
+        }
+        try {
           const remoteLimits = await supabaseRequest<Record<string, unknown>[]>("/rest/v1/attempt_limits?select=*&order=created_at.desc");
           const nextLimits = remoteLimits.map(normalizeAttemptLimit).filter((limit) => limit.identifier);
           setAttemptLimits(nextLimits);
@@ -1215,18 +1456,50 @@ export default function Home() {
     }
   }
 
+  function updateVoucherSetting(category: VoucherCategory, patch: Partial<VoucherSetting>) {
+    const next = voucherSettings.map((setting) =>
+      setting.category === category ? { ...setting, ...patch } : setting,
+    );
+    setVoucherSettings(next);
+    saveJson(STORAGE_VOUCHER_SETTINGS, next);
+  }
+
+  async function saveVoucherSettings() {
+    saveJson(STORAGE_VOUCHER_SETTINGS, voucherSettings);
+    if (!isSupabaseConfigured(settings)) {
+      setSyncStatus(language === "fr" ? "Parametrage voucher sauvegarde localement." : "Voucher settings saved locally.");
+      return;
+    }
+    try {
+      await supabaseRequest("/rest/v1/voucher_settings?on_conflict=category", {
+        method: "POST",
+        body: voucherSettings.map(voucherSettingToSupabase),
+        prefer: "resolution=merge-duplicates,return=representation",
+      });
+      setSyncStatus(`supabase saveVoucherSettings: ${new Date().toISOString()}`);
+    } catch (error) {
+      setSyncStatus(`supabase saveVoucherSettings: ${error instanceof Error ? error.message : "sync error"}`);
+    }
+  }
+
   async function generateVoucher() {
-    const prefix = voucherForm.role.toUpperCase().replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 12) || "VOUCHER";
+    const setting = voucherSettingFor(voucherForm.category, voucherSettings);
+    const prefix = setting.prefix.toUpperCase().replace(/[^A-Z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 12) || "VOUCHER";
     const emails = parseEmailList(voucherForm.assignedTo);
     const recipients = emails.length ? emails : [voucherForm.assignedTo.trim()];
     const createdAt = new Date().toISOString();
+    const expiresAt = addMonths(new Date(createdAt), setting.validityMonths).toISOString();
     const created = recipients.map((assignedTo) => ({
         code: `${prefix}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
-        role: voucherForm.role,
+        role: setting.labelFr,
+        category: setting.category,
+        validityMonths: setting.validityMonths,
+        accessPercent: setting.accessPercent,
         status: assignedTo ? "assigned" as const : "available" as const,
         assignedTo,
         usedBy: "",
         createdAt,
+        expiresAt,
         usedAt: "",
       }));
     const next = [...created, ...voucherRecords];
@@ -1236,7 +1509,18 @@ export default function Home() {
     if (isSupabaseConfigured(settings)) {
       try {
         await supabaseSaveVouchers(created);
+        await Promise.all(created
+          .filter((voucher) => voucher.assignedTo)
+          .map((voucher) => {
+            const existingAccount = userAccounts.some((user) => normalizeEmail(user.email) === normalizeEmail(voucher.assignedTo));
+            const subject = language === "fr" ? "Votre voucher d'acces aux examens blancs" : "Your practice exam access voucher";
+            const body = language === "fr"
+              ? `Bonjour,\n\nUn voucher ${voucher.role} vous a ete attribue pour la plateforme d'examens blancs PMI RDC / K-Majuscule.\n\nCode: ${voucher.code}\nValidite: ${voucher.validityMonths} mois\nAcces: ${voucher.accessPercent}% des lots\nLien: ${PLATFORM_URL}\n\nVotre compte est ${existingAccount ? "deja cree" : "pas encore cree"}. Bonne chance pour vos essais.`
+              : `Hello,\n\nA ${voucher.role} voucher has been assigned to you for the PMI DRC / K-Majuscule practice exam platform.\n\nCode: ${voucher.code}\nValidity: ${voucher.validityMonths} months\nAccess: ${voucher.accessPercent}% of lots\nLink: ${PLATFORM_URL}\n\nYour account is ${existingAccount ? "already created" : "not created yet"}. Good luck with your attempts.`;
+            return queueEmail(voucher.assignedTo, subject, body);
+          }));
         setSyncStatus(`supabase saveVouchers: ${new Date().toISOString()}`);
+        if (created.some((voucher) => voucher.assignedTo)) setAccountNotice(`${accountNotice ? `${accountNotice} | ` : ""}${t.voucherAssignedEmail}`);
       } catch (error) {
         setSyncStatus(`supabase saveVouchers: ${error instanceof Error ? error.message : "sync error"}`);
       }
@@ -1253,8 +1537,14 @@ export default function Home() {
       return;
     }
     const code = normalizeVoucher(candidate.voucher);
-    let voucher = voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used") || null;
-    if (!voucher && isSupabaseConfigured(settings)) {
+    let voucher = code
+      ? voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used") || null
+      : voucherRecords.find((item) =>
+          normalizeEmail(item.assignedTo) === normalizeEmail(candidate.email) &&
+          item.category === candidate.category &&
+          item.status !== "used",
+        ) || null;
+    if (!voucher && isSupabaseConfigured(settings) && code) {
       try {
         voucher = await supabaseFindVoucher(code);
       } catch (error) {
@@ -1262,25 +1552,38 @@ export default function Home() {
         return;
       }
     }
-    if (!voucher || !candidate.password.trim()) {
+    if (!voucher && isSupabaseConfigured(settings)) {
+      try {
+        voucher = await supabaseFindVoucherForEmail(candidate.email, candidate.category);
+      } catch {
+        voucher = null;
+      }
+    }
+    if (!candidate.password.trim()) {
+      setAccountNotice(language === "fr" ? "Mot de passe requis pour creer le compte." : "Password is required to create the account.");
+      return;
+    }
+    if (voucher && voucher.status === "used") {
       setAccountNotice(t.voucherUnknown);
       return;
     }
-    if (voucher.status === "used") {
-      setAccountNotice(t.voucherUnknown);
+    if (voucher && isExpired(voucher.expiresAt)) {
+      setAccountNotice(t.voucherExpired);
       return;
     }
-    if (voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== normalizeEmail(candidate.email)) {
+    if (voucher && voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== normalizeEmail(candidate.email)) {
       setAccountNotice(language === "fr" ? "Ce voucher est attribue a un autre email." : "This voucher is assigned to another email.");
       return;
     }
+    const accountRole = voucher?.role ?? voucherSettingLabel(voucherSettingFor(candidate.category, voucherSettings), "fr");
     const account: UserAccount = {
       name: candidate.name.trim(),
       email: candidate.email.trim(),
       organization: candidate.organization.trim(),
       cohort: candidate.cohort.trim(),
-      role: voucher.role,
-      voucherCode: voucher.code,
+      role: accountRole,
+      category: candidate.category,
+      voucherCode: voucher?.code ?? "",
       password: candidate.password,
       passwordHash: await sha256(candidate.password),
       defaultLanguage: candidate.language,
@@ -1291,6 +1594,15 @@ export default function Home() {
       savedAccount = isSupabaseConfigured(settings)
         ? await supabaseCreateUserAccount(account, voucher)
         : account;
+      if (!voucher) {
+        await queueEmail(
+          settings.trainerAccount,
+          language === "fr" ? "Compte candidat sans voucher" : "Candidate account without voucher",
+          language === "fr"
+            ? `Un compte a ete cree sans voucher lie.\n\nNom: ${account.name}\nEmail: ${account.email}\nNature: ${voucherSettingLabel(voucherSettingFor(account.category, voucherSettings), "fr")}\nOrganisation: ${account.organization || "-"}\nCohorte: ${account.cohort || "-"}`
+            : `An account was created without a linked voucher.\n\nName: ${account.name}\nEmail: ${account.email}\nCategory: ${voucherSettingLabel(voucherSettingFor(account.category, voucherSettings), "en")}\nOrganization: ${account.organization || "-"}\nCohort: ${account.cohort || "-"}`,
+        );
+      }
     } catch (error) {
       setAccountNotice(`Supabase: ${error instanceof Error ? error.message : "sync error"}`);
       return;
@@ -1303,17 +1615,19 @@ export default function Home() {
           : normalizeVoucher(user.voucherCode) !== normalizeVoucher(account.voucherCode),
       ),
     ];
-    const nextVouchers = voucherRecords.map((item) =>
-      item.code === voucher.code
-        ? { ...item, status: "used" as const, usedBy: account.email, usedAt: account.createdAt }
-        : item,
-    );
+    const usedVoucher = voucher ? { ...voucher, status: "used" as const, usedBy: account.email, usedAt: account.createdAt } : null;
+    const nextVouchers = usedVoucher
+      ? [
+        usedVoucher,
+        ...voucherRecords.filter((item) => normalizeVoucher(item.code) !== normalizeVoucher(usedVoucher.code)),
+      ]
+      : voucherRecords;
     setUserAccounts(nextUsers);
     setVoucherRecords(nextVouchers);
     saveJson(STORAGE_USERS, nextUsers);
     saveJson(STORAGE_VOUCHERS, nextVouchers);
-    updateCandidate({ hasAccount: true, voucher: voucher.code });
-    setAccountNotice(`${t.accountCreated}: ${account.email}`);
+    updateCandidate({ hasAccount: true, voucher: voucher?.code ?? "" });
+    setAccountNotice(voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher);
     if (isSupabaseConfigured(settings)) {
       setSyncStatus(`supabase saveUserAccount: ${new Date().toISOString()}`);
     }
@@ -1321,6 +1635,23 @@ export default function Home() {
 
   function startExam(lot: ExamLot) {
     if (!lot.questions.length) return;
+    const voucher = candidateLinkedVoucher(candidate, voucherRecords, userAccounts);
+    if (!voucher) {
+      if (lot.questionCount >= 100 || hasRestrictedAttemptInLastThreeMonths(candidate, attempts)) {
+        setAccessNotice(t.restrictedAccess);
+        setView("home");
+        window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+        return;
+      }
+    } else {
+      const allowedLots = allowedLotsForVoucher(visibleLots, voucher);
+      if (!allowedLots.some((item) => item.id === lot.id)) {
+        setAccessNotice(t.voucherAccessDenied);
+        setView("home");
+        window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+        return;
+      }
+    }
     const matchingLimit = attemptLimits.find((limit) => matchesAttemptLimit(candidate, limit));
     if (matchingLimit) {
       const usedAttempts = attempts.filter((attempt) => attempt.status !== "cancelled" && candidateMatchesAttempt(candidate, attempt)).length;
@@ -1332,13 +1663,6 @@ export default function Home() {
         window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
         return;
       }
-    }
-    if (!candidate.hasAccount && guestMonthlyLotCount >= 2 && !hasGuestTriedLotThisMonth(candidate, attempts, lot.id)) {
-      setAccessNotice(language === "fr"
-        ? "Accès ponctuel limité à 2 lots d'examen par mois. Connectez-vous avec un compte voucher pour continuer."
-        : "Guest access is limited to 2 exam lots per month. Sign in with a voucher account to continue.");
-      setView("home");
-      return;
     }
     const draft = loadJson<Attempt | null>(STORAGE_DRAFT, null);
     const useDraft = draft?.lotId === lot.id && draft.status === "saved";
@@ -1630,6 +1954,11 @@ export default function Home() {
               <label>{t.email}<input type="email" value={candidate.email} onChange={(event) => updateCandidate({ email: event.target.value })} placeholder="Ex. jean@email.com" /></label>
               <label>{t.org}<input value={candidate.organization} onChange={(event) => updateCandidate({ organization: event.target.value })} /></label>
               <label>{t.cohort}<input value={candidate.cohort} onChange={(event) => updateCandidate({ cohort: event.target.value })} /></label>
+              <label>{t.category}<select value={candidate.category} onChange={(event) => updateCandidate({ category: event.target.value as VoucherCategory })}>
+                {voucherSettings.map((setting) => (
+                  <option key={setting.category} value={setting.category}>{voucherSettingLabel(setting, language)}</option>
+                ))}
+              </select></label>
               <label>{t.examType}<select value={candidate.examType} onChange={(event) => updateCandidate({ examType: event.target.value as ExamType })}>
                 <option>CAPM</option>
                 <option>PMP</option>
@@ -1667,7 +1996,7 @@ export default function Home() {
                 <label className="check-row"><input type="checkbox" checked={candidate.hasAccount} onChange={(event) => updateCandidate({ hasAccount: event.target.checked })} /> {t.accountWithVoucher}</label>
               </div>
               <div className="form-grid">
-                <label>{t.voucher}<input value={candidate.voucher} onChange={(event) => updateCandidate({ voucher: event.target.value })} placeholder="PMIRDC-ACTIF-2026" /></label>
+                <label>{t.voucher}<input value={candidate.voucher} onChange={(event) => updateCandidate({ voucher: event.target.value })} placeholder={language === "fr" ? "Facultatif si deja attribue a votre email" : "Optional if already assigned to your email"} /></label>
                 <label>{t.password}<input type="password" value={candidate.password} onChange={(event) => updateCandidate({ password: event.target.value })} /></label>
               </div>
               <div className="actions">
@@ -1816,13 +2145,29 @@ export default function Home() {
 
               <div className="panel wide">
                 <h2>{t.accountManagement}</h2>
+                <h3>{t.voucherSettings}</h3>
+                <div className="voucher-settings-grid">
+                  {voucherSettings.map((setting) => (
+                    <div className="metric" key={setting.category}>
+                      <span>{voucherSettingLabel(setting, language)}</span>
+                      <label>{t.validityMonths}
+                        <input type="number" min="1" value={setting.validityMonths} onChange={(event) => updateVoucherSetting(setting.category, { validityMonths: Number(event.target.value || 1) })} />
+                      </label>
+                      <label>{t.accessPercent}
+                        <input type="number" min="1" max="100" value={setting.accessPercent} onChange={(event) => updateVoucherSetting(setting.category, { accessPercent: Number(event.target.value || 1) })} />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <div className="actions">
+                  <button onClick={saveVoucherSettings}>↻ {language === "fr" ? "Enregistrer le parametrage" : "Save settings"}</button>
+                </div>
                 <div className="form-grid">
                   <label>{t.voucherRole}
-                    <select value={voucherForm.role} onChange={(event) => setVoucherForm({ ...voucherForm, role: event.target.value })}>
-                      <option>Volontaire actif</option>
-                      <option>Membre effectif</option>
-                      <option>Candidat centre</option>
-                      <option>Formateur</option>
+                    <select value={voucherForm.category} onChange={(event) => setVoucherForm({ ...voucherForm, category: event.target.value as VoucherCategory })}>
+                      {voucherSettings.map((setting) => (
+                        <option key={setting.category} value={setting.category}>{voucherSettingLabel(setting, language)}</option>
+                      ))}
                     </select>
                   </label>
                   <label>{t.assignedEmails}
@@ -1840,12 +2185,13 @@ export default function Home() {
                     <h3>{t.generatedVouchers}</h3>
                     <div className="table-wrap">
                       <table>
-                        <thead><tr><th>Code</th><th>{t.voucherRole}</th><th>{t.assignedTo}</th><th>{t.status}</th><th>{t.date}</th></tr></thead>
+                        <thead><tr><th>Code</th><th>{t.voucherRole}</th><th>{t.accessPercent}</th><th>{t.assignedTo}</th><th>{t.status}</th><th>{t.date}</th></tr></thead>
                         <tbody>
                           {voucherRecords.map((voucher) => (
                             <tr key={voucher.code}>
                               <td><strong>{voucher.code}</strong></td>
                               <td>{voucher.role}</td>
+                              <td>{voucher.accessPercent}%</td>
                               <td>{voucher.assignedTo || "-"}</td>
                               <td>{voucher.status}</td>
                               <td>{voucher.createdAt.slice(0, 10)}</td>
@@ -1859,19 +2205,20 @@ export default function Home() {
                     <h3>{t.userAccounts}</h3>
                     <div className="table-wrap">
                       <table>
-                        <thead><tr><th>{t.participant}</th><th>Email</th><th>{t.voucher}</th><th>{t.defaultLanguage}</th><th>{t.date}</th></tr></thead>
+                        <thead><tr><th>{t.participant}</th><th>Email</th><th>{t.category}</th><th>{t.voucher}</th><th>{t.defaultLanguage}</th><th>{t.date}</th></tr></thead>
                         <tbody>
                           {userAccounts.map((user) => (
                             <tr key={user.email}>
                               <td>{user.name}</td>
                               <td>{user.email}</td>
+                              <td>{voucherSettingLabel(voucherSettingFor(user.category, voucherSettings), language)}</td>
                               <td>{user.voucherCode}</td>
                               <td>{user.defaultLanguage.toUpperCase()}</td>
                               <td>{user.createdAt.slice(0, 10)}</td>
                             </tr>
                           ))}
                           {!userAccounts.length && (
-                            <tr><td colSpan={5}>-</td></tr>
+                            <tr><td colSpan={6}>-</td></tr>
                           )}
                         </tbody>
                       </table>
@@ -1964,13 +2311,18 @@ export default function Home() {
 
       {candidateAttempts.length > 0 && view === "home" && (
         <section className="panel">
-          <h2>Rapport de suivi candidat</h2>
+          <h2>{t.profileDashboard}</h2>
           <div className="metric-grid">
-            <Metric label={t.attempts} value={String(candidateAttempts.length)} />
-            <Metric label="Dernier score" value={`${candidateAttempts[0].percent}%`} />
-            <Metric label="Meilleure performance" value={`${Math.max(...candidateAttempts.map((attempt) => attempt.percent))}%`} />
-            <Metric label="Mention actuelle" value={grade(candidateAttempts[0].percent).label} />
+            <Metric label={t.attempts} value={String(candidateReadiness.submitted)} />
+            <Metric label={language === "fr" ? "Lots travailles" : "Lots practiced"} value={String(candidateReadiness.lots)} />
+            <Metric label={language === "fr" ? "Meilleure performance" : "Best performance"} value={`${candidateReadiness.best}%`} />
+            <Metric label={language === "fr" ? "Moyenne" : "Average"} value={`${candidateReadiness.average}%`} />
+            <Metric label={t.qualifyingLots} value={`${candidateReadiness.qualifyingLots}/2`} />
+            <Metric label={t.readiness} value={candidateReadiness.ready ? t.ready : t.notReady} />
           </div>
+          <p className="muted">{candidate.examType === "PMP"
+            ? (language === "fr" ? "Pret pour PMP: au moins 75% sur 2 lots, chacun au premier essai." : "PMP readiness: at least 75% on 2 lots, each on the first attempt.")
+            : (language === "fr" ? "Pret pour CAPM: au moins 80% sur 2 lots, chacun au premier essai." : "CAPM readiness: at least 80% on 2 lots, each on the first attempt.")}</p>
         </section>
       )}
     </main>
