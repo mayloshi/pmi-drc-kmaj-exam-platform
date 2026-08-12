@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import capmLot1Data from "./capm-lot1.json";
 import capmLot2Data from "./capm-lot2.json";
+import capmLot3Data from "./capm-lot3.json";
 
 type Language = "fr" | "en";
 type ExamType = "CAPM" | "PMP" | "Gestion de projet";
@@ -116,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.5";
+const VERSION = "v0.2.6";
 const UPDATED_AT = "2026-08-12";
 const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
 const TRAINER_PASSWORD = "221008";
@@ -204,9 +205,11 @@ const optionLetters = ["A", "B", "C", "D", "E", "F"];
 
 const capmLot1 = capmLot1Data as ExamLot;
 const capmLot2 = capmLot2Data as ExamLot;
+const capmLot3 = capmLot3Data as ExamLot;
 const seedLots: ExamLot[] = [
   capmLot1,
   capmLot2,
+  capmLot3,
   {
     id: "pmp-placeholder",
     examType: "PMP",
@@ -1303,7 +1306,7 @@ export default function Home() {
         setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
         return;
       }
-      const capmLots = [capmLot1, capmLot2];
+      const capmLots = [capmLot1, capmLot2, capmLot3];
       await supabaseRequest("/rest/v1/exam_lots?on_conflict=id", {
         method: "POST",
         body: capmLots.map(lotToSupabase),
@@ -1315,7 +1318,7 @@ export default function Home() {
         prefer: "resolution=merge-duplicates,return=representation",
       });
       setExamLots(seedLots);
-      setSyncStatus(`supabase seed OK: ${capmLots.reduce((sum, lot) => sum + lot.questions.length, 0)} questions CAPM Lots 1-2`);
+      setSyncStatus(`supabase seed OK: ${capmLots.reduce((sum, lot) => sum + lot.questions.length, 0)} questions CAPM Lots 1-3`);
     } catch (error) {
       setSyncStatus(`supabase seed ERROR: ${error instanceof Error ? error.message : "sync error"}`);
     }
@@ -2138,7 +2141,7 @@ export default function Home() {
                 <p className="muted">{language === "fr" ? "Le bouton de test ecrit un voucher DBTEST dans Supabase puis relit les tables. Si les tables manquent, le statut affichera l'erreur exacte." : "The test button writes a DBTEST voucher to Supabase and reads the tables back. If tables are missing, the status displays the exact error."}</p>
                 <div className="actions">
                   <button className="primary" onClick={testSupabaseConnection}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
-                  <button onClick={seedCapmLotsToSupabase}>＋ {language === "fr" ? "Charger CAPM Lots 1-2" : "Load CAPM Lots 1-2"}</button>
+                  <button onClick={seedCapmLotsToSupabase}>＋ {language === "fr" ? "Charger CAPM Lots 1-3" : "Load CAPM Lots 1-3"}</button>
                   <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
                 </div>
               </div>
