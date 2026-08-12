@@ -109,7 +109,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.3";
+const VERSION = "v0.2.4";
 const UPDATED_AT = "2026-08-12";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
@@ -1703,7 +1703,6 @@ export default function Home() {
                   <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
                   <span>FR / EN</span>
                 </div>
-                <small>{t.source} : {lot.source}</small>
                 <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
               </article>
             ))}
