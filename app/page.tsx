@@ -117,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.7";
+const VERSION = "v0.2.8";
 const UPDATED_AT = "2026-08-14";
 const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
 const TRAINER_PASSWORD = "221008";
@@ -209,32 +209,42 @@ const capmLot2 = capmLot2Data as ExamLot;
 const capmLot3 = capmLot3Data as ExamLot;
 const cisspLotTitles = [
   "CISSP Mock Exam (Baseline)",
-  "CISSP Mock Exam (LITE) - 1 - Security and Risk Management",
-  "CISSP Mock Exam (LITE) - 2 - Identity and Access Management",
-  "CISSP Mock Exam (LITE) - 3 - Security Engineering",
-  "CISSP Mock Exam (LITE) - 4 - Communications and Network Security",
-  "CISSP Mock Exam (LITE) - 5 - Security Assessment and Testing",
-  "CISSP Mock Exam (LITE) - 6 - Asset Security Practice",
-  "CISSP Mock Exam (LITE) - 7 - Software Development Security",
-  "CISSP Mock Exam (LITE) - 8 - Security Operations",
+  "CISSP Mock Exam (LITE) - 1",
+  "Domain Area Test: Security and Risk Management",
+  "CISSP Mock Exam (LITE) - 2",
+  "Domain Area Test: Identity and Access Management",
+  "CISSP Mock Exam (LITE) - 3",
+  "Domain Area Test: Security Engineering",
+  "CISSP Mock Exam (LITE) - 4",
+  "Domain Area Test: Communications and Network Security",
+  "CISSP Mock Exam (LITE) - 5",
+  "Domain Area Test: Security Assessment and Testing",
+  "CISSP Mock Exam (LITE) - 6",
+  "Domain Area Test: Asset Security",
+  "CISSP Mock Exam (LITE) - 7",
+  "Domain Area Test: Software Development Security",
+  "CISSP Mock Exam (LITE) - 8",
+  "Domain Area Test: Security Operations",
   "CISSP Mock Exam (LITE) - 9",
   "CISSP Mock Exam (LITE) - 10",
   "CISSP Mock Exam (LITE) - 11",
-  "CISSP Mock Exam (LITE) - 12 - Multi Domain",
+  "CISSP Mock Exam (LITE) - 12",
+  "Domain Area Test: Multi Domain",
   "CISSP Mock Exam (LITE) - 13",
   "CISSP Mock Exam (LITE) - 14",
-  "CISSP Mock Exam (LITE) - 15",
-  "CISSP Mock Exam (LITE) - 16",
-  "CISSP Mock Exam (LITE) - 17",
-  "CISSP Mock Exam (LITE) - 18",
-  "CISSP Mock Exam (LITE) - 19",
-  "Extra Domain Area Test - Security and Risk Management",
-  "Extra Domain Area Test - Security Operations",
+  "CISSP Extended Quiz",
+  "CISSP Mock Exam (LITE)15",
+  "CISSP Mock Exam (LITE)16",
+  "CISSP Mock Exam (LITE)17",
+  "CISSP Mock Exam (LITE)18",
+  "CISSP Mock Exam (LITE)19",
+  "Extra Domain Area Test: Security and Risk Management",
+  "Extra Domain Area Test: Security Operations",
 ];
 const cisspLots: ExamLot[] = cisspLotTitles.map((title, index) => ({
   id: `cissp-${String(index + 1).padStart(2, "0")}`,
   examType: "CISSP",
-  source: "CISSP PDF table of contents - questions require authorized import",
+  source: "Supabase CISSP question bank",
   questionCount: 0,
   title: { fr: title, en: title },
   questions: [],
@@ -364,6 +374,9 @@ const copy = {
     centerName: "Centre K-Majuscule",
     generalPm: "Gestion de projet général",
     cissp: "CISSP",
+    cisspLocked: "CISSP est protege par le meme mot de passe que l'espace formateur.",
+    cisspUnlock: "Debloquer CISSP",
+    cisspPasswordError: "Mot de passe CISSP incorrect.",
     trainerAccess: "Accès protégé. Les données formateur sont prévues pour Supabase.",
     trainerPassword: "Mot de passe formateur",
     enter: "Entrer",
@@ -484,6 +497,9 @@ const copy = {
     centerName: "K-Majuscule Center",
     generalPm: "General project management",
     cissp: "CISSP",
+    cisspLocked: "CISSP is protected with the same password as the trainer area.",
+    cisspUnlock: "Unlock CISSP",
+    cisspPasswordError: "Incorrect CISSP password.",
     trainerAccess: "Protected access. Trainer data is designed for Supabase.",
     trainerPassword: "Trainer password",
     enter: "Enter",
@@ -1126,6 +1142,8 @@ export default function Home() {
   const [activeAttempt, setActiveAttempt] = useState<Attempt | null>(null);
   const [trainerPassword, setTrainerPassword] = useState("");
   const [trainerUnlocked, setTrainerUnlocked] = useState(false);
+  const [cisspPassword, setCisspPassword] = useState("");
+  const [cisspNotice, setCisspNotice] = useState("");
   const [settings, setSettings] = useState<AppSettings>(() => ({ ...DEFAULT_SETTINGS, ...loadJson<Partial<AppSettings>>(STORAGE_SETTINGS, {}) }));
   const [supabaseSession, setSupabaseSession] = useState<SupabaseAuthSession | null>(() => loadJson<SupabaseAuthSession | null>(STORAGE_SUPABASE_SESSION, null));
   const [voucherRecords, setVoucherRecords] = useState<VoucherRecord[]>(() => loadJson<VoucherRecord[]>(STORAGE_VOUCHERS, seedVouchers));
@@ -1158,6 +1176,15 @@ export default function Home() {
     return sameEmail || sameName;
   });
   const candidateReadiness = readinessSummary(candidateAttempts, candidate.examType);
+
+  function unlockCissp() {
+    if (cisspPassword === TRAINER_PASSWORD) {
+      setTrainerUnlocked(true);
+      setCisspNotice("");
+      return;
+    }
+    setCisspNotice(t.cisspPasswordError);
+  }
 
   useEffect(() => {
     if (view !== "exam") return;
@@ -1718,6 +1745,10 @@ export default function Home() {
 
   function startExam(lot: ExamLot) {
     if (!lot.questions.length) return;
+    if (lot.examType === "CISSP" && !trainerUnlocked) {
+      setAccessNotice(t.cisspLocked);
+      return;
+    }
     if (candidate.examType !== lot.examType || (lot.examType === "CISSP" && language !== "en")) {
       updateCandidate({ examType: lot.examType, language: lot.examType === "CISSP" ? "en" : candidate.language });
       if (lot.examType === "CISSP") setLanguage("en");
@@ -2123,21 +2154,32 @@ export default function Home() {
                   <h2>{section.examType}</h2>
                   <span>{section.lots.length} {language === "fr" ? "lot(s)" : "lot(s)"}</span>
                 </div>
-                <div className="catalog-grid compact">
-                  {section.lots.map((lot, index) => (
-                    <article className={`test-card ${lotTone(lot, index)}`} key={lot.id}>
-                      <div className="test-icon">{lotIcon(lot)}</div>
-                      <h2>{lot.title[lot.examType === "CISSP" ? "en" : language]}</h2>
-                      <p>{lotDescription(lot, language)}</p>
-                      <div className="chips">
-                        <span>{lot.questions.length} questions</span>
-                        <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
-                        <span>{lot.examType === "CISSP" ? "EN" : "FR / EN"}</span>
-                      </div>
-                      <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
-                    </article>
-                  ))}
-                </div>
+                {section.examType === "CISSP" && !trainerUnlocked ? (
+                  <div className="cissp-lock">
+                    <p>{t.cisspLocked}</p>
+                    <div className="actions">
+                      <input type="password" value={cisspPassword} onChange={(event) => setCisspPassword(event.target.value)} placeholder={t.trainerPassword} />
+                      <button className="primary" onClick={unlockCissp}>🔐 {t.cisspUnlock}</button>
+                    </div>
+                    {cisspNotice && <p className="error">{cisspNotice}</p>}
+                  </div>
+                ) : (
+                  <div className="catalog-grid compact">
+                    {section.lots.map((lot, index) => (
+                      <article className={`test-card ${lotTone(lot, index)}`} key={lot.id}>
+                        <div className="test-icon">{lotIcon(lot)}</div>
+                        <h2>{lot.title[lot.examType === "CISSP" ? "en" : language]}</h2>
+                        <p>{lotDescription(lot, language)}</p>
+                        <div className="chips">
+                          <span>{lot.questions.length} questions</span>
+                          <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
+                          <span>{lot.examType === "CISSP" ? "EN" : "FR / EN"}</span>
+                        </div>
+                        <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
+                      </article>
+                    ))}
+                  </div>
+                )}
               </section>
             ))}
           </div>

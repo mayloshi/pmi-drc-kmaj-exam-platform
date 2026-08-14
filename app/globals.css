@@ -305,6 +305,25 @@ textarea {
   font-weight: 800;
 }
 
+.cissp-lock {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff8f1;
+}
+
+.cissp-lock p {
+  margin: 0;
+  color: #7c2d12;
+  font-weight: 800;
+}
+
+.cissp-lock input {
+  max-width: 360px;
+}
+
 .participant-layout {
   grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
   gap: 30px;

@@ -42,3 +42,7 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# generated private question banks
+/app/cissp-lots.json
+/supabase/seed-cissp-questions.sql
