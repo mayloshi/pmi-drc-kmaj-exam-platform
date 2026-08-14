@@ -50,7 +50,7 @@ create table if not exists public.voucher_settings (
 
 create table if not exists public.exam_lots (
   id text primary key,
-  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'Gestion de projet')),
+  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet')),
   title_fr text not null,
   title_en text not null,
   source text default '',
@@ -62,7 +62,7 @@ create table if not exists public.exam_lots (
 create table if not exists public.question_bank (
   id text primary key,
   lot_id text not null references public.exam_lots(id) on delete cascade,
-  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'Gestion de projet')),
+  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet')),
   question_type text not null check (question_type in ('single', 'multiple')),
   prompt_fr text not null,
   prompt_en text not null,
@@ -88,7 +88,7 @@ create table if not exists public.attempts (
   organization text default '',
   cohort text default '',
   has_account boolean not null default false,
-  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'Gestion de projet')),
+  exam_type text not null check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet')),
   lot_id text not null,
   lot_title text not null,
   started_at timestamptz not null,
@@ -110,6 +110,21 @@ create table if not exists public.attempt_answers (
   highlighted boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+alter table public.exam_lots
+  drop constraint if exists exam_lots_exam_type_check,
+  add constraint exam_lots_exam_type_check
+  check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet'));
+
+alter table public.question_bank
+  drop constraint if exists question_bank_exam_type_check,
+  add constraint question_bank_exam_type_check
+  check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet'));
+
+alter table public.attempts
+  drop constraint if exists attempts_exam_type_check,
+  add constraint attempts_exam_type_check
+  check (exam_type in ('CAPM', 'PMP', 'CISSP', 'Gestion de projet'));
 
 create table if not exists public.attempt_limits (
   id uuid primary key default gen_random_uuid(),

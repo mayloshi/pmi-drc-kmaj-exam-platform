@@ -6,7 +6,7 @@ import capmLot2Data from "./capm-lot2.json";
 import capmLot3Data from "./capm-lot3.json";
 
 type Language = "fr" | "en";
-type ExamType = "CAPM" | "PMP" | "Gestion de projet";
+type ExamType = "CAPM" | "PMP" | "CISSP" | "Gestion de projet";
 type QuestionType = "single" | "multiple";
 type VoucherCategory = "formation" | "volontaire" | "membre" | "partenaire";
 
@@ -117,8 +117,8 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.6";
-const UPDATED_AT = "2026-08-12";
+const VERSION = "v0.2.7";
+const UPDATED_AT = "2026-08-14";
 const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
@@ -202,10 +202,43 @@ const APPROACHES = {
 } satisfies Record<string, LocalizedText>;
 
 const optionLetters = ["A", "B", "C", "D", "E", "F"];
+const EXAM_SECTIONS: ExamType[] = ["CAPM", "PMP", "CISSP"];
 
 const capmLot1 = capmLot1Data as ExamLot;
 const capmLot2 = capmLot2Data as ExamLot;
 const capmLot3 = capmLot3Data as ExamLot;
+const cisspLotTitles = [
+  "CISSP Mock Exam (Baseline)",
+  "CISSP Mock Exam (LITE) - 1 - Security and Risk Management",
+  "CISSP Mock Exam (LITE) - 2 - Identity and Access Management",
+  "CISSP Mock Exam (LITE) - 3 - Security Engineering",
+  "CISSP Mock Exam (LITE) - 4 - Communications and Network Security",
+  "CISSP Mock Exam (LITE) - 5 - Security Assessment and Testing",
+  "CISSP Mock Exam (LITE) - 6 - Asset Security Practice",
+  "CISSP Mock Exam (LITE) - 7 - Software Development Security",
+  "CISSP Mock Exam (LITE) - 8 - Security Operations",
+  "CISSP Mock Exam (LITE) - 9",
+  "CISSP Mock Exam (LITE) - 10",
+  "CISSP Mock Exam (LITE) - 11",
+  "CISSP Mock Exam (LITE) - 12 - Multi Domain",
+  "CISSP Mock Exam (LITE) - 13",
+  "CISSP Mock Exam (LITE) - 14",
+  "CISSP Mock Exam (LITE) - 15",
+  "CISSP Mock Exam (LITE) - 16",
+  "CISSP Mock Exam (LITE) - 17",
+  "CISSP Mock Exam (LITE) - 18",
+  "CISSP Mock Exam (LITE) - 19",
+  "Extra Domain Area Test - Security and Risk Management",
+  "Extra Domain Area Test - Security Operations",
+];
+const cisspLots: ExamLot[] = cisspLotTitles.map((title, index) => ({
+  id: `cissp-${String(index + 1).padStart(2, "0")}`,
+  examType: "CISSP",
+  source: "CISSP PDF table of contents - questions require authorized import",
+  questionCount: 0,
+  title: { fr: title, en: title },
+  questions: [],
+}));
 const seedLots: ExamLot[] = [
   capmLot1,
   capmLot2,
@@ -218,6 +251,7 @@ const seedLots: ExamLot[] = [
     title: { fr: "PMP - Lots à charger", en: "PMP - Lots to upload" },
     questions: [],
   },
+  ...cisspLots,
   {
     id: "gp-placeholder",
     examType: "Gestion de projet",
@@ -230,12 +264,14 @@ const seedLots: ExamLot[] = [
 
 function lotIcon(lot: ExamLot) {
   if (lot.examType === "PMP") return "⚡";
+  if (lot.examType === "CISSP") return "🛡️";
   if (lot.examType === "Gestion de projet") return "🎯";
   return "🌱";
 }
 
 function lotTone(lot: ExamLot, index = 0) {
   if (lot.examType === "PMP") return "cyan";
+  if (lot.examType === "CISSP") return "orange";
   if (lot.examType === "Gestion de projet") return "orange";
   return index % 2 === 0 ? "purple" : "cyan";
 }
@@ -250,6 +286,11 @@ function lotDescription(lot: ExamLot, language: Language) {
     return language === "fr"
       ? "Questions fondamentales CAPM : concepts clés, gouvernance, parties prenantes, risques et contraintes."
       : "CAPM fundamentals: core concepts, governance, stakeholders, risks, and constraints.";
+  }
+  if (lot.examType === "CISSP") {
+    return language === "fr"
+      ? "Questions CISSP en anglais uniquement : securite, risques, architecture, reseaux, operations et developpement."
+      : "CISSP questions in English only: security, risk, architecture, networks, operations, and development.";
   }
   return language === "fr"
     ? "Questions situationnelles selon le niveau et le domaine sélectionnés."
@@ -276,7 +317,7 @@ const copy = {
     defaultLanguage: "Langue par défaut",
     attempts: "Tentatives",
     platformEyebrow: "Plateforme d'examens blancs",
-    heroTitle: "Examens blancs PMP, CAPM et gestion de projet",
+    heroTitle: "Examens blancs CAPM, PMP et CISSP",
     heroText: "Choisissez votre langue, renseignez vos informations, puis lancez une tentative chronométrée.",
     updated: "Dernière mise à jour",
     pmiMembership: "Devenir membre PMI",
@@ -306,7 +347,7 @@ const copy = {
     endCorrection: "À la fin",
     dashboard: "Dashboard",
     trainerShort: "Formateur",
-    platformStructureNote: "Les lots sont filtrés selon le type d'examen choisi. Les questions sont bilingues FR/EN selon la langue sélectionnée. Les domaines ECO, approches et performance domains ne s'affichent pas pendant l'examen.",
+    platformStructureNote: "Les lots sont organises par sections CAPM, PMP et CISSP. CISSP reste en anglais uniquement. Les domaines ECO, approches et performance domains ne s'affichent pas pendant l'examen.",
     accountWithVoucher: "Créer ou utiliser un compte avec voucher",
     candidateAccount: "Compte candidat",
     accountHelp: "Pour creer un compte, renseignez votre nom, email, nature et mot de passe. Le voucher est associe automatiquement si le formateur l'a deja attribue a votre email.",
@@ -322,6 +363,7 @@ const copy = {
     chapterName: "Chapitre PMI RDC",
     centerName: "Centre K-Majuscule",
     generalPm: "Gestion de projet général",
+    cissp: "CISSP",
     trainerAccess: "Accès protégé. Les données formateur sont prévues pour Supabase.",
     trainerPassword: "Mot de passe formateur",
     enter: "Entrer",
@@ -395,7 +437,7 @@ const copy = {
     defaultLanguage: "Default language",
     attempts: "Attempts",
     platformEyebrow: "Practice exam platform",
-    heroTitle: "PMP, CAPM, and project management practice exams",
+    heroTitle: "CAPM, PMP, and CISSP practice exams",
     heroText: "Choose your language, enter your information, then start a timed attempt.",
     updated: "Last updated",
     pmiMembership: "Become a PMI member",
@@ -425,7 +467,7 @@ const copy = {
     endCorrection: "At the end",
     dashboard: "Dashboard",
     trainerShort: "Trainer",
-    platformStructureNote: "Lots are filtered by the selected exam type. Questions are bilingual FR/EN based on the selected language. ECO domains, approaches, and performance domains are hidden during the exam.",
+    platformStructureNote: "Lots are organized into CAPM, PMP, and CISSP sections. CISSP stays English-only. ECO domains, approaches, and performance domains are hidden during the exam.",
     accountWithVoucher: "Create or use an account with voucher",
     candidateAccount: "Candidate account",
     accountHelp: "To create an account, enter your name, email, category, and password. The voucher is linked automatically if the trainer already assigned it to your email.",
@@ -441,6 +483,7 @@ const copy = {
     chapterName: "PMI DRC Chapter",
     centerName: "K-Majuscule Center",
     generalPm: "General project management",
+    cissp: "CISSP",
     trainerAccess: "Protected access. Trainer data is designed for Supabase.",
     trainerPassword: "Trainer password",
     enter: "Enter",
@@ -851,7 +894,7 @@ function normalizeSupabaseAttempt(row: Record<string, string | number | boolean 
       organization: String(row.organization || ""),
       cohort: String(row.cohort || ""),
       category: "formation",
-      examType: (row.exam_type === "PMP" || row.exam_type === "Gestion de projet" ? row.exam_type : "CAPM") as ExamType,
+      examType: parseExamType(row.exam_type),
       sendEmail: false,
       hasAccount: Boolean(row.has_account),
       voucher: "",
@@ -922,13 +965,28 @@ function normalizeSupabaseLots(lotRows: Record<string, unknown>[], questionRows:
       });
     return {
       id: String(lot.id),
-      examType: (lot.exam_type === "PMP" || lot.exam_type === "Gestion de projet" ? lot.exam_type : "CAPM") as ExamType,
+      examType: parseExamType(lot.exam_type),
       title: { fr: String(lot.title_fr || ""), en: String(lot.title_en || "") },
       source: String(lot.source || "Supabase"),
       questionCount: Number(lot.question_count || questions.length),
       questions,
     };
   });
+}
+
+function mergeExamLots(localLots: ExamLot[], remoteLots: ExamLot[]) {
+  const remoteById = new Map(remoteLots.map((lot) => [lot.id, lot]));
+  const merged = localLots.map((lot) => remoteById.get(lot.id) ?? lot);
+  const localIds = new Set(localLots.map((lot) => lot.id));
+  remoteLots.forEach((lot) => {
+    if (!localIds.has(lot.id)) merged.push(lot);
+  });
+  return merged;
+}
+
+function parseExamType(value: unknown): ExamType {
+  if (value === "PMP" || value === "CISSP" || value === "Gestion de projet") return value;
+  return "CAPM";
 }
 
 function candidateKey(candidate: Candidate) {
@@ -1087,6 +1145,10 @@ export default function Home() {
   const timePercent = duration ? remainingSeconds / duration : 1;
   const currentScore = scoreAttempt(selectedLot, answers);
   const visibleLots = examLots.filter((lot) => lot.examType === candidate.examType);
+  const lotSections = EXAM_SECTIONS.map((examType) => ({
+    examType,
+    lots: examLots.filter((lot) => lot.examType === examType),
+  }));
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
     Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
@@ -1324,6 +1386,24 @@ export default function Home() {
     }
   }
 
+  async function seedCisspLotsToSupabase() {
+    try {
+      if (!isSupabaseConfigured(settings)) {
+        setSyncStatus(language === "fr" ? "Supabase non configure." : "Supabase is not configured.");
+        return;
+      }
+      await supabaseRequest("/rest/v1/exam_lots?on_conflict=id", {
+        method: "POST",
+        body: cisspLots.map(lotToSupabase),
+        prefer: "resolution=merge-duplicates,return=representation",
+      });
+      setExamLots(mergeExamLots(seedLots, cisspLots));
+      setSyncStatus(`supabase seed OK: ${cisspLots.length} CISSP lot shells`);
+    } catch (error) {
+      setSyncStatus(`supabase seed CISSP ERROR: ${error instanceof Error ? error.message : "sync error"}`);
+    }
+  }
+
   async function validateAccountLogin(profile: Candidate = candidate) {
     if (isSupabaseConfigured(settings)) {
       const session = await supabaseSignIn(profile.email, profile.password);
@@ -1425,7 +1505,7 @@ export default function Home() {
         setVoucherRecords(nextVouchers);
         setUserAccounts(nextUsers);
         setAttempts(nextAttempts);
-        if (nextLots.length) setExamLots(nextLots);
+        if (nextLots.length) setExamLots(mergeExamLots(seedLots, nextLots));
         saveJson(STORAGE_VOUCHERS, nextVouchers);
         saveJson(STORAGE_USERS, nextUsers);
         saveJson(STORAGE_ATTEMPTS, nextAttempts);
@@ -1638,6 +1718,10 @@ export default function Home() {
 
   function startExam(lot: ExamLot) {
     if (!lot.questions.length) return;
+    if (candidate.examType !== lot.examType || (lot.examType === "CISSP" && language !== "en")) {
+      updateCandidate({ examType: lot.examType, language: lot.examType === "CISSP" ? "en" : candidate.language });
+      if (lot.examType === "CISSP") setLanguage("en");
+    }
     const voucher = candidateLinkedVoucher(candidate, voucherRecords, userAccounts);
     if (!voucher) {
       if (lot.questionCount >= 100 || hasRestrictedAttemptInLastThreeMonths(candidate, attempts)) {
@@ -1647,7 +1731,8 @@ export default function Home() {
         return;
       }
     } else {
-      const allowedLots = allowedLotsForVoucher(visibleLots, voucher);
+      const typedLots = examLots.filter((item) => item.examType === lot.examType);
+      const allowedLots = allowedLotsForVoucher(typedLots, voucher);
       if (!allowedLots.some((item) => item.id === lot.id)) {
         setAccessNotice(t.voucherAccessDenied);
         setView("home");
@@ -1792,11 +1877,17 @@ export default function Home() {
 
   function submitAttempt(status: Attempt["status"]) {
     const score = status === "submitted" ? scoreAttempt(selectedLot, answers) : { score: 0, total: selectedLot.questions.length, percent: 0 };
+    const attemptCandidate: Candidate = {
+      ...candidate,
+      examType: selectedLot.examType,
+      language: selectedLot.examType === "CISSP" ? "en" : candidate.language,
+    };
+    const titleLanguage: Language = selectedLot.examType === "CISSP" ? "en" : language;
     const attempt: Attempt = {
       id: activeAttempt?.id ?? crypto.randomUUID(),
-      candidate,
+      candidate: attemptCandidate,
       lotId: selectedLot.id,
-      lotTitle: selectedLot.title[language],
+      lotTitle: selectedLot.title[titleLanguage],
       startedAt: activeAttempt?.startedAt ?? new Date().toISOString(),
       submittedAt: status === "submitted" ? new Date().toISOString() : undefined,
       status,
@@ -1965,6 +2056,7 @@ export default function Home() {
               <label>{t.examType}<select value={candidate.examType} onChange={(event) => updateCandidate({ examType: event.target.value as ExamType })}>
                 <option>CAPM</option>
                 <option>PMP</option>
+                <option>CISSP</option>
                 <option value="Gestion de projet">{t.generalPm}</option>
               </select></label>
               <label>{t.defaultLanguage}<select value={candidate.language} onChange={(event) => updateCandidate({ language: event.target.value as Language })}>
@@ -2024,19 +2116,29 @@ export default function Home() {
             </div>
             <button onClick={() => setView("home")}>✎ {t.editInfo}</button>
           </div>
-          <div className="catalog-grid compact">
-            {visibleLots.map((lot, index) => (
-              <article className={`test-card ${lotTone(lot, index)}`} key={lot.id}>
-                <div className="test-icon">{lotIcon(lot)}</div>
-                <h2>{lot.title[language]}</h2>
-                <p>{lotDescription(lot, language)}</p>
-                <div className="chips">
-                  <span>{lot.questions.length} questions</span>
-                  <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
-                  <span>FR / EN</span>
+          <div className="lot-sections">
+            {lotSections.map((section) => (
+              <section className="lot-section" key={section.examType}>
+                <div className="lot-section-head">
+                  <h2>{section.examType}</h2>
+                  <span>{section.lots.length} {language === "fr" ? "lot(s)" : "lot(s)"}</span>
                 </div>
-                <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
-              </article>
+                <div className="catalog-grid compact">
+                  {section.lots.map((lot, index) => (
+                    <article className={`test-card ${lotTone(lot, index)}`} key={lot.id}>
+                      <div className="test-icon">{lotIcon(lot)}</div>
+                      <h2>{lot.title[lot.examType === "CISSP" ? "en" : language]}</h2>
+                      <p>{lotDescription(lot, language)}</p>
+                      <div className="chips">
+                        <span>{lot.questions.length} questions</span>
+                        <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
+                        <span>{lot.examType === "CISSP" ? "EN" : "FR / EN"}</span>
+                      </div>
+                      <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
+                    </article>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </section>
@@ -2142,6 +2244,7 @@ export default function Home() {
                 <div className="actions">
                   <button className="primary" onClick={testSupabaseConnection}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
                   <button onClick={seedCapmLotsToSupabase}>＋ {language === "fr" ? "Charger CAPM Lots 1-3" : "Load CAPM Lots 1-3"}</button>
+                  <button onClick={seedCisspLotsToSupabase}>＋ {language === "fr" ? "Charger lots CISSP" : "Load CISSP lots"}</button>
                   <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
                 </div>
               </div>

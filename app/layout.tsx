@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "PMI RDC et K-Majuscule - Examens blancs",
-  description: "Plateforme bilingue pour examens blancs PMP, CAPM et gestion de projet.",
+  description: "Plateforme pour examens blancs CAPM, PMP et CISSP.",
   icons: {
     icon: "/logo-pmi-drc.png",
     shortcut: "/logo-pmi-drc.png",
