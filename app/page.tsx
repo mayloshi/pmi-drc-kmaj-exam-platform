@@ -117,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.8";
+const VERSION = "v0.2.9";
 const UPDATED_AT = "2026-08-14";
 const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
 const TRAINER_PASSWORD = "221008";
@@ -366,6 +366,11 @@ const copy = {
     voucherUnknown: "Aucun voucher actif n'est lie a ce compte. Acces limite applique.",
     loginUnknown: "Email ou mot de passe non reconnu.",
     selectLot: "Sélection du lot",
+    selectExamCategory: "Choisissez une categorie d'examen",
+    categoryHelp: "Les lots seront affiches apres le choix de la categorie.",
+    openCategory: "Voir les lots",
+    backToCategories: "Retour aux categories",
+    cisspCategoryHint: "Acces protege par le mot de passe formateur.",
     editInfo: "Modifier mes informations",
     source: "Source",
     confirmStart: "Confirmez-vous le démarrage de cet examen ?",
@@ -489,6 +494,11 @@ const copy = {
     voucherUnknown: "No active voucher is linked to this account. Restricted access applies.",
     loginUnknown: "Email or password not recognized.",
     selectLot: "Lot selection",
+    selectExamCategory: "Choose an exam category",
+    categoryHelp: "Lots appear after you choose the category.",
+    openCategory: "See lots",
+    backToCategories: "Back to categories",
+    cisspCategoryHint: "Access protected by the trainer password.",
     editInfo: "Edit my information",
     source: "Source",
     confirmStart: "Do you confirm that you want to start this exam?",
@@ -1134,6 +1144,7 @@ export default function Home() {
   const [language, setLanguage] = useState<Language>(() => loadJson<Partial<Candidate>>(STORAGE_CANDIDATE, {}).language ?? "fr");
   const [view, setView] = useState<"home" | "select" | "exam" | "results" | "trainer">("home");
   const [examLots, setExamLots] = useState<ExamLot[]>(seedLots);
+  const [selectedExamCategory, setSelectedExamCategory] = useState<ExamType | null>(null);
   const [selectedLotId, setSelectedLotId] = useState(capmLot1.id);
   const [answers, setAnswers] = useState<Record<string, number[]>>({});
   const [highlighted, setHighlighted] = useState<string[]>([]);
@@ -1167,6 +1178,12 @@ export default function Home() {
     examType,
     lots: examLots.filter((lot) => lot.examType === examType),
   }));
+  const selectedSection = selectedExamCategory
+    ? {
+        examType: selectedExamCategory,
+        lots: examLots.filter((lot) => lot.examType === selectedExamCategory),
+      }
+    : null;
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
     Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
@@ -1177,13 +1194,23 @@ export default function Home() {
   });
   const candidateReadiness = readinessSummary(candidateAttempts, candidate.examType);
 
-  function unlockCissp() {
+  async function unlockCissp() {
     if (cisspPassword === TRAINER_PASSWORD) {
       setTrainerUnlocked(true);
+      setSelectedExamCategory("CISSP");
       setCisspNotice("");
+      if (isSupabaseConfigured(settings)) await refreshRemoteData();
       return;
     }
     setCisspNotice(t.cisspPasswordError);
+  }
+
+  function chooseExamCategory(examType: ExamType) {
+    setAccessNotice("");
+    setCisspNotice("");
+    setSelectedExamCategory(examType);
+    updateCandidate({ examType, language: examType === "CISSP" ? "en" : candidate.language });
+    if (examType === "CISSP") setLanguage("en");
   }
 
   useEffect(() => {
@@ -1511,6 +1538,7 @@ export default function Home() {
       }
     }
     if (!profile.hasAccount) saveJson(STORAGE_CANDIDATE, profile);
+    setSelectedExamCategory(null);
     setView("select");
   }
 
@@ -2143,18 +2171,35 @@ export default function Home() {
           <div className="section-head">
             <div>
               <p className="eyebrow">{t.selectLot}</p>
-              <h1>{candidate.examType}</h1>
+              <h1>{selectedExamCategory ?? t.selectExamCategory}</h1>
+              {!selectedExamCategory && <p className="lead">{t.categoryHelp}</p>}
             </div>
-            <button onClick={() => setView("home")}>✎ {t.editInfo}</button>
+            <div className="actions">
+              {selectedExamCategory && <button onClick={() => setSelectedExamCategory(null)}>← {t.backToCategories}</button>}
+              <button onClick={() => setView("home")}>✎ {t.editInfo}</button>
+            </div>
           </div>
-          <div className="lot-sections">
-            {lotSections.map((section) => (
-              <section className="lot-section" key={section.examType}>
+          {!selectedExamCategory ? (
+            <div className="exam-category-grid">
+              {lotSections.map((section, index) => (
+                <button className={`exam-category-card ${lotTone(section.lots[0] ?? capmLot1, index)}`} key={section.examType} onClick={() => chooseExamCategory(section.examType)}>
+                  <span className="test-icon">{section.examType}</span>
+                  <strong>{section.examType}</strong>
+                  <em>{section.lots.length} lot(s)</em>
+                  {section.examType === "CISSP" && <small>{t.cisspCategoryHint}</small>}
+                  <span>{t.openCategory}</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="lot-sections">
+              {selectedSection && (
+                <section className="lot-section" key={selectedSection.examType}>
                 <div className="lot-section-head">
-                  <h2>{section.examType}</h2>
-                  <span>{section.lots.length} {language === "fr" ? "lot(s)" : "lot(s)"}</span>
+                  <h2>{selectedSection.examType}</h2>
+                  <span>{selectedSection.lots.length} {language === "fr" ? "lot(s)" : "lot(s)"}</span>
                 </div>
-                {section.examType === "CISSP" && !trainerUnlocked ? (
+                {selectedSection.examType === "CISSP" && !trainerUnlocked ? (
                   <div className="cissp-lock">
                     <p>{t.cisspLocked}</p>
                     <div className="actions">
@@ -2165,7 +2210,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="catalog-grid compact">
-                    {section.lots.map((lot, index) => (
+                    {selectedSection.lots.map((lot, index) => (
                       <article className={`test-card ${lotTone(lot, index)}`} key={lot.id}>
                         <div className="test-icon">{lotIcon(lot)}</div>
                         <h2>{lot.title[lot.examType === "CISSP" ? "en" : language]}</h2>
@@ -2181,8 +2226,9 @@ export default function Home() {
                   </div>
                 )}
               </section>
-            ))}
-          </div>
+              )}
+            </div>
+          )}
         </section>
       )}
 
