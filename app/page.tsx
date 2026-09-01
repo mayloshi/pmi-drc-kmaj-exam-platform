@@ -117,9 +117,10 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.10";
+const VERSION = "v0.2.11";
 const UPDATED_AT = "2026-09-01";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
+const AUTH_REDIRECT_URL = PLATFORM_URL;
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
@@ -400,6 +401,8 @@ const copy = {
     generatedVouchers: "Vouchers generes",
     userAccounts: "Comptes utilisateur",
     accountCreated: "Compte cree",
+    activationEmailSent: "Compte cree. Verifiez votre email et cliquez sur le lien d'activation avant de vous connecter.",
+    accountActivated: "Compte active. Vous pouvez maintenant vous connecter avec votre email et votre mot de passe.",
     accountCreatedNoVoucher: "Compte cree sans voucher lie. Une notification a ete preparee pour l'administrateur.",
     voucherAssignedEmail: "Email d'attribution prepare pour le candidat.",
     restrictedAccess: "Sans compte ou sans voucher lie, l'acces est limite a un seul lot de moins de 100 questions pendant 3 mois.",
@@ -528,6 +531,8 @@ const copy = {
     generatedVouchers: "Generated vouchers",
     userAccounts: "User accounts",
     accountCreated: "Account created",
+    activationEmailSent: "Account created. Check your email and click the activation link before signing in.",
+    accountActivated: "Account activated. You can now sign in with your email and password.",
     accountCreatedNoVoucher: "Account created without a linked voucher. A notification was prepared for the administrator.",
     voucherAssignedEmail: "Voucher assignment email prepared for the candidate.",
     restrictedAccess: "Without an account or linked voucher, access is limited to one lot under 100 questions for 3 months.",
@@ -750,7 +755,16 @@ function supabaseHeaders(settings: AppSettings, token?: string, prefer?: string)
 async function parseSupabaseResponse<T>(response: Response): Promise<T> {
   const text = await response.text();
   if (!response.ok) {
-    throw new Error(text || response.statusText);
+    let parsedMessage = "";
+    if (text) {
+      try {
+        const payload = JSON.parse(text) as Record<string, string>;
+        parsedMessage = payload.msg || payload.message || payload.error_description || payload.error || "";
+      } catch {
+        parsedMessage = "";
+      }
+    }
+    throw new Error(parsedMessage || text || response.statusText);
   }
   return text ? JSON.parse(text) as T : ([] as T);
 }
@@ -1229,6 +1243,32 @@ export default function Home() {
     }
   }, [view, trainerUnlocked]);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !isSupabaseConfigured(settings)) return;
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const accessToken = hash.get("access_token");
+    if (!accessToken) return;
+
+    const refreshToken = hash.get("refresh_token") ?? "";
+    const session: SupabaseAuthSession = { access_token: accessToken, refresh_token: refreshToken };
+    setSupabaseSession(session);
+    saveJson(STORAGE_SUPABASE_SESSION, session);
+    setAccountNotice(copy[language].accountActivated);
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+
+    supabaseCurrentUser(accessToken)
+      .then((user) => {
+        const nextSession = { ...session, user };
+        setSupabaseSession(nextSession);
+        saveJson(STORAGE_SUPABASE_SESSION, nextSession);
+        if (user.email) updateCandidate({ email: user.email, hasAccount: true });
+        return completeActivatedSupabaseAccount(user, accessToken).then(() => refreshRemoteData());
+      })
+      .catch(() => {
+        refreshRemoteData();
+      });
+  }, []);
+
   function updateCandidate(patch: Partial<Candidate>) {
     const next = { ...candidate, ...patch };
     setCandidate(next);
@@ -1270,6 +1310,13 @@ export default function Home() {
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
     return session;
+  }
+
+  async function supabaseCurrentUser(token: string) {
+    const response = await fetch(`${cleanSupabaseUrl(settings.supabaseUrl)}/auth/v1/user`, {
+      headers: supabaseHeaders(settings, token),
+    });
+    return parseSupabaseResponse<{ id: string; email?: string }>(response);
   }
 
   async function supabaseGetProfile(userId: string, token: string) {
@@ -1318,7 +1365,7 @@ export default function Home() {
   }
 
   async function supabaseCreateUserAccount(account: UserAccount, voucher: VoucherRecord | null) {
-    const auth = await supabaseAuth<SupabaseAuthSession>("/auth/v1/signup", {
+    const auth = await supabaseAuth<SupabaseAuthSession>(`/auth/v1/signup?redirect_to=${encodeURIComponent(AUTH_REDIRECT_URL)}`, {
       email: normalizeEmail(account.email),
       password: account.password,
       data: {
@@ -1361,6 +1408,32 @@ export default function Home() {
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
     return savedAccount;
+  }
+
+  async function completeActivatedSupabaseAccount(user: { id: string; email?: string }, token: string) {
+    const email = normalizeEmail(user.email || "");
+    if (!email) return;
+    const localAccount = userAccounts.find((account) => normalizeEmail(account.email) === email);
+    if (!localAccount) return;
+    const savedAccount = { ...localAccount, id: user.id, password: "" };
+    await supabaseRequest("/rest/v1/profiles?on_conflict=id", {
+      method: "POST",
+      token,
+      body: [profileToSupabase(savedAccount)],
+      prefer: "resolution=merge-duplicates,return=representation",
+    });
+    if (savedAccount.voucherCode) {
+      await supabaseRequest(`/rest/v1/vouchers?code=eq.${encodeURIComponent(savedAccount.voucherCode)}`, {
+        method: "PATCH",
+        token,
+        body: {
+          status: "used",
+          used_by: email,
+          used_at: savedAccount.createdAt,
+        },
+        prefer: "return=representation",
+      });
+    }
   }
 
   async function supabaseSaveAttempt(attempt: Attempt) {
@@ -1765,7 +1838,9 @@ export default function Home() {
     saveJson(STORAGE_USERS, nextUsers);
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher?.code ?? "" });
-    setAccountNotice(voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher);
+    setAccountNotice(isSupabaseConfigured(settings)
+      ? `${t.activationEmailSent} (${account.email})`
+      : voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher);
     if (isSupabaseConfigured(settings)) {
       setSyncStatus(`supabase saveUserAccount: ${new Date().toISOString()}`);
     }
