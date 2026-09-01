@@ -117,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.11";
+const VERSION = "v0.2.12";
 const UPDATED_AT = "2026-09-01";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -402,6 +402,8 @@ const copy = {
     userAccounts: "Comptes utilisateur",
     accountCreated: "Compte cree",
     activationEmailSent: "Compte cree. Verifiez votre email et cliquez sur le lien d'activation avant de vous connecter.",
+    activationEmailResent: "Lien d'activation renvoye. Verifiez votre boite email et les courriers indesirables.",
+    resendActivationEmail: "Renvoyer le lien d'activation",
     accountActivated: "Compte active. Vous pouvez maintenant vous connecter avec votre email et votre mot de passe.",
     accountCreatedNoVoucher: "Compte cree sans voucher lie. Une notification a ete preparee pour l'administrateur.",
     voucherAssignedEmail: "Email d'attribution prepare pour le candidat.",
@@ -532,6 +534,8 @@ const copy = {
     userAccounts: "User accounts",
     accountCreated: "Account created",
     activationEmailSent: "Account created. Check your email and click the activation link before signing in.",
+    activationEmailResent: "Activation link resent. Check your inbox and spam folder.",
+    resendActivationEmail: "Resend activation link",
     accountActivated: "Account activated. You can now sign in with your email and password.",
     accountCreatedNoVoucher: "Account created without a linked voucher. A notification was prepared for the administrator.",
     voucherAssignedEmail: "Voucher assignment email prepared for the candidate.",
@@ -1178,6 +1182,7 @@ export default function Home() {
   const [attemptLimits, setAttemptLimits] = useState<AttemptLimit[]>(() => loadJson<AttemptLimit[]>(STORAGE_ATTEMPT_LIMITS, []));
   const [limitForm, setLimitForm] = useState({ identifier: "", identifierType: "email" as AttemptLimit["identifierType"], maxAttempts: 2, note: "" });
   const [accountNotice, setAccountNotice] = useState("");
+  const [accountNoticeKind, setAccountNoticeKind] = useState<"info" | "success" | "error">("info");
   const [accessNotice, setAccessNotice] = useState("");
   const [syncStatus, setSyncStatus] = useState("");
 
@@ -1201,6 +1206,12 @@ export default function Home() {
   const canAccessLots =
     Boolean(!candidate.hasAccount && candidate.name.trim()) ||
     Boolean(candidate.hasAccount && candidate.email.trim() && candidate.password);
+
+  function notifyAccount(message: string, kind: "info" | "success" | "error" = "info") {
+    setAccountNoticeKind(kind);
+    setAccountNotice(message);
+  }
+
   const candidateAttempts = attempts.filter((attempt) => {
     const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
     const sameName = candidate.name && attempt.candidate.name.toLowerCase() === candidate.name.toLowerCase();
@@ -1253,7 +1264,7 @@ export default function Home() {
     const session: SupabaseAuthSession = { access_token: accessToken, refresh_token: refreshToken };
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
-    setAccountNotice(copy[language].accountActivated);
+    notifyAccount(copy[language].accountActivated, "success");
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
 
     supabaseCurrentUser(accessToken)
@@ -1310,6 +1321,16 @@ export default function Home() {
     setSupabaseSession(session);
     saveJson(STORAGE_SUPABASE_SESSION, session);
     return session;
+  }
+
+  async function supabaseResendActivationEmail(email: string) {
+    await supabaseAuth<{ message?: string }>("/auth/v1/resend", {
+      type: "signup",
+      email: normalizeEmail(email),
+      options: {
+        email_redirect_to: AUTH_REDIRECT_URL,
+      },
+    });
   }
 
   async function supabaseCurrentUser(token: string) {
@@ -1716,7 +1737,7 @@ export default function Home() {
     const next = [...created, ...voucherRecords];
     setVoucherRecords(next);
     saveJson(STORAGE_VOUCHERS, next);
-    setAccountNotice(`${t.copyVoucher}: ${created.map((voucher) => voucher.code).join(", ")}`);
+    notifyAccount(`${t.copyVoucher}: ${created.map((voucher) => voucher.code).join(", ")}`, "success");
     if (isSupabaseConfigured(settings)) {
       try {
         await supabaseSaveVouchers(created);
@@ -1731,7 +1752,7 @@ export default function Home() {
             return queueEmail(voucher.assignedTo, subject, body);
           }));
         setSyncStatus(`supabase saveVouchers: ${new Date().toISOString()}`);
-        if (created.some((voucher) => voucher.assignedTo)) setAccountNotice(`${accountNotice ? `${accountNotice} | ` : ""}${t.voucherAssignedEmail}`);
+        if (created.some((voucher) => voucher.assignedTo)) notifyAccount(`${accountNotice ? `${accountNotice} | ` : ""}${t.voucherAssignedEmail}`, "success");
       } catch (error) {
         setSyncStatus(`supabase saveVouchers: ${error instanceof Error ? error.message : "sync error"}`);
       }
@@ -1740,11 +1761,11 @@ export default function Home() {
 
   async function createUserAccount() {
     if (!candidate.name.trim()) {
-      setAccountNotice(t.accessMissingNameEmail);
+      notifyAccount(t.accessMissingNameEmail, "error");
       return;
     }
     if (!candidate.email.trim()) {
-      setAccountNotice(language === "fr" ? "Email requis pour creer un compte utilisateur." : "Email is required to create a user account.");
+      notifyAccount(language === "fr" ? "Email requis pour creer un compte utilisateur." : "Email is required to create a user account.", "error");
       return;
     }
     const code = normalizeVoucher(candidate.voucher);
@@ -1759,7 +1780,7 @@ export default function Home() {
       try {
         voucher = await supabaseFindVoucher(code);
       } catch (error) {
-        setAccountNotice(`Supabase: ${error instanceof Error ? error.message : "sync error"}`);
+        notifyAccount(`Supabase: ${error instanceof Error ? error.message : "sync error"}`, "error");
         return;
       }
     }
@@ -1771,19 +1792,19 @@ export default function Home() {
       }
     }
     if (!candidate.password.trim()) {
-      setAccountNotice(language === "fr" ? "Mot de passe requis pour creer le compte." : "Password is required to create the account.");
+      notifyAccount(language === "fr" ? "Mot de passe requis pour creer le compte." : "Password is required to create the account.", "error");
       return;
     }
     if (voucher && voucher.status === "used") {
-      setAccountNotice(t.voucherUnknown);
+      notifyAccount(t.voucherUnknown, "error");
       return;
     }
     if (voucher && isExpired(voucher.expiresAt)) {
-      setAccountNotice(t.voucherExpired);
+      notifyAccount(t.voucherExpired, "error");
       return;
     }
     if (voucher && voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== normalizeEmail(candidate.email)) {
-      setAccountNotice(language === "fr" ? "Ce voucher est attribue a un autre email." : "This voucher is assigned to another email.");
+      notifyAccount(language === "fr" ? "Ce voucher est attribue a un autre email." : "This voucher is assigned to another email.", "error");
       return;
     }
     const accountRole = voucher?.role ?? voucherSettingLabel(voucherSettingFor(candidate.category, voucherSettings), "fr");
@@ -1815,7 +1836,7 @@ export default function Home() {
         );
       }
     } catch (error) {
-      setAccountNotice(`Supabase: ${error instanceof Error ? error.message : "sync error"}`);
+      notifyAccount(`Supabase: ${error instanceof Error ? error.message : "sync error"}`, "error");
       return;
     }
     const nextUsers = [
@@ -1838,11 +1859,33 @@ export default function Home() {
     saveJson(STORAGE_USERS, nextUsers);
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher?.code ?? "" });
-    setAccountNotice(isSupabaseConfigured(settings)
+    if (isSupabaseConfigured(settings)) {
+      try {
+        await supabaseResendActivationEmail(account.email);
+      } catch (error) {
+        notifyAccount(`Supabase email: ${error instanceof Error ? error.message : "sync error"}`, "error");
+        return;
+      }
+    }
+    notifyAccount(isSupabaseConfigured(settings)
       ? `${t.activationEmailSent} (${account.email})`
-      : voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher);
+      : voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher,
+      "success");
     if (isSupabaseConfigured(settings)) {
       setSyncStatus(`supabase saveUserAccount: ${new Date().toISOString()}`);
+    }
+  }
+
+  async function resendActivationEmail() {
+    if (!candidate.email.trim()) {
+      notifyAccount(language === "fr" ? "Email requis pour renvoyer le lien d'activation." : "Email is required to resend the activation link.", "error");
+      return;
+    }
+    try {
+      await supabaseResendActivationEmail(candidate.email);
+      notifyAccount(`${t.activationEmailResent} (${candidate.email})`, "success");
+    } catch (error) {
+      notifyAccount(`Supabase email: ${error instanceof Error ? error.message : "sync error"}`, "error");
     }
   }
 
@@ -2231,10 +2274,11 @@ export default function Home() {
               <div className="actions">
                 <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
                 <button onClick={() => startSelect(true)}>▶ {t.signIn}</button>
+                <button onClick={resendActivationEmail}>✉ {t.resendActivationEmail}</button>
                 <button onClick={() => alert(language === "fr" ? "Réinitialisation prévue via Supabase Auth : email avec lien sécurisé." : "Reset planned through Supabase Auth: email with secure link.")}>↻ {t.resetPassword}</button>
               </div>
             </div>
-            {accountNotice && <p className="helper-note">{accountNotice}</p>}
+            {accountNotice && <p className={`helper-note ${accountNoticeKind}`}>{accountNotice}</p>}
             {accessNotice && <p className="error">{accessNotice}</p>}
           </div>
           </section>
@@ -2447,8 +2491,9 @@ export default function Home() {
                 <div className="actions">
                   <button className="primary" onClick={generateVoucher}>＋ {t.generateVouchers}</button>
                   <button onClick={createUserAccount}>✓ {t.createUserAccount}</button>
+                  <button onClick={resendActivationEmail}>✉ {t.resendActivationEmail}</button>
                 </div>
-                {accountNotice && <p className="helper-note">{accountNotice}</p>}
+                {accountNotice && <p className={`helper-note ${accountNoticeKind}`}>{accountNotice}</p>}
                 <div className="account-admin-grid">
                   <div>
                     <h3>{t.generatedVouchers}</h3>

@@ -497,6 +497,18 @@ label {
   font-weight: 800;
 }
 
+.helper-note.success {
+  color: #047857;
+}
+
+.helper-note.error {
+  color: var(--red);
+}
+
+.helper-note.info {
+  color: #9a3412;
+}
+
 .section-head {
   display: flex;
   justify-content: space-between;
