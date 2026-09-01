@@ -117,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.13";
+const VERSION = "v0.2.14";
 const UPDATED_AT = "2026-09-01";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -1877,14 +1877,6 @@ export default function Home() {
     saveJson(STORAGE_USERS, nextUsers);
     saveJson(STORAGE_VOUCHERS, nextVouchers);
     updateCandidate({ hasAccount: true, voucher: voucher?.code ?? "" });
-    if (isSupabaseConfigured(settings)) {
-      try {
-        await supabaseResendActivationEmail(account.email);
-      } catch (error) {
-        notifyAccount(`Supabase email: ${error instanceof Error ? error.message : "sync error"}`, "error");
-        return;
-      }
-    }
     notifyAccount(isSupabaseConfigured(settings)
       ? `${t.activationEmailSent} (${account.email})`
       : voucher ? `${t.accountCreated}: ${account.email}` : t.accountCreatedNoVoucher,
