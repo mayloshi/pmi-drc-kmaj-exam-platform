@@ -117,9 +117,9 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.9";
-const UPDATED_AT = "2026-08-14";
-const PLATFORM_URL = "https://mayloshi.github.io/pmi-drc-kmaj-exam-platform/";
+const VERSION = "v0.2.10";
+const UPDATED_AT = "2026-09-01";
+const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
