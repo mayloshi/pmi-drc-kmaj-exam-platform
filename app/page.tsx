@@ -117,7 +117,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.12";
+const VERSION = "v0.2.13";
 const UPDATED_AT = "2026-09-01";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -405,6 +405,10 @@ const copy = {
     activationEmailResent: "Lien d'activation renvoye. Verifiez votre boite email et les courriers indesirables.",
     resendActivationEmail: "Renvoyer le lien d'activation",
     accountActivated: "Compte active. Vous pouvez maintenant vous connecter avec votre email et votre mot de passe.",
+    loadingAccount: "Creation du compte en cours...",
+    loadingActivationEmail: "Envoi du lien d'activation en cours...",
+    loadingData: "Chargement des donnees en cours...",
+    loadingAction: "Action en cours...",
     accountCreatedNoVoucher: "Compte cree sans voucher lie. Une notification a ete preparee pour l'administrateur.",
     voucherAssignedEmail: "Email d'attribution prepare pour le candidat.",
     restrictedAccess: "Sans compte ou sans voucher lie, l'acces est limite a un seul lot de moins de 100 questions pendant 3 mois.",
@@ -537,6 +541,10 @@ const copy = {
     activationEmailResent: "Activation link resent. Check your inbox and spam folder.",
     resendActivationEmail: "Resend activation link",
     accountActivated: "Account activated. You can now sign in with your email and password.",
+    loadingAccount: "Creating account...",
+    loadingActivationEmail: "Sending activation link...",
+    loadingData: "Loading data...",
+    loadingAction: "Action in progress...",
     accountCreatedNoVoucher: "Account created without a linked voucher. A notification was prepared for the administrator.",
     voucherAssignedEmail: "Voucher assignment email prepared for the candidate.",
     restrictedAccess: "Without an account or linked voucher, access is limited to one lot under 100 questions for 3 months.",
@@ -1185,6 +1193,7 @@ export default function Home() {
   const [accountNoticeKind, setAccountNoticeKind] = useState<"info" | "success" | "error">("info");
   const [accessNotice, setAccessNotice] = useState("");
   const [syncStatus, setSyncStatus] = useState("");
+  const [busyMessage, setBusyMessage] = useState("");
 
   const selectedLot = useMemo(() => examLots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [examLots, selectedLotId]);
   const t = copy[language];
@@ -1210,6 +1219,15 @@ export default function Home() {
   function notifyAccount(message: string, kind: "info" | "success" | "error" = "info") {
     setAccountNoticeKind(kind);
     setAccountNotice(message);
+  }
+
+  async function withBusy<T>(message: string, action: () => Promise<T> | T) {
+    setBusyMessage(message);
+    try {
+      return await action();
+    } finally {
+      setBusyMessage("");
+    }
   }
 
   const candidateAttempts = attempts.filter((attempt) => {
@@ -2157,6 +2175,14 @@ export default function Home() {
 
   return (
     <main>
+      {busyMessage && (
+        <div className="busy-overlay" role="status" aria-live="polite">
+          <div className="busy-dialog">
+            <span className="busy-spinner" aria-hidden="true" />
+            <strong>{busyMessage}</strong>
+          </div>
+        </div>
+      )}
       <header className="hero-shell">
         <div className="hero-top">
           <div className="brand-card">
@@ -2210,8 +2236,8 @@ export default function Home() {
       <nav className="quick-nav" aria-label="Navigation rapide">
         <button onClick={goHome}>⌂ {t.home}</button>
         <button onClick={goTop}>↑ {t.top}</button>
-        <button onClick={goExams}>▦ {t.exams}</button>
-        <button onClick={isSupabaseConfigured(settings) ? refreshRemoteData : () => window.location.reload()}>↻ {t.refresh}</button>
+        <button onClick={() => withBusy(t.loadingData, goExams)} disabled={Boolean(busyMessage)}>▦ {t.exams}</button>
+        <button onClick={() => withBusy(t.loadingData, isSupabaseConfigured(settings) ? refreshRemoteData : () => window.location.reload())} disabled={Boolean(busyMessage)}>↻ {t.refresh}</button>
       </nav>
 
       {view === "home" && (
@@ -2272,9 +2298,9 @@ export default function Home() {
                 <label>{t.password}<input type="password" value={candidate.password} onChange={(event) => updateCandidate({ password: event.target.value })} /></label>
               </div>
               <div className="actions">
-                <button className="primary" onClick={createUserAccount}>✓ {t.createUserAccount}</button>
-                <button onClick={() => startSelect(true)}>▶ {t.signIn}</button>
-                <button onClick={resendActivationEmail}>✉ {t.resendActivationEmail}</button>
+                <button className="primary" onClick={() => withBusy(t.loadingAccount, createUserAccount)} disabled={Boolean(busyMessage)}>✓ {t.createUserAccount}</button>
+                <button onClick={() => withBusy(t.loadingData, () => startSelect(true))} disabled={Boolean(busyMessage)}>▶ {t.signIn}</button>
+                <button onClick={() => withBusy(t.loadingActivationEmail, resendActivationEmail)} disabled={Boolean(busyMessage)}>✉ {t.resendActivationEmail}</button>
                 <button onClick={() => alert(language === "fr" ? "Réinitialisation prévue via Supabase Auth : email avec lien sécurisé." : "Reset planned through Supabase Auth: email with secure link.")}>↻ {t.resetPassword}</button>
               </div>
             </div>
@@ -2449,10 +2475,10 @@ export default function Home() {
                 </div>
                 <p className="muted">{language === "fr" ? "Le bouton de test ecrit un voucher DBTEST dans Supabase puis relit les tables. Si les tables manquent, le statut affichera l'erreur exacte." : "The test button writes a DBTEST voucher to Supabase and reads the tables back. If tables are missing, the status displays the exact error."}</p>
                 <div className="actions">
-                  <button className="primary" onClick={testSupabaseConnection}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
-                  <button onClick={seedCapmLotsToSupabase}>＋ {language === "fr" ? "Charger CAPM Lots 1-3" : "Load CAPM Lots 1-3"}</button>
-                  <button onClick={seedCisspLotsToSupabase}>＋ {language === "fr" ? "Charger lots CISSP" : "Load CISSP lots"}</button>
-                  <button onClick={refreshRemoteData}>↻ {t.refresh}</button>
+                  <button className="primary" onClick={() => withBusy(t.loadingData, testSupabaseConnection)} disabled={Boolean(busyMessage)}>⇄ {language === "fr" ? "Tester Supabase" : "Test Supabase"}</button>
+                  <button onClick={() => withBusy(t.loadingData, seedCapmLotsToSupabase)} disabled={Boolean(busyMessage)}>＋ {language === "fr" ? "Charger CAPM Lots 1-3" : "Load CAPM Lots 1-3"}</button>
+                  <button onClick={() => withBusy(t.loadingData, seedCisspLotsToSupabase)} disabled={Boolean(busyMessage)}>＋ {language === "fr" ? "Charger lots CISSP" : "Load CISSP lots"}</button>
+                  <button onClick={() => withBusy(t.loadingData, refreshRemoteData)} disabled={Boolean(busyMessage)}>↻ {t.refresh}</button>
                 </div>
               </div>
 
@@ -2473,7 +2499,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="actions">
-                  <button onClick={saveVoucherSettings}>↻ {language === "fr" ? "Enregistrer le parametrage" : "Save settings"}</button>
+                  <button onClick={() => withBusy(t.loadingAction, saveVoucherSettings)} disabled={Boolean(busyMessage)}>↻ {language === "fr" ? "Enregistrer le parametrage" : "Save settings"}</button>
                 </div>
                 <div className="form-grid">
                   <label>{t.voucherRole}
@@ -2489,9 +2515,9 @@ export default function Home() {
                   </label>
                 </div>
                 <div className="actions">
-                  <button className="primary" onClick={generateVoucher}>＋ {t.generateVouchers}</button>
-                  <button onClick={createUserAccount}>✓ {t.createUserAccount}</button>
-                  <button onClick={resendActivationEmail}>✉ {t.resendActivationEmail}</button>
+                  <button className="primary" onClick={() => withBusy(t.loadingAction, generateVoucher)} disabled={Boolean(busyMessage)}>＋ {t.generateVouchers}</button>
+                  <button onClick={() => withBusy(t.loadingAccount, createUserAccount)} disabled={Boolean(busyMessage)}>✓ {t.createUserAccount}</button>
+                  <button onClick={() => withBusy(t.loadingActivationEmail, resendActivationEmail)} disabled={Boolean(busyMessage)}>✉ {t.resendActivationEmail}</button>
                 </div>
                 {accountNotice && <p className={`helper-note ${accountNoticeKind}`}>{accountNotice}</p>}
                 <div className="account-admin-grid">
@@ -2562,7 +2588,7 @@ export default function Home() {
                   </label>
                 </div>
                 <div className="actions">
-                  <button className="primary" onClick={saveAttemptLimit}>! {language === "fr" ? "Enregistrer la limite" : "Save limit"}</button>
+                  <button className="primary" onClick={() => withBusy(t.loadingAction, saveAttemptLimit)} disabled={Boolean(busyMessage)}>! {language === "fr" ? "Enregistrer la limite" : "Save limit"}</button>
                 </div>
                 <div className="table-wrap">
                   <table>
@@ -2607,8 +2633,8 @@ export default function Home() {
                           <td>
                             <div className="row-actions">
                               <button onClick={() => { setActiveAttempt(attempt); setSelectedLotId(attempt.lotId); setView("results"); window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0); }}>o {t.see}</button>
-                              <button onClick={() => sendDetailedResults(attempt)}>@ Email</button>
-                              <button className="danger-button" onClick={() => deleteAttempt(attempt)}>x {language === "fr" ? "Supprimer" : "Delete"}</button>
+                              <button onClick={() => withBusy(t.loadingActivationEmail, () => sendDetailedResults(attempt))} disabled={Boolean(busyMessage)}>@ Email</button>
+                              <button className="danger-button" onClick={() => withBusy(t.loadingAction, () => deleteAttempt(attempt))} disabled={Boolean(busyMessage)}>x {language === "fr" ? "Supprimer" : "Delete"}</button>
                             </div>
                           </td>
                         </tr>
