@@ -9,7 +9,7 @@
   "questionCount": 60,
   "questions": [
     {
-      "id": "Q1",
+      "id": "PMP1Q1",
       "type": "single",
       "prompt": {
         "fr": "Vous travaillez comme chef de projet dans une organisation gouvernementale où « l’agile » n’est pas pleinement intégré dans la culture. Quelle devrait être votre meilleure approche en tant que chef de projet lorsque vous dirigez un projet piloté par l’agile dans une organisation où les termes et le langage agile ne correspondent pas à la culture organisationnelle ?",
@@ -54,7 +54,7 @@
       }
     },
     {
-      "id": "Q2",
+      "id": "PMP1Q2",
       "type": "single",
       "prompt": {
         "fr": "En tant que chef de projet d’un projet de gouvernance impliquant des autorités de conseils locaux comme parties prenantes clés, une partie prenante enthousiaste du département des douanes et droits de douane demande des mises à jour de projet plus fréquentes et plus détaillées, et propose son assistance, ce qui vous pousse à vous renseigner davantage sur son parcours. À quel artefact de projet devriez-vous vous référer avant d’engager une discussion plus approfondie avec cette partie prenante ?",
@@ -99,7 +99,7 @@
       }
     },
     {
-      "id": "Q3",
+      "id": "PMP1Q3",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet est en train d’estimer les ressources de l’équipe qui seront nécessaires pour le projet. En raison de la nature du projet et de l’approche de développement choisie, il rencontre une difficulté : seuls quelques éléments de haut niveau de la structure de découpage du projet ont été identifiés, les autres devant être progressivement détaillés tout au long du projet. Quelle est la meilleure approche pour l’estimation des ressources de l’équipe du projet ?",
@@ -144,7 +144,7 @@
       }
     },
     {
-      "id": "Q4",
+      "id": "PMP1Q4",
       "type": "single",
       "prompt": {
         "fr": "Dans l’agile basé sur les itérations, le product owner travaille souvent avec l’équipe pour préparer certaines user stories de l’itération à venir au cours d’une ou plusieurs sessions au milieu de l’itération. L’objectif de ces réunions est d’analyser suffisamment de user stories pour que l’équipe comprenne ce que sont ces stories et quelle est leur taille relative les unes par rapport aux autres. Comment appelle-t-on ce processus ?",
@@ -189,7 +189,7 @@
       }
     },
     {
-      "id": "Q5",
+      "id": "PMP1Q5",
       "type": "single",
       "prompt": {
         "fr": "L’un des membres de votre équipe est soudainement devenu indisponible pendant le projet en raison d’une maladie de longue durée. Cela a entraîné la replanification de certaines activités du projet qui se trouvaient sur le chemin critique. Lors d’une réunion de revue du projet, vous découvrez qu’une activité du chemin critique et quelques activités de chemins quasi critiques sont désormais planifiées pour se dérouler en même temps. Le sponsor est préoccupé par cette situation. Quelle devrait être votre première étape en tant que chef de projet ?",
@@ -234,7 +234,7 @@
       }
     },
     {
-      "id": "Q6",
+      "id": "PMP1Q6",
       "type": "single",
       "prompt": {
         "fr": "En étudiant le graphique d’avancement restant de version d’une équipe Scrum avant la réunion matinale de revue du sprint, il a été constaté qu’à un certain point, le graphique passe sous l’axe X. Choisissez la meilleure conclusion :",
@@ -279,7 +279,7 @@
       }
     },
     {
-      "id": "Q7",
+      "id": "PMP1Q7",
       "type": "single",
       "prompt": {
         "fr": "Une équipe de développement logiciel ne peut commencer à rédiger le périmètre du développement qu’après 2 mois à compter du début de la conception. Cela vise à garantir que l’équipe dispose de suffisamment de points de données issus de la conception pour rédiger le périmètre. Quel type de dépendance cela représente-t-il ?",
@@ -324,7 +324,7 @@
       }
     },
     {
-      "id": "Q8",
+      "id": "PMP1Q8",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le chef de projet du lancement d’une turbine d’aviation. Le calendrier de ce lancement est extrêmement critique, car la date a été communiquée aux médias et aux actionnaires. Vous avez analysé le travail à réaliser et avez établi une liste d’activités. Vous avez également consulté votre sponsor pour identifier les jalons importants que vous devez respecter. Quelle est votre prochaine meilleure ligne de conduite en tant que chef de projet ?",
@@ -369,7 +369,7 @@
       }
     },
     {
-      "id": "Q9",
+      "id": "PMP1Q9",
       "type": "single",
       "prompt": {
         "fr": "Dans un projet DSDM où le temps a été fixé, il est essentiel de comprendre l’importance relative du travail à réaliser afin de progresser et de respecter les délais. Quelle technique de priorisation classe les stories ou les backlogs en catégories must-have, should-have, could-have et won’t-have ?",
@@ -414,7 +414,7 @@
       }
     },
     {
-      "id": "Q10",
+      "id": "PMP1Q10",
       "type": "single",
       "prompt": {
         "fr": "Vous tenez une réunion de revue de l’état d’avancement du projet avec votre sponsor aux étapes finales d’un projet agile basé sur les itérations. Votre sponsor n’est pas très satisfait de la façon dont le projet a été exécuté. Sa principale préoccupation concerne l’échéancier, que vous vous étiez initialement engagé à réaliser en 40 semaines, mais l’ensemble du projet tend maintenant vers 48 semaines. Il reste encore environ 3 à 4 semaines de points de story. En tant que praticien agile, vous auriez dû suivre la performance de l’équipe dans le temps. Comment auriez-vous dû réaliser cette tâche ?",
@@ -459,7 +459,7 @@
       }
     },
     {
-      "id": "Q11",
+      "id": "PMP1Q11",
       "type": "single",
       "prompt": {
         "fr": "Il y a eu une fusion du leadership entre deux entreprises technologiques : Social Space et Smart Cloud. À la suite de cela, les développeurs et les ressources de codage des deux entreprises travaillent actuellement dans plusieurs équipes agiles sur un portefeuille commun de projets. Quelle est la pratique agile la mieux adaptée pour assurer une planification des versions fluide entre les équipes ?",
@@ -504,7 +504,7 @@
       }
     },
     {
-      "id": "Q12",
+      "id": "PMP1Q12",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le Product Owner de plusieurs projets pilotés par Scrum dans votre organisation. Vous faites de votre mieux pour répartir votre temps entre chaque projet et vous tenez des réunions hebdomadaires avec chacun des CSM. Cependant, vous n’êtes pas disponible pour la prise de décision quotidienne liée au développement du produit. Qui pourriez-vous prévoir comme votre meilleur représentant pendant votre absence ?",
@@ -549,7 +549,7 @@
       }
     },
     {
-      "id": "Q13",
+      "id": "PMP1Q13",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le praticien agile d’un projet itératif fondé sur l’agile. Comme première étape après la collecte des user stories, vous avez développé une matrice priorisée qui décrit les fonctionnalités du produit qui seront livrées dans chaque version au fil du temps. À quel artefact de projet fait-on référence ici ?",
@@ -594,7 +594,7 @@
       }
     },
     {
-      "id": "Q14",
+      "id": "PMP1Q14",
       "type": "single",
       "prompt": {
         "fr": "Le chef de projet crée un échéancier pour automatiser une opération de prise et de placement avec des COBOTs, robots collaboratifs. Le responsable des opérations remet en question l’estimation de 3 semaines pour l’installation. Le chef de projet la justifie en utilisant des données historiques et une analyse de variables. Quelle technique d’estimation le chef de projet a-t-il utilisée ici ?",
@@ -639,7 +639,7 @@
       }
     },
     {
-      "id": "Q15",
+      "id": "PMP1Q15",
       "type": "single",
       "prompt": {
         "fr": "Clairemont Inc. passe d’une méthodologie traditionnelle de management de projet à un management de projet fondé sur l’agile. Dans le cadre de la formation des chefs de projet au sein de l’entreprise, Clairemont Inc. a affecté comme mentors des Scrum Masters expérimentés à de nouveaux chefs de projet. Pendant le processus d’observation, les nouveaux chefs de projet observent les Scrum Masters non pas comme des « chefs », mais comme des « facilitateurs ». Leur mission est d’autonomiser les équipes, de lever les barrières pour elles et de développer leur capacité à constituer des équipes autonomes avec une vision partagée. Quelle méthodologie de leadership les Scrum Masters ont-ils adoptée ici ?",
@@ -684,7 +684,7 @@
       }
     },
     {
-      "id": "Q16",
+      "id": "PMP1Q16",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le chef de projet du déploiement d’un nouveau système de gestion de l’apprentissage, ou LMS, basé sur le cloud à East Coast University. Le projet implique également l’élimination progressive des anciens systèmes LMS locaux et l’introduction progressive du nouveau système basé sur le cloud. L’attente du client est une transition fluide entre les deux systèmes. Lors de votre réunion quotidienne debout, quatre problèmes vous ont été signalés aujourd’hui. Quel est le problème le plus critique que le chef de projet doit prioriser ?",
@@ -729,7 +729,7 @@
       }
     },
     {
-      "id": "Q17",
+      "id": "PMP1Q17",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le chef de projet pour la construction d’un nouvel immeuble de bureaux. Le projet approche de la remise au client. La dernière partie, qui est l’aménagement paysager dans et autour du nouveau bâtiment, est sur le point de commencer. Vous examinez l’échéancier du projet et les interdépendances entre les activités. Vous constatez que l’aménagement paysager pourrait être planifié pour commencer 2 semaines avant le début planifié du processus de remise de l’immeuble de bureaux. Cela serait représenté comme une relation fin-début avec une ______ de 2 semaines. Remplissez les blancs.",
@@ -774,7 +774,7 @@
       }
     },
     {
-      "id": "Q18",
+      "id": "PMP1Q18",
       "type": "single",
       "prompt": {
         "fr": "Au stade de la planification d’un projet d’assainissement d’une ONG, le chef de projet élabore le plan de management du projet. Le plan attend les mises à jour des références de base des coûts et de l’échéancier avant de demander l’approbation du sponsor. Cependant, un ingénieur civil alerte le chef de projet que la disposition de l’assainissement doit changer en raison d’une interférence avec une future construction d’autoroute, ce qui a un impact significatif sur le périmètre et le temps. Quelle est maintenant la meilleure prochaine étape pour le chef de projet ?",
@@ -819,7 +819,7 @@
       }
     },
     {
-      "id": "Q19",
+      "id": "PMP1Q19",
       "type": "single",
       "prompt": {
         "fr": "Le client qui organise une assemblée générale annuelle a clairement indiqué que l’ordre du jour et la préparation de l’événement devraient correspondre aux attentes des principales parties prenantes. Le chef de projet collecte les exigences et consolide la voix des principales parties prenantes afin de comprendre leurs attentes et leurs exigences vis-à-vis de l’événement. Un outil de collecte de données composé de courtes descriptions textuelles provenant des parties prenantes, exprimant leurs attentes vis-à-vis de l’événement sous le format : « En tant que [utilisateur], je [veux], [afin que] », est utilisé. Quel outil de management de projet agile est utilisé ici ?",
@@ -864,7 +864,7 @@
       }
     },
     {
-      "id": "Q20",
+      "id": "PMP1Q20",
       "type": "single",
       "prompt": {
         "fr": "Une activité critique pendant un sprint a été retardée en raison de certains empêchements qui n’ont pas été résolus à temps. Cependant, le retard était dans la tolérance fixée par le client et n’a donc pas causé d’escalade majeure. Le Product Owner veut empêcher que ce type de situation ne se reproduise à l’avenir. Quelle est la cérémonie agile la mieux adaptée pour discuter de ce problème ?",
@@ -909,7 +909,7 @@
       }
     },
     {
-      "id": "Q21",
+      "id": "PMP1Q21",
       "type": "single",
       "prompt": {
         "fr": "En tant que chef de projet, vous avez identifié un risque selon lequel l’un de vos fournisseurs d’acier d’armature pourrait augmenter le prix de celui-ci au milieu du projet. Cependant, l’augmentation ne serait pas très élevée et vous pouvez la maîtriser en conservant une réserve pour aléas dans votre estimation des coûts. Vous n’aurez besoin de déclencher les réserves que si la situation se produit. Quelle stratégie de réponse aux risques utilisez-vous ici ?",
@@ -954,7 +954,7 @@
       }
     },
     {
-      "id": "Q22",
+      "id": "PMP1Q22",
       "type": "single",
       "prompt": {
         "fr": "Au milieu de la supervision du lancement critique d’une turbine d’aviation, une demande de changement de conception visant à réduire les rotations de la turbine est apparue pendant la phase d’exécution. Cependant, une divergence apparaît lorsque l’équipe de fabrication affirme que cette demande avait déjà été rejetée six mois auparavant, tandis que l’équipe de conception insiste sur le fait qu’il s’agit d’une première demande, laissant le chef de projet dans l’incertitude quant à la vérité de la situation. Quel est le meilleur artefact de projet pour vérifier si cette demande a réellement été proposée et évaluée ?",
@@ -999,7 +999,7 @@
       }
     },
     {
-      "id": "Q23",
+      "id": "PMP1Q23",
       "type": "single",
       "prompt": {
         "fr": "Lors d’une évaluation du backlog, vous remarquez un élément que vous aviez vu dans le registre des risques mis à jour : « organiser un cours de remise à niveau PHP pour l’équipe de développement ». Lorsque vous examinez le journal des risques, vous constatez que ce problème avait été signalé il y a plusieurs mois et qu’il est également mentionné comme « clôturé » trois mois auparavant. Que devriez-vous faire en tant que chef de projet ?",
@@ -1044,7 +1044,7 @@
       }
     },
     {
-      "id": "Q24",
+      "id": "PMP1Q24",
       "type": "single",
       "prompt": {
         "fr": "Tout événement ou problème pouvant causer un risque pour votre projet est appelé un obstacle de projet. Les types d’obstacles de projet varient selon l’industrie, les parties prenantes, l’environnement commercial et le projet lui-même. Associez la définition des obstacles de projet suivants à leurs noms. Note : Dans votre examen PMP, vous devrez glisser-déposer des boîtes contenant les définitions afin de les faire correspondre aux noms. Noms des obstacles : Empêchement Blocage Obstacle Définitions :A. Facteurs, problèmes, événements ou conditions externes pouvant provoquer des arrêts dans le travail ou dans tout avancement ultérieurB. Problèmes qui arrêtent complètement ou bloquent l’avancement d’une tâche ou d’un projet, rendant souvent impossible la poursuite du travail jusqu’à ce que le problème soit résoluC. Situations, conditions et actions qui ralentissent ou entravent l’avancement, mais qui peuvent être réglées avec un certain niveau de planification et d’exécution",
@@ -1089,7 +1089,7 @@
       }
     },
     {
-      "id": "Q25",
+      "id": "PMP1Q25",
       "type": "single",
       "prompt": {
         "fr": "Dans les projets avec des exigences évolutives, un risque élevé ou une incertitude importante, le périmètre n’est pas compris au début du projet ou il évolue pendant le projet. Les méthodes agiles cherchent délibérément à passer moins de temps à définir et à convenir du périmètre dans les premières étapes du projet, et davantage de temps à établir le processus de découverte et d’affinage continu. Comment les équipes agiles valident-elles le périmètre et affinent-elles les exigences ?",
@@ -1134,7 +1134,7 @@
       }
     },
     {
-      "id": "Q26",
+      "id": "PMP1Q26",
       "type": "single",
       "prompt": {
         "fr": "Dans un projet, il y a eu beaucoup de manquements sur les livrables qualité. Le sponsor a donné une directive claire selon laquelle la qualité est désormais le domaine clé d’attention pour ce projet. Une semaine plus tard, une panne majeure liée à la qualité survient à nouveau. Quelle est la meilleure ligne de conduite pour le chef de projet ?",
@@ -1179,7 +1179,7 @@
       }
     },
     {
-      "id": "Q27",
+      "id": "PMP1Q27",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le Product Owner d’un projet fondé sur l’agile qui prévoit de développer la base de données des étudiants pour King’s College, Londres. Vous êtes au milieu d’une itération et, lors de l’une de vos réunions quotidiennes debout, vous apprenez qu’une approbation clé du gouvernement britannique concernant la protection des données a été manquée et que votre projet est actuellement non conforme à la loi britannique sur la protection des données. Quelle est votre meilleure étape en tant que Product Owner ici ?",
@@ -1224,7 +1224,7 @@
       }
     },
     {
-      "id": "Q28",
+      "id": "PMP1Q28",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le chef de projet chargé du déploiement d’un nouveau portail d’avantages sociaux santé des employés pour Fixmore Inc. L’un des membres de votre équipe vous a escaladé que la nouvelle application d’avantages santé n’est pas compatible avec l’architecture serveur existante de Fixmore Inc. Elle nécessitera une mise à niveau pour fonctionner correctement. Après avoir vérifié le périmètre de votre projet, vous découvrez que les mises à niveau des serveurs ne figurent pas dans le budget de cette année, mais peuvent être ajoutées l’année prochaine comme élément de périmètre supplémentaire. Quelle devrait être votre action privilégiée en tant que chef de projet ?",
@@ -1269,7 +1269,7 @@
       }
     },
     {
-      "id": "Q29",
+      "id": "PMP1Q29",
       "type": "single",
       "prompt": {
         "fr": "En agile, une façon de travailler, ou Way of Working, WoW, permet à une équipe de personnaliser un projet, un flux de travail ou un processus. Les équipes efficaces peuvent choisir les pratiques, stratégies et cycles de vie qui créeront la valeur globale maximale pour le client. Qui devrait choisir le cycle de vie adapté aux besoins du projet ?",
@@ -1314,7 +1314,7 @@
       }
     },
     {
-      "id": "Q30",
+      "id": "PMP1Q30",
       "type": "single",
       "prompt": {
         "fr": "Un rapport d’avancement est partagé avec le chef de projet dans un projet agile, indiquant que le projet n’est pas sur la bonne voie. Le chef de projet est préoccupé par le rapport, car les lots de travaux ont été intégrés dans les itérations conformément à la priorité organisationnelle de haut niveau. À l’avenir, comment le chef de projet peut-il éviter une telle déconnexion ?",
@@ -1359,7 +1359,7 @@
       }
     },
     {
-      "id": "Q31",
+      "id": "PMP1Q31",
       "type": "single",
       "prompt": {
         "fr": "Zoom est un concurrent majeur d’Uber Cabs, et l’entreprise utilise des pratiques agiles pour piloter ses projets dans l’industrie du transport public. Zoom prévoit d’intégrer la commande de repas auprès de restaurants à emporter comme fonctionnalité dans son application de taxi. La fonctionnalité serait d’abord lancée sur Android, puis étendue à iOS. Cependant, l’équipe doit valider les fonctionnalités requises de l’application sur le marché avant de passer à leur développement. Quel cycle de vie de projet convient à cette équipe ?",
@@ -1404,7 +1404,7 @@
       }
     },
     {
-      "id": "Q32",
+      "id": "PMP1Q32",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet rédige le plan de management du projet après avoir reçu l’approbation de la charte du projet. Le projet porte sur le domaine de l’architecture de réseau blockchain et il existe très peu d’informations historiques disponibles sur les bonnes pratiques au sein du PMO, bureau de management de projet. Quelle est la meilleure prochaine étape que le chef de projet peut entreprendre dans ce scénario ?",
@@ -1449,7 +1449,7 @@
       }
     },
     {
-      "id": "Q33",
+      "id": "PMP1Q33",
       "type": "single",
       "prompt": {
         "fr": "La gestion des conflits est le processus qui consiste à gérer et à apaiser les composantes négatives d’un conflit tout en augmentant ses aspects positifs. Associez les approches de résolution des conflits aux définitions correctes. Dans votre examen PMP, vous devrez faire glisser et organiser les « approches » avec leurs « définitions ». Approches : Se retirer / Éviter Faire un compromis / Réconcilier Forcer / Diriger Collaborer / Résoudre le problème Lisser / Accommoder Définitions :A. Poursuivre votre point de vue aux dépens des autres. Proposer uniquement des solutions gagnant-perdant généralement imposées par le pouvoir positionnelB. Se retirer d’une résolution de conflit réelle ou potentielle. Reporter le problème pour qu’il soit traité par d’autres à une date ultérieureC. Mettre l’accent sur les zones d’accord plutôt que sur les différences. Céder votre position aux besoins des autres afin de maintenir l’harmonie dans les relationsD. Intégrer plusieurs points de vue provenant de perspectives différentes. Permettre une attitude coopérative et un dialogue ouvert pour parvenir à un consensus et à un engagementE. Rechercher des solutions qui apportent un certain degré de satisfaction à toutes les parties. Mais chacune des parties renonce à quelque chose",
@@ -1494,7 +1494,7 @@
       }
     },
     {
-      "id": "Q34",
+      "id": "PMP1Q34",
       "type": "single",
       "prompt": {
         "fr": "Quelques jours après le début de la production d’une ligne d’emballage de shampooing nouvellement installée, il a été identifié qu’un contrôle important de validation qualité qui devait être effectué avant l’expédition du produit avait été manqué. Cela a entraîné une inquiétude concernant la qualité du produit fini, et toutes les unités de production expédiées jusqu’à ce jour ont été placées en quarantaine. Le sponsor a demandé au chef de projet d’inclure immédiatement cette validation dans le plan du projet et de réviser l’échéancier du projet. Que doit faire le chef de projet en premier ?",
@@ -1539,7 +1539,7 @@
       }
     },
     {
-      "id": "Q35",
+      "id": "PMP1Q35",
       "type": "single",
       "prompt": {
         "fr": "Un projet de télécommunications est actuellement en phase d’initialisation, et le chef de projet élabore actuellement la charte du projet. Le sponsor du projet souhaite examiner le plan qui consiste en une explication documentée permettant de créer, maximiser et maintenir les avantages de votre projet. À quel artefact de projet le chef de projet devrait-il se référer ?",
@@ -1584,7 +1584,7 @@
       }
     },
     {
-      "id": "Q36",
+      "id": "PMP1Q36",
       "type": "multiple",
       "prompt": {
         "fr": "Vous êtes le coach agile d’une équipe qui développe un logiciel pour gérer une flotte de camions pour DHL via une interface basée sur une application. Le renforcement des capacités de votre équipe est votre priorité principale. Quelles sont les techniques que vous pouvez utiliser pour évaluer les compétences d’un membre de l’équipe ? Sélectionnez DEUX OPTIONS.",
@@ -1634,7 +1634,7 @@
       }
     },
     {
-      "id": "Q37",
+      "id": "PMP1Q37",
       "type": "multiple",
       "prompt": {
         "fr": "Le développement piloté par les fonctionnalités, Feature Driven Development ou FDD, a été conçu pour répondre aux besoins spécifiques des grands projets de développement logiciel. Lesquels des éléments suivants ne font PAS partie des six rôles principaux d’un projet FDD ? Sélectionnez DEUX OPTIONS.",
@@ -1684,7 +1684,7 @@
       }
     },
     {
-      "id": "Q38",
+      "id": "PMP1Q38",
       "type": "single",
       "prompt": {
         "fr": "Vous gérez un projet de construction d’une zone économique spéciale qui est actuellement en phase d’initialisation. Vous échangez avec les agences gouvernementales afin d’identifier les postes de coûts liés aux dépenses fiscales de tiers. Cela servira d’entrée à votre plan de management du projet pendant la phase de planification. Comment appelleriez-vous ce facteur externe qui influence le coût de votre projet et, finalement, votre plan de management du projet ?",
@@ -1729,7 +1729,7 @@
       }
     },
     {
-      "id": "Q39",
+      "id": "PMP1Q39",
       "type": "multiple",
       "prompt": {
         "fr": "La rétrospective de sprint est une réunion récurrente tenue à la fin d’un sprint, utilisée pour discuter de ce qui s’est bien passé pendant le cycle de sprint précédent et de ce qui peut être amélioré pour le prochain sprint. La rétrospective de sprint agile est une partie essentielle du cadre Scrum pour développer, livrer et gérer des projets complexes. Quels sont certains des autres objectifs de la tenue d’une réunion de rétrospective ? Sélectionnez les TROIS réponses applicables.",
@@ -1780,7 +1780,7 @@
       }
     },
     {
-      "id": "Q40",
+      "id": "PMP1Q40",
       "type": "single",
       "prompt": {
         "fr": "Roy est la cheffe de projet d’un projet de développement d’une turbine d’aviation. Elle est actuellement dans le groupe de processus « planifier la gestion du périmètre » et tient une réunion d’équipe avec son équipe principale afin de déterminer l’approche de management pour ce projet. Son équipe doit finaliser si elle suivra une approche de développement en cascade, itérative, adaptative, agile ou hybride. Que cherche-t-elle à définir stratégiquement ici et à expliquer à l’équipe ?",
@@ -1825,7 +1825,7 @@
       }
     },
     {
-      "id": "Q41",
+      "id": "PMP1Q41",
       "type": "single",
       "prompt": {
         "fr": "Une cheffe de projet dirige un projet de rénovation d’une tour de blanchisserie sèche dans l’industrie des biens de grande consommation. Elle valorise la collaboration de l’équipe et se trouve actuellement dans la phase de collecte des exigences. Elle organise une session de brainstorming inclusive avec son équipe afin de générer et de prioriser des idées pour les options de rénovation, réparer, remplacer, restaurer, en utilisant un vote anonyme sur une échelle de 1 à 5 pour la priorisation. Quelle technique la cheffe de projet utilise-t-elle ici pour collecter les exigences ?",
@@ -1870,7 +1870,7 @@
       }
     },
     {
-      "id": "Q42",
+      "id": "PMP1Q42",
       "type": "single",
       "prompt": {
         "fr": "Une multinationale dirige un projet de déploiement d’infrastructure informatique couvrant 4 pays. À mi-parcours de la phase d’exécution du projet, le chef de projet découvre que l’une des principales parties prenantes a été partiellement réaffectée à un autre projet et aura donc désormais une implication réduite. Que doit faire le chef de projet ?",
@@ -1915,7 +1915,7 @@
       }
     },
     {
-      "id": "Q43",
+      "id": "PMP1Q43",
       "type": "single",
       "prompt": {
         "fr": "Un coach agile a rejoint une équipe qui développe une application pour des entreprises de banque d’investissement. Le coach observe que différentes équipes Scrum travaillent au développement de différentes fonctionnalités de l’application. Cependant, les équipes ont du mal à parvenir à un alignement commun sur la « définition de terminé », Definition of Done, DoD. Que devrait faire le coach dans ce scénario ?",
@@ -1960,7 +1960,7 @@
       }
     },
     {
-      "id": "Q44",
+      "id": "PMP1Q44",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet doit s’assurer qu’un projet agile livre une valeur commerciale précoce. Il a récemment appris que quelques parties prenantes ont exprimé des préoccupations au sujet du plan de publication des versions, soulignant qu’il ne répondra pas aux besoins commerciaux urgents. Comment le chef de projet devrait-il répondre le plus efficacement ?",
@@ -2005,7 +2005,7 @@
       }
     },
     {
-      "id": "Q45",
+      "id": "PMP1Q45",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet a récemment terminé un projet de développement d’application pour un client. Cependant, le client continue d’appeler les membres de l’équipe pour résoudre des problèmes techniques, effectuer du dépannage, etc., et des demandes continuent d’arriver pour de petits changements et des mises à niveau. La remise au client était une tâche importante du projet qui aurait dû être terminée à temps. Quel artefact de projet devrait contenir la date de référence de cette tâche, permettant au chef de projet de vérifier dans quelle mesure le projet est hors trajectoire par rapport à la date initialement planifiée ?",
@@ -2050,7 +2050,7 @@
       }
     },
     {
-      "id": "Q46",
+      "id": "PMP1Q46",
       "type": "single",
       "prompt": {
         "fr": "Une équipe est en transition d’une organisation de management de projet fondée sur la cascade vers une organisation fondée sur l’agile. Malheureusement, certains départements manquent encore d’une formation agile appropriée. Comment le chef de projet devrait-il répondre au manque de formation agile au sein des équipes spécifiques ?",
@@ -2095,7 +2095,7 @@
       }
     },
     {
-      "id": "Q47",
+      "id": "PMP1Q47",
       "type": "single",
       "prompt": {
         "fr": "Pendant la phase de planification, le chef de projet réalise que le processus de « test utilisateur » ne peut pas être terminé avec les ressources fournies. Par conséquent, le chef de projet engage l’équipe des approvisionnements et prévoit d’embaucher des ressources temporaires pour terminer le processus de test utilisateur à temps. Quelle stratégie de réponse aux risques le chef de projet a-t-il utilisée ici ?",
@@ -2140,7 +2140,7 @@
       }
     },
     {
-      "id": "Q48",
+      "id": "PMP1Q48",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le facilitateur d’un projet agile basé sur les itérations et l’un des membres de votre équipe vient vous demander de l’aide concernant un livrable qui lui a été assigné lors de la dernière réunion quotidienne debout. L’aide demandée de sa part consiste principalement à fournir une formation sur le module SAP-PS à son équipe. Où devriez-vous discuter de ce problème avec le reste de votre équipe ?",
@@ -2185,7 +2185,7 @@
       }
     },
     {
-      "id": "Q49",
+      "id": "PMP1Q49",
       "type": "single",
       "prompt": {
         "fr": "Sam est le Product Owner d’un projet dirigé selon l’agile qui prévoit de déployer une nouvelle application d’information touristique pour la Ville de Londres. Il examine la carte de contrôle qualité avec l’équipe projet et le Scrum Master. Les temps de réponse diminuent au fil des itérations, mais ils restent au-dessus de la limite supérieure de contrôle. Qu’est-ce que cela signifie ?",
@@ -2230,7 +2230,7 @@
       }
     },
     {
-      "id": "Q50",
+      "id": "PMP1Q50",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet a récemment terminé un projet de déploiement logiciel pour un client multinational. Ensuite, le chef de projet confirme avec le responsable de version que l’intégration du logiciel a été réalisée avec tous les départements de l’organisation inclus dans le périmètre, à savoir : fabrication, ingénierie, achats, et planification et développement des matériaux. L’équipe d’assurance qualité du client a également vérifié les livrables terminés après l’achèvement du dernier et final sprint. Quelle est la prochaine étape pour le chef de projet ?",
@@ -2275,7 +2275,7 @@
       }
     },
     {
-      "id": "Q51",
+      "id": "PMP1Q51",
       "type": "single",
       "prompt": {
         "fr": "Vous dirigez un projet en tant que Scrum Master au sein de votre organisation, mais la plupart des membres de votre équipe sont nouveaux et inexpérimentés. De plus, plusieurs d’entre eux ont été réaffectés depuis d’autres départements dans le cadre de la politique de rotation des postes de l’entreprise. Par conséquent, ils ont peu de connaissances techniques du domaine. En tant que Scrum Master, vous devez mettre cette équipe en position de réussir. Quelle est la stratégie la plus efficace que vous pouvez adopter ici ?",
@@ -2320,7 +2320,7 @@
       }
     },
     {
-      "id": "Q52",
+      "id": "PMP1Q52",
       "type": "single",
       "prompt": {
         "fr": "Pour un projet d’aménagement paysager, Rob utilise une technique d’estimation afin de déterminer le coût du pavage d’une allée. Il vérifie les données précédentes dans le référentiel de son entreprise, les actifs organisationnels, afin de trouver un coût de référence pour un travail de nature similaire réalisé dans le passé. Quel type de technique d’estimation Rob utilise-t-il ici ?",
@@ -2365,7 +2365,7 @@
       }
     },
     {
-      "id": "Q53",
+      "id": "PMP1Q53",
       "type": "multiple",
       "prompt": {
         "fr": "Un chef de projet a été affecté à la direction d’un projet piloté par l’agile dans une organisation qui suit le modèle traditionnel en cascade depuis plus de 30 ans. Les dirigeants de l’entreprise sont réticents à adopter la nouvelle méthodologie, et le chef de projet a du mal à obtenir l’adhésion des dirigeants pour que le projet se déroule sans heurts. Quelles actions peut-il entreprendre pour surmonter ce problème ? Sélectionnez les TROIS OPTIONS applicables.",
@@ -2416,7 +2416,7 @@
       }
     },
     {
-      "id": "Q54",
+      "id": "PMP1Q54",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes sur le point de clôturer un cycle d’itération pour un projet géré selon l’agile visant à développer une application de commande de repas. Soudainement, l’un de vos développeurs mentionne qu’une fonctionnalité qui aurait permis aux utilisateurs de voir le temps de cuisson du repas commandé au format HH:MM a été manquée dans cette itération. Après investigation, il a été constaté que l’équipe de conception n’avait pas fourni l’entrée nécessaire à l’équipe de développement pour permettre cette fonctionnalité. Que devriez-vous faire en tant que chef de projet pour éviter que ce type de situation ne se reproduise à l’avenir ?",
@@ -2461,7 +2461,7 @@
       }
     },
     {
-      "id": "Q55",
+      "id": "PMP1Q55",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet reçoit une demande de changement d’une partie prenante. Il documente le changement par une demande formelle et commence à évaluer l’impact du changement avec son équipe principale. Il découvre que le changement est assez facile à mettre en œuvre et n’aura aucun effet sur le coût ou l’échéancier du projet. Quelle est la prochaine étape pour le chef de projet ?",
@@ -2506,7 +2506,7 @@
       }
     },
     {
-      "id": "Q56",
+      "id": "PMP1Q56",
       "type": "single",
       "prompt": {
         "fr": "Un projet est en cours d’exécution et l’équipe de recherche et développement communique au chef de projet que les exigences et fonctionnalités du produit ont changé à la suite d’un rapport d’étude de marché publié par l’équipe de recherche sur le comportement des consommateurs. Ces changements n’étaient pas anticipés et peuvent affecter les ventes ainsi que le périmètre global du projet de manière significative. Quelle action le chef de projet devrait-il entreprendre ?",
@@ -2551,7 +2551,7 @@
       }
     },
     {
-      "id": "Q57",
+      "id": "PMP1Q57",
       "type": "single",
       "prompt": {
         "fr": "Une équipe agile travaille efficacement sur le lancement d’un nouveau produit. La première version du produit doit être publiée dans un délai de quatre mois afin d’éviter des intégrations supplémentaires de fonctionnalités dues à une nouvelle législation à venir. Le Product Owner soumet donc une demande de mise à jour supplémentaire de fonctionnalité afin de terminer le projet avant que les nouvelles lois ne deviennent applicables. Cependant, le projet est contraint par le temps, mais flexible sur le budget. Que devrait faire le chef de projet pour gérer cette situation ?",
@@ -2596,7 +2596,7 @@
       }
     },
     {
-      "id": "Q58",
+      "id": "PMP1Q58",
       "type": "single",
       "prompt": {
         "fr": "Zen Pharma Inc. prévoit d’acquérir Rochester Pharmaceuticals. L’acquisition a lieu dans une industrie fortement réglementée. Le sponsor du projet et le président du conseil d’administration ont demandé un changement d’emballage qui, à première vue, semble violer les exigences légales. Quelle devrait être la première étape du chef de projet ici ?",
@@ -2641,7 +2641,7 @@
       }
     },
     {
-      "id": "Q59",
+      "id": "PMP1Q59",
       "type": "single",
       "prompt": {
         "fr": "Un dirigeant du département de conception produit visite occasionnellement l’espace de travail de votre équipe agile pour donner de nouvelles contributions sur la conception. C’est une partie prenante critique du projet, mais pendant la revue de sprint, vous constatez, en tant que Scrum Master, que votre équipe abandonne tout et commence à travailler sur les nouvelles contributions dès qu’elles viennent de cette partie prenante. Comment devriez-vous gérer cette situation ?",
@@ -2686,7 +2686,7 @@
       }
     },
     {
-      "id": "Q60",
+      "id": "PMP1Q60",
       "type": "single",
       "prompt": {
         "fr": "Huit mois après le début d’un projet agile étroitement lié à la stratégie d’expansion d’une entreprise, le conseil d’administration suit de près son avancement. Le Chief Information Officer exprime toutefois sa frustration, car les derniers enregistrements hebdomadaires du graphique d’avancement réalisé montrent que la date d’achèvement projetée se déplace plusieurs fois de manière significative vers l’avant et vers l’arrière. Comment le chef de projet peut-il estimer la date d’achèvement avec plus de précision et de certitude ?",

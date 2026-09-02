@@ -9,7 +9,7 @@
   "questionCount": 60,
   "questions": [
     {
-      "id": "Q1",
+      "id": "PMP2Q1",
       "type": "single",
       "prompt": {
         "fr": "Dans un projet hybride, plusieurs obstacles ont récemment été mis en évidence sur le radiateur d’information. De nombreux membres de l’équipe ont signalé des difficultés à intégrer un nouvel ensemble d’exigences législatives dans le projet. Les risques pourraient être des révisions majeures et du retravail sur les fonctionnalités du produit, ainsi que des impacts associés sur les coûts et l’échéancier. Quel paramètre est susceptible d’être classé le plus haut dans l’évaluation des risques ?",
@@ -54,7 +54,7 @@
       }
     },
     {
-      "id": "Q2",
+      "id": "PMP2Q2",
       "type": "single",
       "prompt": {
         "fr": "Un cycle de vie de projet est une série de phases qu’un projet traverse depuis son démarrage jusqu’à son achèvement. Le cycle de vie d’un projet doit être adapté en fonction du besoin du scénario d’affaires. Faites correspondre les cycles de vie de projet suivants (A, B, C, D) avec les scénarios d’affaires appropriés (1, 2, 3, 4) : Cycle de vie du projet Scénario d’affaire (A) Hybride (1) Un projet dont le périmètre est déterminé tôt dans le cycle de vie du projet, mais où le temps et les coûts seront constamment modifiés. L’équipe doit réaliser une série de cycles répétés jusqu’à ce que le périmètre atteigne la perfection. (B) Incrémental (2) Un projet qui présente un besoin d’affaires d’être lancé sur le marché à la date la plus rapprochée possible. (C) Itératif (3) Un projet dans lequel le périmètre, les coûts, le temps, les ressources et les parties prenantes ont été définis pendant l’initiation et ne changeront pas substantiellement au cours du projet. (D) Waterfall (4) Un projet dans lequel le périmètre change constamment pour le nouveau livrable. Mais une fois finalisé, le déploiement sera réalisé selon une approche phasée prédéterminée.",
@@ -99,7 +99,7 @@
       }
     },
     {
-      "id": "Q3",
+      "id": "PMP2Q3",
       "type": "single",
       "prompt": {
         "fr": "Vous avez récemment été intégré comme chef de projet pour un projet en cours. Le chef de projet précédent a déjà quitté son rôle et vous n’avez pas eu l’occasion de faire une passation correcte. Vous avez demain une revue des coûts et de l’échéancier du projet avec votre sponsor. Vous devez obtenir les bons artefacts de projet afin d’extraire ces données avant la réunion. La meilleure façon de vérifier la performance des coûts et de l’échéancier d’un projet est de vérifier :",
@@ -144,7 +144,7 @@
       }
     },
     {
-      "id": "Q4",
+      "id": "PMP2Q4",
       "type": "single",
       "prompt": {
         "fr": "Les équipes géographiquement distribuées dans un espace de travail Agile ont besoin d’espaces de travail virtuels. Dans ce type spécial de canal de communication, des liens de visioconférence de longue durée sont établis entre les membres de l’équipe situés dans différentes zones géographiques. Les personnes démarrent le lien au début de la journée de travail et le ferment à la fin. De cette façon, les personnes peuvent entrer et sortir de la conférence à travers différents fuseaux horaires et interagir spontanément. À quel type de canal de communication Agile fait-on référence ici ?",
@@ -189,7 +189,7 @@
       }
     },
     {
-      "id": "Q5",
+      "id": "PMP2Q5",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le Scrum Master d’un projet piloté en Agile, et vous assistez au daily stand-up. Le département qualité a signalé une forte augmentation des réclamations clients après le lancement de la première version du site web qui a été développé. Après une enquête initiale, il a été constaté que les utilisateurs finaux utilisent la page « contactez-nous » pour poser leurs questions plutôt que l’option chatbot, et qu’ils ne reçoivent donc aucune réponse à leurs demandes. Les designers et les développeurs ne l’avaient pas anticipé. Qu’aurait-on pu faire pour éviter cette situation ?",
@@ -234,7 +234,7 @@
       }
     },
     {
-      "id": "Q6",
+      "id": "PMP2Q6",
       "type": "single",
       "prompt": {
         "fr": "En raison de changements de périmètre dans un projet de développement d’application pendant l’exécution, vous identifiez, en tant que chef de projet, que le prestataire de services tiers doit apporter des modifications à un correctif de sécurité déjà en cours d’utilisation. Que devez-vous faire en premier en tant que chef de projet ?",
@@ -279,7 +279,7 @@
       }
     },
     {
-      "id": "Q7",
+      "id": "PMP2Q7",
       "type": "single",
       "prompt": {
         "fr": "Un projet Agile est retardé de cinq mois et les membres seniors du conseil surveillent l’avancement chaque semaine. Le sponsor a demandé une analyse des causes racines du retard. Après investigation, le chef de projet constate que, dans les derniers burndown charts hebdomadaires, les dates d’achèvement ont été déplacées plusieurs fois vers l’arrière et vers l’avant. Qu’aurait-on pu faire différemment pour estimer les dates d’achèvement des sprints avec beaucoup plus de précision et de stabilité ?",
@@ -324,7 +324,7 @@
       }
     },
     {
-      "id": "Q8",
+      "id": "PMP2Q8",
       "type": "single",
       "prompt": {
         "fr": "Un projet rencontre des difficultés à définir le périmètre d’un nouveau développement de produit comportant plusieurs phases liées entre elles au sein d’équipes non colocalisées. Il existe un niveau élevé de dépendance entre les phases. Comment le chef de projet devrait-il planifier la résolution de ce défi ?",
@@ -369,7 +369,7 @@
       }
     },
     {
-      "id": "Q9",
+      "id": "PMP2Q9",
       "type": "single",
       "prompt": {
         "fr": "Pour un projet qui implique des responsables fonctionnels de plusieurs pays, le périmètre est devenu si diversifié qu’un comité de pilotage est désormais responsable à la place du sponsor pour gérer cela. Que devrait faire le chef de projet pour intégrer ce nouveau changement afin de maintenir une communication efficace ?",
@@ -414,7 +414,7 @@
       }
     },
     {
-      "id": "Q10",
+      "id": "PMP2Q10",
       "type": "single",
       "prompt": {
         "fr": "Aron est un nouveau membre de l’équipe de développement qui n’est pas habitué aux pratiques Agile. Un développeur senior fournit régulièrement des retours correctifs sur le travail d’Aron lors des daily stand-up meetings. Cela rend Aron nerveux chaque fois que le développeur senior vient aux réunions du matin, qui sont animées par le Scrum Master du projet. Laquelle des options suivantes pourrait justifier l’invitation du développeur senior par le Scrum Master aux daily stand-ups ?",
@@ -459,7 +459,7 @@
       }
     },
     {
-      "id": "Q11",
+      "id": "PMP2Q11",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes chef de projet pour un projet d’automatisation et vous avez soumis votre charte pour approbation au comité de pilotage. Après avoir vérifié le plan de gestion des ressources, le comité mentionne que les parties prenantes ne sont pas conscientes de leur implication dans le projet. Qu’auriez-vous dû faire pour éviter cela ?",
@@ -504,7 +504,7 @@
       }
     },
     {
-      "id": "Q12",
+      "id": "PMP2Q12",
       "type": "single",
       "prompt": {
         "fr": "L’entreprise A lance sur le marché un nouveau produit de soins pour hommes qui vise à satisfaire les clients. L’entreprise souhaite également concevoir le produit sur la base du feedback de la concurrence existante sur le marché. Quelle méthode le chef de projet devrait-il utiliser pour accomplir cela ?",
@@ -549,7 +549,7 @@
       }
     },
     {
-      "id": "Q13",
+      "id": "PMP2Q13",
       "type": "single",
       "prompt": {
         "fr": "Dans un projet Agile, un grand nombre de stories sont restées incomplètes à la fin des itérations. Plusieurs membres de l’équipe ont travaillé sur ces stories et aucun obstacle n’a été identifié. À laquelle des options suivantes l’équipe Agile peut-elle recourir pour résoudre la situation ?",
@@ -594,7 +594,7 @@
       }
     },
     {
-      "id": "Q14",
+      "id": "PMP2Q14",
       "type": "single",
       "prompt": {
         "fr": "Votre équipe projet a oublié de prendre en compte une donnée de conception critique provenant du département de conception lors de l’élaboration de l’énoncé du périmètre. Cela crée maintenant un risque sur la qualité du produit fini. Le sponsor souhaite une résolution immédiate du problème. Que devez-vous faire en tant que chef de projet comme première étape ?",
@@ -639,7 +639,7 @@
       }
     },
     {
-      "id": "Q15",
+      "id": "PMP2Q15",
       "type": "single",
       "prompt": {
         "fr": "Dans cette technique d’estimation Agile, une user story est présentée à l’équipe, il y a une conversation entre les membres de l’équipe et avec le Product Owner, et lorsque l’équipe a posé ses questions, le Scrum Master demande à l’équipe d’utiliser un jeu de cartes avec des nombres de Fibonacci modifiés pour voter sur le nombre de points à attribuer à la story. De quelle technique d’estimation parle-t-on ici ?",
@@ -684,7 +684,7 @@
       }
     },
     {
-      "id": "Q16",
+      "id": "PMP2Q16",
       "type": "single",
       "prompt": {
         "fr": "____________ agit de manière responsable pour mener les activités avec intégrité, soin et fiabilité, tout en maintenant la conformité avec les lignes directrices externes et internes. Ils démontrent un engagement large envers les impacts financiers, sociaux et environnementaux des projets qu’ils soutiennent. Complétez l’espace vide avec l’option la plus appropriée :",
@@ -729,7 +729,7 @@
       }
     },
     {
-      "id": "Q17",
+      "id": "PMP2Q17",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet a récemment terminé le plan de gestion du projet pour un projet de développement immobilier résidentiel. Celui-ci est soumis aux parties prenantes pour approbation. Le chef de projet identifie un risque potentiel de retard dans le processus d’approbation par les parties prenantes. Quelle serait la meilleure ligne de conduite ?",
@@ -774,7 +774,7 @@
       }
     },
     {
-      "id": "Q18",
+      "id": "PMP2Q18",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le facilitateur d’un projet Agile basé sur des itérations et une nouvelle story est soumise par le client pendant une itération en cours. Vous devez inclure cette fonctionnalité dans votre prochain sprint, mais vous n’êtes pas sûr du périmètre complet de cette fonctionnalité. Quel est le meilleur forum pour discuter de ce problème ?",
@@ -819,7 +819,7 @@
       }
     },
     {
-      "id": "Q19",
+      "id": "PMP2Q19",
       "type": "multiple",
       "prompt": {
         "fr": "La stewardship englobe des responsabilités à la fois internes et externes à l’organisation et reflète la compréhension et l’acceptation de la confiance, ainsi que les actions et décisions qui génèrent et maintiennent cette confiance. Quels sont certains autres aspects de la stewardship ? Sélectionnez TROIS OPTIONS.",
@@ -870,7 +870,7 @@
       }
     },
     {
-      "id": "Q20",
+      "id": "PMP2Q20",
       "type": "single",
       "prompt": {
         "fr": "L’objectif d’une gestion de projet efficace est d’évaluer et d’ajuster continuellement l’alignement du projet avec les objectifs d’affaires ainsi qu’avec les bénéfices et la valeur attendus. Laquelle des options suivantes est un exemple de « valeur » idéale créée pendant la livraison d’un projet ?",
@@ -915,7 +915,7 @@
       }
     },
     {
-      "id": "Q21",
+      "id": "PMP2Q21",
       "type": "single",
       "prompt": {
         "fr": "Une équipe projet Agile a terminé une itération qui a ajouté au produit un certain nombre de fonctionnalités alignées, lesquelles avaient été soumises sous forme de user stories. Maintenant, l’équipe souhaite illustrer ces fonctionnalités au Product Owner. Quel est le forum approprié pour réaliser cette activité ?",
@@ -960,7 +960,7 @@
       }
     },
     {
-      "id": "Q22",
+      "id": "PMP2Q22",
       "type": "single",
       "prompt": {
         "fr": "Vous gérez un projet qui implique une équipe mondiale et interculturelle. Le projet est maintenant en phase d’exécution. Vous remarquez que l’implication d’une partie prenante particulière n’est pas au niveau attendu depuis deux semaines. Cette personne est une partie prenante importante de votre projet, et les contributions opportunes de sa part sont très importantes pour votre projet. Quelle devrait être votre première étape en tant que chef de projet pour gérer cela ?",
@@ -1005,7 +1005,7 @@
       }
     },
     {
-      "id": "Q23",
+      "id": "PMP2Q23",
       "type": "single",
       "prompt": {
         "fr": "Vous avez récemment été nommé chef de projet dans un projet qui accuse un retard de six mois par rapport à sa référence de base. Le chef de projet précédent a démissionné sans préavis et vous n’avez pas eu l’occasion de bénéficier d’une passation. Le moral de l’équipe est très bas et les rôles et responsabilités n’ont pas été définis. Ainsi, tout le monde essaie de tout faire, ce qui entraîne un chaos total et du retravail. Quel type de style de leadership devriez-vous adopter ici pour gérer la situation ?",
@@ -1050,7 +1050,7 @@
       }
     },
     {
-      "id": "Q24",
+      "id": "PMP2Q24",
       "type": "single",
       "prompt": {
         "fr": "Une équipe projet Agile a terminé une itération qui a ajouté au produit un certain nombre de fonctionnalités alignées, lesquelles avaient été soumises sous forme de user stories. Maintenant, l’équipe souhaite illustrer les fonctionnalités et solliciter du feedback lors d’une réunion de démonstration/revue. Qui assiste à la démonstration et accepte ou refuse les stories ?",
@@ -1095,7 +1095,7 @@
       }
     },
     {
-      "id": "Q25",
+      "id": "PMP2Q25",
       "type": "single",
       "prompt": {
         "fr": "Une étude de faisabilité au début d’un projet de développement d’application incluait une fonctionnalité d’« essai gratuit de 30 jours ». Une demande de changement a été approuvée par le comité de maîtrise des changements et par le sponsor du projet, indiquant que la fonctionnalité d’« essai gratuit de 30 jours » ne devrait plus être présente et que, dès le jour du lancement, l’application devrait être « basée sur l’abonnement ». Cela est en totale contradiction avec le plan initial. Que devriez-vous faire en tant que chef de projet ?",
@@ -1140,7 +1140,7 @@
       }
     },
     {
-      "id": "Q26",
+      "id": "PMP2Q26",
       "type": "single",
       "prompt": {
         "fr": "Vous dirigez un projet Agile visant à développer une application pour un client du secteur Oil & Gas. Le client soumet continuellement de nouvelles feature stories pour l’application. En tant que Product Owner, vous venez de communiquer aux parties prenantes la définition du périmètre achevé pour la release de la prochaine version. Que devriez-vous faire ensuite ?",
@@ -1185,7 +1185,7 @@
       }
     },
     {
-      "id": "Q27",
+      "id": "PMP2Q27",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes le Product Owner d’un projet Agile basé sur des itérations et vous avez récemment découvert qu’une fonctionnalité importante du produit n’avait pas été documentée lors de la première planification de sprint. Le client a remarqué l’erreur lors de la deuxième revue de livrable. Que devriez-vous faire maintenant ?",
@@ -1230,7 +1230,7 @@
       }
     },
     {
-      "id": "Q28",
+      "id": "PMP2Q28",
       "type": "single",
       "prompt": {
         "fr": "Lors d’une réunion d’équipe, vous examinez le registre des risques et le journal des problèmes d’un projet. Vous remarquez qu’un des membres de votre équipe n’atteint pas les objectifs fixés et que, par conséquent, beaucoup de livrables de sa part sont retardés. Que devriez-vous faire en tant que chef de projet ?",
@@ -1275,7 +1275,7 @@
       }
     },
     {
-      "id": "Q29",
+      "id": "PMP2Q29",
       "type": "single",
       "prompt": {
         "fr": "Votre équipe projet a récemment atteint un jalon clé pour un projet Agile basé sur des itérations. Pour cela, l’équipe a satisfait aux exigences techniques critiques d’un nouveau processus et a réalisé la démonstration avec le Product Owner. L’équipe est maintenant prête à passer au prochain cycle d’itération. Quelle devrait être l’étape suivante ici ?",
@@ -1320,7 +1320,7 @@
       }
     },
     {
-      "id": "Q30",
+      "id": "PMP2Q30",
       "type": "single",
       "prompt": {
         "fr": "L’engagement des parties prenantes inclut la mise en œuvre de stratégies et d’actions visant à promouvoir l’implication productive des parties prenantes. Quelle est la séquence correcte pour naviguer efficacement dans l’engagement des parties prenantes tout au long du projet ? Classez les éléments suivants dans l’ordre. Dans votre examen PMP, vous devrez faire glisser et déposer chacune des options suivantes dans la séquence correcte demandée par la question. Prioriser Surveiller Engager Identifier Comprendre et analyser",
@@ -1365,7 +1365,7 @@
       }
     },
     {
-      "id": "Q31",
+      "id": "PMP2Q31",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet découvre que certains livrables critiques du projet ne sont pas satisfaits et que, pour cette raison, l’une des principales parties prenantes est sur le point d’escalader le problème au sponsor du projet. Que devrait faire le chef de projet pour gérer cette partie prenante ?",
@@ -1410,7 +1410,7 @@
       }
     },
     {
-      "id": "Q32",
+      "id": "PMP2Q32",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes chef de projet pour un projet Agile basé sur le flux, et l’une de vos parties prenantes a proposé une exigence très complexe. Cette fonctionnalité du produit nécessitera beaucoup de travail de fond et de revue de littérature. Il s’agit d’une fonctionnalité totalement nouvelle qui n’a jamais été testée auparavant sur aucune plateforme. Votre équipe est également d’avis que cette fonctionnalité n’ajoute pas de valeur et ne devrait pas être nécessaire au bon fonctionnement du produit. Quelle est la meilleure ligne de conduite en tant que chef de projet ?",
@@ -1455,7 +1455,7 @@
       }
     },
     {
-      "id": "Q33",
+      "id": "PMP2Q33",
       "type": "single",
       "prompt": {
         "fr": "Votre équipe projet a pris du retard sur certaines tâches. En tant que chef de projet, vous essayez de gérer cela en prenant des décisions de priorisation sur quelques tâches suivantes. Après une semaine, vous constatez que cette repriorisation n’a pas résolu le retard. Vous devez maintenant escalader le problème aux parties prenantes. À quel artefact du projet devriez-vous vous référer pour trouver la bonne méthode d’escalade ?",
@@ -1500,7 +1500,7 @@
       }
     },
     {
-      "id": "Q34",
+      "id": "PMP2Q34",
       "type": "single",
       "prompt": {
         "fr": "Faites correspondre les diagrammes suivants (A, B, C, D) avec leurs définitions correctes de cycle de vie de projet (1, 2, 3, 4). Prédictif Itératif Incrémental Agile",
@@ -1545,7 +1545,7 @@
       }
     },
     {
-      "id": "Q35",
+      "id": "PMP2Q35",
       "type": "single",
       "prompt": {
         "fr": "Un projet Agile basé sur le flux connaît des retards dans les releases de version. La plupart du temps, les raisons des retards sont imprévues et inattendues. Elles ne sont jamais soulevées ni traitées lors des daily standups ou des revues d’itération. Comment ce problème peut-il être traité en tant que servant leader ?",
@@ -1590,7 +1590,7 @@
       }
     },
     {
-      "id": "Q36",
+      "id": "PMP2Q36",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet d’un projet de développement d’infrastructure informatique décrit les rôles et responsabilités de chaque personne dans l’équipe projet afin d’éviter les conflits et les problèmes de coordination. Le chef de projet établit également des attentes claires concernant les comportements acceptables des membres de l’équipe projet. Sur quel artefact du projet le chef de projet travaille-t-il ?",
@@ -1635,7 +1635,7 @@
       }
     },
     {
-      "id": "Q37",
+      "id": "PMP2Q37",
       "type": "single",
       "prompt": {
         "fr": "Dans le graphique d’analyse de la valeur acquise ci-dessous, quelle mesure parmi A, B, C ou D représente l’écart à l’achèvement, Variance At Completion (VAC) ? Pour les questions de type hotspot dans votre examen PMP, vous devrez cliquer sur l’une des options A, B, C ou D dans le diagramme ci-dessous :",
@@ -1680,7 +1680,7 @@
       }
     },
     {
-      "id": "Q38",
+      "id": "PMP2Q38",
       "type": "single",
       "prompt": {
         "fr": "Après l’approbation de la charte de projet, le chef de projet invite toutes les parties prenantes, y compris le sponsor, à une réunion. L’objectif de la réunion est d’aligner l’équipe sur les objectifs communs et les livrables du projet. Quel est le résultat le plus probable de cette réunion ?",
@@ -1725,7 +1725,7 @@
       }
     },
     {
-      "id": "Q39",
+      "id": "PMP2Q39",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet gère la construction d’un parc industriel dans une zone économique spéciale, actuellement en phase de planification. Il remarque qu’une partie prenante particulière est assez réticente à approuver le plan de gestion du projet, car elle ne croit pas aux critères de succès du projet. Le soutien et l’engagement de cette partie prenante sont essentiels à la réussite du projet. Que devrait faire le chef de projet pour obtenir l’adhésion de cette partie prenante ?",
@@ -1770,7 +1770,7 @@
       }
     },
     {
-      "id": "Q40",
+      "id": "PMP2Q40",
       "type": "single",
       "prompt": {
         "fr": "Dans le tableau suivant du plan de réponse aux risques, sélectionnez les plans de réponse les mieux adaptés (A, B, C, D) aux risques identifiés (1, 2, 3, 4). Dans votre examen PMP, vous devrez faire glisser et déposer les plans de réponse les mieux adaptés (A, B, C, D) pour atténuer les risques identifiés (1, 2, 3, 4). Risque n° Description Évaluation du risque Réponse Propriétaire 1 Votre fournisseur d’acier ne peut pas livrer les armatures à temps en raison de certains problèmes organisationnels au sein de son entreprise. Élevée",
@@ -1815,7 +1815,7 @@
       }
     },
     {
-      "id": "Q41",
+      "id": "PMP2Q41",
       "type": "single",
       "prompt": {
         "fr": "La charge de travail de votre projet est très élevée et toutes vos ressources internes sont surchargées. Vous discutez de ce problème avec votre équipe projet et elle propose d’externaliser une partie du périmètre du projet à une agence externe. Quel artefact du projet devrait idéalement être révisé en premier ?",
@@ -1860,7 +1860,7 @@
       }
     },
     {
-      "id": "Q42",
+      "id": "PMP2Q42",
       "type": "single",
       "prompt": {
         "fr": "Une équipe projet Agile a terminé une itération qui a ajouté au produit un certain nombre de fonctionnalités alignées, lesquelles avaient été soumises sous forme de user stories. Maintenant, l’équipe souhaite illustrer les fonctionnalités et solliciter du feedback lors d’une réunion de démonstration/revue. Laquelle des affirmations suivantes est vraie pour un projet géré en Agile ?",
@@ -1905,7 +1905,7 @@
       }
     },
     {
-      "id": "Q43",
+      "id": "PMP2Q43",
       "type": "single",
       "prompt": {
         "fr": "Un projet de construction d’autoroute, actuellement confronté à des retards importants et à un échéancier très serré, risque de subir des revers majeurs en cas de nouveaux retards. Le chef de projet a reçu une notification des autorités juridiques locales concernant une violation des lois environnementales, exigeant une réunion immédiate. Cependant, le chef de projet ne peut pas quitter le site du projet, car cela provoquerait des retards de construction en l’absence de supervision. Quelle est la meilleure ligne de conduite ici ?",
@@ -1950,7 +1950,7 @@
       }
     },
     {
-      "id": "Q44",
+      "id": "PMP2Q44",
       "type": "single",
       "prompt": {
         "fr": "L’adaptation est l’ajustement délibéré de l’approche de gestion de projet, de la gouvernance et des processus afin de les rendre plus adaptés à l’environnement donné et au travail à réaliser. Classez les étapes suivantes de l’adaptation dans leur ordre idéal d’exécution. Dans votre examen PMP, on peut vous demander de faire glisser et déposer chacune des options suivantes afin de les organiser dans le bon ordre. Mettre en œuvre l’amélioration continue Adapter pour l’organisation Adapter pour le projet Sélectionner l’approche initiale de développement",
@@ -1995,7 +1995,7 @@
       }
     },
     {
-      "id": "Q45",
+      "id": "PMP2Q45",
       "type": "single",
       "prompt": {
         "fr": "Vous êtes dans le processus de surveillance et de maîtrise du travail du projet, et vous remarquez que de nombreux changements sont proposés par les parties prenantes, chacune ayant une opinion très différente sur ces changements. Chacun pense que sa demande de changement devrait recevoir la priorité maximale. Que devriez-vous faire en tant que chef de projet pour résoudre cela ?",
@@ -2040,7 +2040,7 @@
       }
     },
     {
-      "id": "Q46",
+      "id": "PMP2Q46",
       "type": "single",
       "prompt": {
         "fr": "Votre équipe projet a récemment atteint un jalon clé pour un projet Agile basé sur les itérations. Pour cela, l’équipe a satisfait aux exigences techniques critiques d’un nouveau processus et a réalisé la démonstration avec le Product Owner. Dans le cadre du rapport d’état du projet à envoyer aux principales parties prenantes, vous prévoyez d’ajouter une capture d’écran d’un graphique qui montre visuellement le travail, en story points, achevé par rapport au plan. À quel graphique fait-on référence ici ?",
@@ -2085,7 +2085,7 @@
       }
     },
     {
-      "id": "Q47",
+      "id": "PMP2Q47",
       "type": "single",
       "prompt": {
         "fr": "Lors de la phase d’exécution d’un projet, le chef de projet passe beaucoup de temps à gérer quotidiennement des urgences. Chaque jour, il y a de nouveaux défis, empêchements et blocages qui doivent être résolus pour l’équipe. Laquelle des stratégies suivantes serait idéale pour le chef de projet ?",
@@ -2130,7 +2130,7 @@
       }
     },
     {
-      "id": "Q48",
+      "id": "PMP2Q48",
       "type": "single",
       "prompt": {
         "fr": "Quelle est la meilleure ligne de conduite en tant que chef de projet lorsque les membres de l’équipe projet ne respectent pas le plan de gestion des communications et n’ont pas une compréhension partagée de la manière dont les communications doivent circuler pendant un projet ?",
@@ -2175,7 +2175,7 @@
       }
     },
     {
-      "id": "Q49",
+      "id": "PMP2Q49",
       "type": "single",
       "prompt": {
         "fr": "L’adaptation est l’ajustement délibéré de l’approche de gestion de projet, de la gouvernance et des processus afin de les rendre plus adaptés à l’environnement donné et au travail à réaliser. Faites correspondre les suggestions d’adaptation (A, B, C, D) avec les situations les plus appropriées (1, 2, 3, 4) dans le tableau ci-dessous. Dans votre examen PMP, vous devrez faire glisser et déposer les suggestions d’adaptation (A, B, C, D) pour les faire correspondre aux situations les plus appropriées (1, 2, 3, 4). Situations Considérations d’adaptation 1. Votre projet génère des livrables de mauvaise qualité à la fin de chaque itération. (A) Vérifier que les mesures appropriées sont collectées, analysées, partagées et discutées lors des réunions d’équipe et avec les parties prenantes. Valider l’accord sur les mesures au sein de l’équipe et avec les parties prenantes. 2. Les parties prenantes manquent de visibilité et de compréhension sur l’avancement du projet. (B) Réaliser une analyse des causes racines et identifier s’il existe des écarts liés aux processus ou activités du projet. Développer des interventions systémiques. 3. Trop de travail en cours, ou WIP, et/ou taux élevé de rebut/retravail. (C) Ajouter davantage de boucles de vérification du feedback et d’étapes d’assurance qualité. 4. Gestion constante des urgences et résolution non planifiée des problèmes au sein de l’équipe et avec les parties prenantes. (D) Utiliser la cartographie de la chaîne de valeur et les tableaux Kanban pour visualiser le travail, identifier les problèmes et proposer des solutions.",
@@ -2220,7 +2220,7 @@
       }
     },
     {
-      "id": "Q50",
+      "id": "PMP2Q50",
       "type": "single",
       "prompt": {
         "fr": "À la suite d’une faille de sécurité, un correctif de cybersécurité d’urgence doit être déployé très rapidement dans tous les bureaux régionaux d’une grande institution financière. L’intégration réseau, la compatibilité et les contraintes de programmation font partie des empêchements qui peuvent retarder significativement le déploiement. Cependant, une fois le produit minimum viable livré, le reste du correctif peut être déployé sans aucune variation. Quelle approche de gestion de projet serait la plus adaptée dans ce scénario ?",
@@ -2265,7 +2265,7 @@
       }
     },
     {
-      "id": "Q51",
+      "id": "PMP2Q51",
       "type": "single",
       "prompt": {
         "fr": "Dans cette pratique d’exécution Agile, toute l’équipe se réunit et discute des critères d’acceptation du produit du travail. Ensuite, des tests sont créés, ce qui permet à l’équipe d’écrire juste assez de code et de tests automatisés pour répondre aux critères. De quelle pratique d’exécution parle-t-on ici ?",
@@ -2310,7 +2310,7 @@
       }
     },
     {
-      "id": "Q52",
+      "id": "PMP2Q52",
       "type": "single",
       "prompt": {
         "fr": "Une équipe Agile a montré des progrès remarquables lors des trois premières itérations. Cependant, lors de la quatrième itération, le rythme de l’équipe est devenu anormalement bas sans raison apparente. Laquelle des options suivantes est la cause la plus probable ?",
@@ -2355,7 +2355,7 @@
       }
     },
     {
-      "id": "Q53",
+      "id": "PMP2Q53",
       "type": "single",
       "prompt": {
         "fr": "Un chef de projet est invité à utiliser le nouveau système d’estimation de l’échéancier de l’entreprise après avoir déjà réalisé l’estimation avec une méthode classique. Le nouveau système est compliqué et ajoutera au moins trois semaines supplémentaires au projet. Le sponsor du projet n’est pas aligné avec l’extension de l’échéancier. Cependant, selon les lignes directrices de l’entreprise, le nouveau processus doit être suivi pour obtenir l’approbation permettant de passer à la phase d’exécution. Que devrait faire le chef de projet ?",
@@ -2400,7 +2400,7 @@
       }
     },
     {
-      "id": "Q54",
+      "id": "PMP2Q54",
       "type": "single",
       "prompt": {
         "fr": "Votre équipe fait de son mieux pour traiter plusieurs éléments bloqués sur le tableau Kanban, mais ils restent toujours dans le même état. Les informations issues de plusieurs sprint retrospectives ont révélé que les empêchements pouvaient être attribués au responsable du département Finance. Vous avez tenu plusieurs réunions avec le responsable Finance, mais il reste une partie prenante résistante. Que devriez-vous faire ensuite en tant que chef de projet ?",
@@ -2445,7 +2445,7 @@
       }
     },
     {
-      "id": "Q55",
+      "id": "PMP2Q55",
       "type": "single",
       "prompt": {
         "fr": "Lors d’une réunion de planification de sprint, certains éléments du backlog sont priorisés avec l’aide du Product Owner. Cependant, le chef de projet constate que les éléments du backlog n’ont pas été estimés. Le Product Owner mentionne la nécessité d’un exercice de validation pour vérifier les fonctionnalités avant de progresser. Que faut-il faire avant d’ajouter les éléments au sprint backlog ?",
@@ -2490,7 +2490,7 @@
       }
     },
     {
-      "id": "Q56",
+      "id": "PMP2Q56",
       "type": "single",
       "prompt": {
         "fr": "Les méthodes d’analyse de justification commerciale sont associées à l’autorisation ou à la justification d’un projet ou d’une décision. Les résultats des analyses suivantes sont souvent utilisés dans un business case qui justifie le lancement d’un projet. Faites correspondre les différentes méthodes (A, B, C, D) avec leurs définitions (1, 2, 3, 4). Dans votre examen PMP, vous devrez faire glisser et déposer 1, 2, 3, 4 pour les faire correspondre à la bonne option A, B, C, D. Méthode Définition",
@@ -2535,7 +2535,7 @@
       }
     },
     {
-      "id": "Q57",
+      "id": "PMP2Q57",
       "type": "single",
       "prompt": {
         "fr": "Les méthodes d’estimation sont utilisées pour développer une approximation du travail, du temps ou du coût dans un projet. Faites correspondre les différentes méthodes d’estimation (A, B, C, D) avec leurs définitions (1, 2, 3, 4). Dans votre examen PMP, vous devrez faire glisser et déposer 1, 2, 3, 4 pour les faire correspondre à la bonne option A, B, C, D. Méthode d’estimation Définition",
@@ -2580,7 +2580,7 @@
       }
     },
     {
-      "id": "Q58",
+      "id": "PMP2Q58",
       "type": "single",
       "prompt": {
         "fr": "Le département d’excellence manufacturière d’un fabricant de rasoirs a approuvé avec enthousiasme la démonstration à mi-projet de l’équipe Agile d’un système d’automatisation pick-and-place destiné à améliorer la productivité des ouvriers de la chaîne d’assemblage. Cependant, le produit final a été considéré comme inutilisable en raison de la très faible fiabilité du système pour exécuter l’opération du cas d’utilisation conformément à la conception. Que devrait faire le chef de projet pour éviter ce type d’échec à l’avenir ?",
@@ -2625,7 +2625,7 @@
       }
     },
     {
-      "id": "Q59",
+      "id": "PMP2Q59",
       "type": "single",
       "prompt": {
         "fr": "Un projet a connu certains changements de performance, et certains risques se sont produits. L’EAC et le BAC diffèrent maintenant en conséquence. Le sponsor du projet demande une estimation du coût du projet à l’achèvement. Laquelle des affirmations suivantes est vraie ?",
@@ -2670,7 +2670,7 @@
       }
     },
     {
-      "id": "Q60",
+      "id": "PMP2Q60",
       "type": "single",
       "prompt": {
         "fr": "LensMade.Com, une entreprise de soins oculaires en ligne, perd des parts de marché au profit de ses concurrents en raison d’un processus de mise sur le marché lent. L’équipe Agile de LensMade.Com a reçu du Product Owner l’orientation de restreindre le nombre de fonctionnalités d’un produit et de publier des versions plus rapidement afin de réduire le délai de mise sur le marché. Quel sera l’impact de cette demande sur la planification ?",

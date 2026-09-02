@@ -232,7 +232,7 @@ def build_lot(config: dict) -> dict:
                 fr["options"].append(en["options"][len(fr["options"])])
         combined_text = " ".join([en["prompt"], en["explanation"], " ".join(en["options"])])
         questions.append({
-            "id": f"Q{number}",
+            "id": f"PMP{config['lot']}Q{number}",
             "type": option_type(en["prompt"], en["options"], en["correct"]),
             "prompt": {"fr": fr["prompt"] or en["prompt"], "en": en["prompt"]},
             "options": [{"fr": fr_option, "en": en_option} for fr_option, en_option in zip(fr["options"], en["options"])],
