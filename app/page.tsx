@@ -11,6 +11,7 @@ type Language = "fr" | "en";
 type ExamType = "CAPM" | "PMP" | "CISSP" | "Gestion de projet";
 type QuestionType = "single" | "multiple";
 type VoucherCategory = "formation" | "volontaire" | "membre" | "partenaire";
+type ResultGroupBy = "organization" | "cohort";
 
 type LocalizedText = {
   fr: string;
@@ -119,7 +120,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v1.0.3";
+const VERSION = "v1.0.4";
 const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -1203,6 +1204,7 @@ export default function Home() {
   const [voucherForm, setVoucherForm] = useState({ category: "formation" as VoucherCategory, assignedTo: "" });
   const [attemptLimits, setAttemptLimits] = useState<AttemptLimit[]>(() => loadJson<AttemptLimit[]>(STORAGE_ATTEMPT_LIMITS, []));
   const [limitForm, setLimitForm] = useState({ identifier: "", identifierType: "email" as AttemptLimit["identifierType"], maxAttempts: 2, note: "" });
+  const [resultGroupBy, setResultGroupBy] = useState<ResultGroupBy>("organization");
   const [accountNotice, setAccountNotice] = useState("");
   const [accountNoticeKind, setAccountNoticeKind] = useState<"info" | "success" | "error">("info");
   const [accessNotice, setAccessNotice] = useState("");
@@ -2191,6 +2193,137 @@ export default function Home() {
     URL.revokeObjectURL(url);
   }
 
+  function groupedResultRows(groupBy: ResultGroupBy) {
+    const rows = new Map<string, {
+      group: string;
+      examType: ExamType;
+      attempts: number;
+      submitted: number;
+      participants: Set<string>;
+      lots: Set<string>;
+      totalPercent: number;
+      best: number;
+      latest: string;
+    }>();
+    attempts.filter((attempt) => attempt.status !== "cancelled").forEach((attempt) => {
+      const group = (groupBy === "organization" ? attempt.candidate.organization : attempt.candidate.cohort).trim() || (language === "fr" ? "Non renseigne" : "Not provided");
+      const key = `${group}::${attempt.candidate.examType}`;
+      const current = rows.get(key) ?? {
+        group,
+        examType: attempt.candidate.examType,
+        attempts: 0,
+        submitted: 0,
+        participants: new Set<string>(),
+        lots: new Set<string>(),
+        totalPercent: 0,
+        best: 0,
+        latest: "",
+      };
+      current.attempts += 1;
+      if (attempt.status === "submitted") {
+        current.submitted += 1;
+        current.totalPercent += attempt.percent;
+        current.best = Math.max(current.best, attempt.percent);
+      }
+      current.participants.add(normalizeEmail(attempt.candidate.email) || attempt.candidate.name.trim().toLowerCase() || attempt.id);
+      current.lots.add(attempt.lotId);
+      const date = attempt.submittedAt ?? attempt.startedAt;
+      if (!current.latest || date > current.latest) current.latest = date;
+      rows.set(key, current);
+    });
+    return [...rows.values()]
+      .map((row) => ({
+        ...row,
+        participantsCount: row.participants.size,
+        lotsCount: row.lots.size,
+        average: row.submitted ? Math.round(row.totalPercent / row.submitted) : 0,
+      }))
+      .sort((a, b) => a.group.localeCompare(b.group) || a.examType.localeCompare(b.examType));
+  }
+
+  function escapeHtml(value: unknown) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+
+  function groupedReportHtml(groupBy: ResultGroupBy) {
+    const groupLabel = groupBy === "organization" ? t.org : t.cohort;
+    const summaryRows = groupedResultRows(groupBy);
+    const detailRows = attempts
+      .filter((attempt) => attempt.status !== "cancelled")
+      .sort((a, b) => {
+        const groupA = groupBy === "organization" ? a.candidate.organization : a.candidate.cohort;
+        const groupB = groupBy === "organization" ? b.candidate.organization : b.candidate.cohort;
+        return groupA.localeCompare(groupB) || (b.submittedAt ?? b.startedAt).localeCompare(a.submittedAt ?? a.startedAt);
+      });
+    return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>${escapeHtml(language === "fr" ? "Rapport des resultats par groupe" : "Grouped results report")}</title>
+  <style>
+    body { font-family: Calibri, Aptos, Segoe UI, sans-serif; color: #07162d; margin: 28px; }
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    h2 { margin: 28px 0 10px; font-size: 18px; }
+    p { margin: 0 0 18px; color: #667085; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+    th, td { border: 1px solid #dfe3ea; padding: 8px; text-align: left; vertical-align: top; font-size: 12px; }
+    th { background: #f3f6fa; }
+    .badge { font-weight: 700; }
+    @media print { body { margin: 14mm; } button { display: none; } }
+  </style>
+</head>
+<body>
+  <h1>${escapeHtml(language === "fr" ? "Rapport des resultats par groupe" : "Grouped results report")}</h1>
+  <p>${escapeHtml(VERSION)} | ${escapeHtml(language === "fr" ? "Mise a jour" : "Updated")} ${escapeHtml(UPDATED_AT)} | ${escapeHtml(groupLabel)}</p>
+  <h2>${escapeHtml(language === "fr" ? "Synthese" : "Summary")}</h2>
+  <table>
+    <thead><tr><th>${escapeHtml(groupLabel)}</th><th>${escapeHtml(t.examType)}</th><th>${escapeHtml(t.participant)}</th><th>${escapeHtml(t.attempts)}</th><th>${escapeHtml(language === "fr" ? "Soumises" : "Submitted")}</th><th>${escapeHtml(language === "fr" ? "Lots" : "Lots")}</th><th>${escapeHtml(language === "fr" ? "Moyenne" : "Average")}</th><th>${escapeHtml(language === "fr" ? "Meilleur" : "Best")}</th><th>${escapeHtml(t.result)}</th><th>${escapeHtml(t.date)}</th></tr></thead>
+    <tbody>
+      ${summaryRows.map((row) => `<tr><td>${escapeHtml(row.group)}</td><td>${escapeHtml(row.examType)}</td><td>${row.participantsCount}</td><td>${row.attempts}</td><td>${row.submitted}</td><td>${row.lotsCount}</td><td>${row.average}%</td><td>${row.best}%</td><td>${escapeHtml(grade(row.average).label)}</td><td>${escapeHtml(row.latest.slice(0, 19))}</td></tr>`).join("") || `<tr><td colspan="10">-</td></tr>`}
+    </tbody>
+  </table>
+  <h2>${escapeHtml(language === "fr" ? "Details des tentatives" : "Attempt details")}</h2>
+  <table>
+    <thead><tr><th>${escapeHtml(groupLabel)}</th><th>${escapeHtml(t.date)}</th><th>${escapeHtml(t.participant)}</th><th>Email</th><th>${escapeHtml(t.examType)}</th><th>${escapeHtml(t.lot)}</th><th>Score</th><th>%</th><th>${escapeHtml(t.result)}</th><th>${escapeHtml(t.status)}</th></tr></thead>
+    <tbody>
+      ${detailRows.map((attempt) => {
+        const group = (groupBy === "organization" ? attempt.candidate.organization : attempt.candidate.cohort).trim() || (language === "fr" ? "Non renseigne" : "Not provided");
+        return `<tr><td>${escapeHtml(group)}</td><td>${escapeHtml((attempt.submittedAt ?? attempt.startedAt).slice(0, 19))}</td><td>${escapeHtml(attempt.candidate.name)}</td><td>${escapeHtml(attempt.candidate.email || "-")}</td><td>${escapeHtml(attempt.candidate.examType)}</td><td>${escapeHtml(attempt.lotTitle)}</td><td>${attempt.score}/${attempt.total}</td><td>${attempt.percent}%</td><td>${escapeHtml(grade(attempt.percent).label)}</td><td>${escapeHtml(attempt.status)}</td></tr>`;
+      }).join("") || `<tr><td colspan="10">-</td></tr>`}
+    </tbody>
+  </table>
+</body>
+</html>`;
+  }
+
+  function exportGroupedExcel() {
+    const html = groupedReportHtml(resultGroupBy);
+    const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `resultats-par-${resultGroupBy}-pmi-rdc-kmaj-${new Date().toISOString().slice(0, 10)}.xls`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function exportGroupedPdf() {
+    const report = window.open("", "_blank", "noopener,noreferrer,width=1100,height=800");
+    if (!report) {
+      setSyncStatus(language === "fr" ? "Export PDF bloque par le navigateur." : "PDF export blocked by the browser.");
+      return;
+    }
+    report.document.open();
+    report.document.write(groupedReportHtml(resultGroupBy));
+    report.document.close();
+    report.focus();
+    report.setTimeout(() => report.print(), 250);
+  }
+
   function goHome() {
     setView("home");
     window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
@@ -2502,6 +2635,14 @@ export default function Home() {
                 </div>
                 <div className="actions">
                   <button onClick={exportCsv}>⇩ {t.exportCsv}</button>
+                  <label className="inline-select">{language === "fr" ? "Groupe" : "Group"}
+                    <select value={resultGroupBy} onChange={(event) => setResultGroupBy(event.target.value as ResultGroupBy)}>
+                      <option value="organization">{t.org}</option>
+                      <option value="cohort">{t.cohort}</option>
+                    </select>
+                  </label>
+                  <button onClick={exportGroupedExcel}>▣ {language === "fr" ? "Excel par groupe" : "Excel by group"}</button>
+                  <button onClick={exportGroupedPdf}>▤ {language === "fr" ? "PDF par groupe" : "PDF by group"}</button>
                   <button onClick={() => alert(language === "fr" ? "Import prevu : chargez les lots dans les tables Supabase exam_lots et question_bank." : "Import planned: upload lots into the Supabase exam_lots and question_bank tables.")}>＋ {t.uploadLot}</button>
                   <button onClick={() => alert(language === "fr" ? "Autorisation de reprise prevue via les tables Supabase attempts et vouchers." : "Retake authorization planned through the Supabase attempts and vouchers tables.")}>↻ {t.allowRetake}</button>
                 </div>
