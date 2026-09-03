@@ -119,7 +119,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v1.0.0";
+const VERSION = "v1.0.1";
 const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -1316,6 +1316,16 @@ export default function Home() {
     return parseSupabaseResponse<T>(response);
   }
 
+  async function supabaseRequestAll<T>(path: string, pageSize = 1000) {
+    const rows: T[] = [];
+    for (let from = 0; ; from += pageSize) {
+      const separator = path.includes("?") ? "&" : "?";
+      const page = await supabaseRequest<T[]>(`${path}${separator}limit=${pageSize}&offset=${from}`);
+      rows.push(...page);
+      if (page.length < pageSize) return rows;
+    }
+  }
+
   async function supabaseAuth<T>(path: string, body: unknown) {
     if (!isSupabaseConfigured(settings)) {
       throw new Error(language === "fr" ? "Supabase n'est pas configure." : "Supabase is not configured.");
@@ -1685,7 +1695,7 @@ export default function Home() {
           supabaseRequest<Record<string, string | number | boolean | null>[]>("/rest/v1/attempts?select=*&order=started_at.desc"),
           supabaseRequest<Record<string, unknown>[]>("/rest/v1/attempt_answers?select=*"),
           supabaseRequest<Record<string, unknown>[]>("/rest/v1/exam_lots?select=*&active=eq.true&order=created_at.asc"),
-          supabaseRequest<Record<string, unknown>[]>("/rest/v1/question_bank?select=*&active=eq.true&order=created_at.asc"),
+          supabaseRequestAll<Record<string, unknown>>("/rest/v1/question_bank?select=*&active=eq.true&order=created_at.asc"),
         ]);
         const nextVouchers = remoteVouchers.map(normalizeVoucherRecord).filter((voucher) => voucher.code);
         const nextUsers = remoteUsers.map(normalizeUserAccount).filter((user) => user.email);
