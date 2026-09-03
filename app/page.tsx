@@ -119,7 +119,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.16";
+const VERSION = "v1.0.0";
 const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -1310,7 +1310,7 @@ export default function Home() {
     }
     const response = await fetch(`${cleanSupabaseUrl(settings.supabaseUrl)}${path}`, {
       method: options.method || "GET",
-      headers: supabaseHeaders(settings, options.token || supabaseSession?.access_token, options.prefer),
+      headers: supabaseHeaders(settings, options.token, options.prefer),
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
     });
     return parseSupabaseResponse<T>(response);
@@ -2656,7 +2656,7 @@ export default function Home() {
                           <td>
                             <div className="row-actions">
                               <button onClick={() => { setActiveAttempt(attempt); setSelectedLotId(attempt.lotId); setView("results"); window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0); }}>o {t.see}</button>
-                              <button onClick={() => withBusy(t.loadingActivationEmail, () => sendDetailedResults(attempt))} disabled={Boolean(busyMessage)}>@ Email</button>
+                              <button onClick={() => withBusy(t.loadingAction, () => sendDetailedResults(attempt))} disabled={Boolean(busyMessage)}>@ Email</button>
                               <button className="danger-button" onClick={() => withBusy(t.loadingAction, () => deleteAttempt(attempt))} disabled={Boolean(busyMessage)}>x {language === "fr" ? "Supprimer" : "Delete"}</button>
                             </div>
                           </td>
