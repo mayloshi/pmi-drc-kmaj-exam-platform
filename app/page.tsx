@@ -119,7 +119,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v1.0.2";
+const VERSION = "v1.0.3";
 const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -1075,21 +1075,26 @@ function hasGuestTriedLotThisMonth(candidate: Candidate, attempts: Attempt[], lo
   );
 }
 
+function usableVoucherForEmail(email: string, vouchers: VoucherRecord[], category?: VoucherCategory) {
+  const normalizedEmail = normalizeEmail(email);
+  const eligible = vouchers.filter((voucher) =>
+    normalizedEmail &&
+    !isExpired(voucher.expiresAt) &&
+    (
+      (voucher.status === "used" && normalizeEmail(voucher.usedBy) === normalizedEmail) ||
+      (voucher.status !== "used" && normalizeEmail(voucher.assignedTo) === normalizedEmail)
+    ),
+  );
+  return eligible.find((voucher) => category && voucher.category === category) ?? eligible[0] ?? null;
+}
+
 function candidateLinkedVoucher(candidate: Candidate, vouchers: VoucherRecord[], users: UserAccount[]) {
   const email = normalizeEmail(candidate.email);
   const account = users.find((user) => email && normalizeEmail(user.email) === email);
   const code = normalizeVoucher(candidate.voucher || account?.voucherCode || "");
   const voucher = code
     ? vouchers.find((item) => normalizeVoucher(item.code) === code)
-    : vouchers.find((item) =>
-        email &&
-        item.status === "used" &&
-        normalizeEmail(item.usedBy) === email,
-      ) || vouchers.find((item) =>
-        email &&
-        item.status !== "used" &&
-        normalizeEmail(item.assignedTo) === email,
-      );
+    : usableVoucherForEmail(email, vouchers, account?.category ?? candidate.category);
   if (!voucher || isExpired(voucher.expiresAt)) return null;
   if (email && voucher.assignedTo && normalizeEmail(voucher.assignedTo) !== email) return null;
   if (email && voucher.usedBy && normalizeEmail(voucher.usedBy) !== email) return null;
@@ -1396,9 +1401,10 @@ export default function Home() {
     return rows[0] ? normalizeVoucherRecord(rows[0]) : null;
   }
 
-  async function supabaseFindVoucherForEmail(email: string, category: VoucherCategory) {
+  async function supabaseFindVoucherForEmail(email: string, category?: VoucherCategory) {
+    const categoryFilter = category ? `&category=eq.${encodeURIComponent(category)}` : "";
     const rows = await supabaseRequest<Record<string, string | number | null>[]>(
-      `/rest/v1/vouchers?select=*&assigned_to=eq.${encodeURIComponent(normalizeEmail(email))}&category=eq.${encodeURIComponent(category)}&status=neq.used&order=created_at.desc&limit=1`,
+      `/rest/v1/vouchers?select=*&assigned_to=eq.${encodeURIComponent(normalizeEmail(email))}${categoryFilter}&status=neq.used&order=created_at.desc&limit=1`,
     );
     return rows[0] ? normalizeVoucherRecord(rows[0]) : null;
   }
@@ -1639,6 +1645,9 @@ export default function Home() {
   }
 
   async function startSelect(forceAccount = false) {
+    if (isSupabaseConfigured(settings)) {
+      await refreshRemoteData();
+    }
     const profile = forceAccount ? { ...candidate, hasAccount: true } : candidate;
     const profileCanAccessLots =
       Boolean(!profile.hasAccount && profile.name.trim()) ||
@@ -1828,11 +1837,7 @@ export default function Home() {
     const code = normalizeVoucher(candidate.voucher);
     let voucher = code
       ? voucherRecords.find((item) => normalizeVoucher(item.code) === code && item.status !== "used") || null
-      : voucherRecords.find((item) =>
-          normalizeEmail(item.assignedTo) === normalizeEmail(candidate.email) &&
-          item.category === candidate.category &&
-          item.status !== "used",
-        ) || null;
+      : usableVoucherForEmail(candidate.email, voucherRecords, candidate.category);
     if (!voucher && isSupabaseConfigured(settings) && code) {
       try {
         voucher = await supabaseFindVoucher(code);
@@ -1844,6 +1849,7 @@ export default function Home() {
     if (!voucher && isSupabaseConfigured(settings)) {
       try {
         voucher = await supabaseFindVoucherForEmail(candidate.email, candidate.category);
+        if (!voucher) voucher = await supabaseFindVoucherForEmail(candidate.email);
       } catch {
         voucher = null;
       }
@@ -2195,6 +2201,9 @@ export default function Home() {
   }
 
   async function goExams() {
+    if (isSupabaseConfigured(settings)) {
+      await refreshRemoteData();
+    }
     if (candidate.hasAccount && canAccessLots) {
       await startSelect();
       window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
