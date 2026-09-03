@@ -119,8 +119,8 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v0.2.15";
-const UPDATED_AT = "2026-09-02";
+const VERSION = "v0.2.16";
+const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
 const TRAINER_PASSWORD = "221008";
@@ -2076,6 +2076,8 @@ export default function Home() {
             created_at: new Date().toISOString(),
           }],
         });
+        setSyncStatus(language === "fr" ? "Email detaille mis en file d'envoi." : "Detailed email queued for sending.");
+        return;
       } catch {
         // The mailto fallback remains available if the optional queue table is not installed yet.
       }
@@ -2122,6 +2124,12 @@ export default function Home() {
     setView(status === "submitted" ? "results" : "home");
     if (status === "submitted") {
       window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+      if (attempt.candidate.sendEmail && attempt.candidate.email) {
+        const subject = `${language === "fr" ? "Resultats de votre examen blanc" : "Your practice exam results"} - ${attempt.lotTitle}`;
+        void queueEmail(attempt.candidate.email, subject, detailedAttemptText(attempt), attempt.id)
+          .then(() => setSyncStatus(language === "fr" ? "Resultats mis en file d'envoi email." : "Results queued for email sending."))
+          .catch((error) => setSyncStatus(`email queue: ${error instanceof Error ? error.message : "sync error"}`));
+      }
     }
   }
 
