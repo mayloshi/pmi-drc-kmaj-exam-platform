@@ -119,7 +119,7 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v1.0.1";
+const VERSION = "v1.0.2";
 const UPDATED_AT = "2026-09-03";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
@@ -206,6 +206,7 @@ const APPROACHES = {
 
 const optionLetters = ["A", "B", "C", "D", "E", "F"];
 const EXAM_SECTIONS: ExamType[] = ["CAPM", "PMP", "CISSP"];
+const PROFILE_EXAM_TYPES: ExamType[] = ["CAPM", "PMP", "Gestion de projet", "CISSP"];
 
 const capmLot1 = capmLot1Data as ExamLot;
 const capmLot2 = capmLot2Data as ExamLot;
@@ -1131,6 +1132,16 @@ function readinessSummary(attempts: Attempt[], examType: ExamType) {
   };
 }
 
+function profileExamSummaries(attempts: Attempt[]) {
+  return PROFILE_EXAM_TYPES.map((examType) => ({
+    examType,
+    attempts: attempts
+      .filter((attempt) => attempt.candidate.examType === examType)
+      .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()),
+    readiness: readinessSummary(attempts, examType),
+  }));
+}
+
 function matchesAttemptLimit(candidate: Candidate, limit: AttemptLimit) {
   const identifier = limit.identifier.trim().toLowerCase();
   if (!identifier || !limit.active) return false;
@@ -1228,12 +1239,8 @@ export default function Home() {
     }
   }
 
-  const candidateAttempts = attempts.filter((attempt) => {
-    const sameEmail = candidate.email && attempt.candidate.email === candidate.email;
-    const sameName = candidate.name && attempt.candidate.name.toLowerCase() === candidate.name.toLowerCase();
-    return sameEmail || sameName;
-  });
-  const candidateReadiness = readinessSummary(candidateAttempts, candidate.examType);
+  const candidateAttempts = attempts.filter((attempt) => candidateMatchesAttempt(candidate, attempt));
+  const candidateProfileSummaries = profileExamSummaries(candidateAttempts);
 
   async function unlockCissp() {
     if (cisspPassword === TRAINER_PASSWORD) {
@@ -1692,8 +1699,8 @@ export default function Home() {
         const [remoteVouchers, remoteUsers, remoteAttempts, remoteAnswers, remoteLots, remoteQuestions] = await Promise.all([
           supabaseRequest<Record<string, string>[]>("/rest/v1/vouchers?select=*&order=created_at.desc"),
           supabaseRequest<Record<string, string>[]>("/rest/v1/profiles?select=*&order=created_at.desc"),
-          supabaseRequest<Record<string, string | number | boolean | null>[]>("/rest/v1/attempts?select=*&order=started_at.desc"),
-          supabaseRequest<Record<string, unknown>[]>("/rest/v1/attempt_answers?select=*"),
+          supabaseRequestAll<Record<string, string | number | boolean | null>>("/rest/v1/attempts?select=*&order=started_at.desc"),
+          supabaseRequestAll<Record<string, unknown>>("/rest/v1/attempt_answers?select=*"),
           supabaseRequest<Record<string, unknown>[]>("/rest/v1/exam_lots?select=*&active=eq.true&order=created_at.asc"),
           supabaseRequestAll<Record<string, unknown>>("/rest/v1/question_bank?select=*&active=eq.true&order=created_at.asc"),
         ]);
@@ -2683,19 +2690,52 @@ export default function Home() {
       )}
 
       {candidateAttempts.length > 0 && view === "home" && (
-        <section className="panel">
+        <section className="panel profile-panel">
           <h2>{t.profileDashboard}</h2>
-          <div className="metric-grid">
-            <Metric label={t.attempts} value={String(candidateReadiness.submitted)} />
-            <Metric label={language === "fr" ? "Lots travailles" : "Lots practiced"} value={String(candidateReadiness.lots)} />
-            <Metric label={language === "fr" ? "Meilleure performance" : "Best performance"} value={`${candidateReadiness.best}%`} />
-            <Metric label={language === "fr" ? "Moyenne" : "Average"} value={`${candidateReadiness.average}%`} />
-            <Metric label={t.qualifyingLots} value={`${candidateReadiness.qualifyingLots}/2`} />
-            <Metric label={t.readiness} value={candidateReadiness.ready ? t.ready : t.notReady} />
+          <div className="profile-exam-grid">
+            {candidateProfileSummaries.map(({ examType, attempts: examAttempts, readiness }) => (
+              <article className="profile-exam-card" key={examType}>
+                <div className="lot-section-head">
+                  <h3>{examType}</h3>
+                  <Badge percent={readiness.average} />
+                </div>
+                <div className="metric-grid compact-metrics">
+                  <Metric label={t.attempts} value={String(examAttempts.length)} />
+                  <Metric label={language === "fr" ? "Soumises" : "Submitted"} value={String(readiness.submitted)} />
+                  <Metric label={language === "fr" ? "Lots travailles" : "Lots practiced"} value={String(readiness.lots)} />
+                  <Metric label={language === "fr" ? "Meilleure performance" : "Best performance"} value={`${readiness.best}%`} />
+                  <Metric label={language === "fr" ? "Moyenne" : "Average"} value={`${readiness.average}%`} />
+                  <Metric label={t.qualifyingLots} value={`${readiness.qualifyingLots}/2`} />
+                  <Metric label={t.readiness} value={readiness.ready ? t.ready : t.notReady} />
+                </div>
+                <p className="muted">{examType === "PMP"
+                  ? (language === "fr" ? "Pret pour PMP: au moins 75% sur 2 lots, chacun au premier essai." : "PMP readiness: at least 75% on 2 lots, each on the first attempt.")
+                  : examType === "CAPM"
+                    ? (language === "fr" ? "Pret pour CAPM: au moins 80% sur 2 lots, chacun au premier essai." : "CAPM readiness: at least 80% on 2 lots, each on the first attempt.")
+                    : (language === "fr" ? "Synthese indicative sur les tentatives soumises." : "Indicative summary based on submitted attempts.")}</p>
+                <div className="table-wrap profile-history">
+                  <table>
+                    <thead>
+                      <tr><th>{t.date}</th><th>{t.lot}</th><th>{t.score}</th><th>%</th><th>{t.status}</th><th>{t.result}</th></tr>
+                    </thead>
+                    <tbody>
+                      {examAttempts.map((attempt) => (
+                        <tr key={attempt.id}>
+                          <td>{(attempt.submittedAt ?? attempt.startedAt).slice(0, 19)}</td>
+                          <td>{attempt.lotTitle}</td>
+                          <td>{attempt.score}/{attempt.total}</td>
+                          <td>{attempt.percent}%</td>
+                          <td>{attempt.status}</td>
+                          <td><Badge percent={attempt.percent} /></td>
+                        </tr>
+                      ))}
+                      {!examAttempts.length && <tr><td colSpan={6}>-</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            ))}
           </div>
-          <p className="muted">{candidate.examType === "PMP"
-            ? (language === "fr" ? "Pret pour PMP: au moins 75% sur 2 lots, chacun au premier essai." : "PMP readiness: at least 75% on 2 lots, each on the first attempt.")
-            : (language === "fr" ? "Pret pour CAPM: au moins 80% sur 2 lots, chacun au premier essai." : "CAPM readiness: at least 80% on 2 lots, each on the first attempt.")}</p>
         </section>
       )}
     </main>

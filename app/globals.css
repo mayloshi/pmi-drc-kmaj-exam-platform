@@ -459,6 +459,37 @@ textarea {
   grid-column: 1 / -1;
 }
 
+.profile-panel {
+  margin-top: 28px;
+}
+
+.profile-exam-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.profile-exam-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fbfcff;
+}
+
+.profile-exam-card h3 {
+  margin: 0;
+}
+
+.compact-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.profile-history table {
+  min-width: 760px;
+}
+
 .eyebrow {
   margin: 0 0 8px;
   color: var(--pmi-purple);
