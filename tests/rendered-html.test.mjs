@@ -9,7 +9,8 @@ test("exam platform source includes the requested core capabilities", async () =
   assert.match(page, /Centre K-Majuscule/);
   assert.match(page, /capmLot1Data/);
   assert.match(page, /capmLot2Data/);
-  assert.match(page, /TRAINER_PASSWORD = "221008"/);
+  assert.doesNotMatch(page, /const TRAINER_PASSWORD/);
+  assert.match(page, /rpc\/is_exam_trainer/);
   assert.match(page, /Supabase/);
   assert.match(page, /supabaseSaveAttempt/);
   assert.match(page, /PMIRDC-ACTIF-2026/);
