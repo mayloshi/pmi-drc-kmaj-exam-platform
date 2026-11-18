@@ -120,11 +120,11 @@ type SupabaseAuthSession = {
   user?: { id: string; email?: string };
 };
 
-const VERSION = "v1.0.4";
-const UPDATED_AT = "2026-09-03";
+const PMP_INITIAL_LOT_ID = "pmp-initial-assessment";
+const VERSION = "v1.0.5";
+const UPDATED_AT = "2026-11-18";
 const PLATFORM_URL = "https://test.pmi-drcongo.org/";
 const AUTH_REDIRECT_URL = PLATFORM_URL;
-const TRAINER_PASSWORD = "221008";
 const STORAGE_ATTEMPTS = "pmi-drc-kmaj-attempts";
 const STORAGE_DRAFT = "pmi-drc-kmaj-draft";
 const STORAGE_CANDIDATE = "pmi-drc-kmaj-candidate";
@@ -288,6 +288,7 @@ function lotTone(lot: ExamLot, index = 0) {
 }
 
 function lotDescription(lot: ExamLot, language: Language) {
+  if (lot.id === PMP_INITIAL_LOT_ID) return language === "fr" ? "Évaluation de départ pour situer ton niveau avant les examens blancs PMP." : "Initial assessment to see where you stand before taking the PMP practice exams.";
   if (!lot.questions.length) {
     return language === "fr"
       ? "Lot prêt à recevoir les questions depuis Supabase."
@@ -323,6 +324,10 @@ const copy = {
     details: "Détails par question",
     account: "Créer un compte",
     guest: "Accès ponctuel",
+    pmpWelcomeTitle: "Bienvenue dans les examens blancs PMP",
+    pmpWelcome: "Commence par l’évaluation initiale pour situer ton niveau. Une fois ta tentative soumise, tu pourras passer au moins un autre examen blanc PMP, avec ou sans voucher.",
+    pmpAssessmentRequired: "Soumets d’abord ton évaluation initiale pour accéder aux autres examens blancs PMP.",
+    pmpAssessmentCompleted: "Évaluation initiale terminée. Tu peux maintenant choisir un examen blanc PMP.",
     password: "Mot de passe",
     voucher: "Voucher code",
     defaultLanguage: "Langue par défaut",
@@ -380,10 +385,10 @@ const copy = {
     centerName: "Centre K-Majuscule",
     generalPm: "Gestion de projet général",
     cissp: "CISSP",
-    cisspLocked: "CISSP est protege par le meme mot de passe que l'espace formateur.",
+    cisspLocked: "Connecte-toi avec un compte formateur autorisé pour accéder aux examens CISSP.",
     cisspUnlock: "Debloquer CISSP",
-    cisspPasswordError: "Mot de passe CISSP incorrect.",
-    trainerAccess: "Accès protégé. Les données formateur sont prévues pour Supabase.",
+    cisspPasswordError: "Connexion refusée. Vérifie les identifiants de ton compte formateur.",
+    trainerAccess: "Connecte-toi avec ton compte formateur Supabase.",
     trainerPassword: "Mot de passe formateur",
     enter: "Entrer",
     trainerDashboard: "Dashboard formateur",
@@ -434,7 +439,6 @@ const copy = {
     result: "Résultat",
     action: "Action",
     see: "Voir",
-    results: "Résultats",
     total: "Total",
     percentage: "Pourcentage",
     lot: "Lot",
@@ -459,6 +463,10 @@ const copy = {
     details: "Question details",
     account: "Create account",
     guest: "One-time access",
+    pmpWelcomeTitle: "Welcome to the PMP practice exams",
+    pmpWelcome: "Start with the initial assessment to see where you stand. Once you submit it, you can take at least one more PMP practice exam, with or without a voucher.",
+    pmpAssessmentRequired: "Submit your initial assessment first to unlock the other PMP practice exams.",
+    pmpAssessmentCompleted: "Initial assessment completed. You can now choose a PMP practice exam.",
     password: "Password",
     voucher: "Voucher code",
     defaultLanguage: "Default language",
@@ -516,10 +524,10 @@ const copy = {
     centerName: "K-Majuscule Center",
     generalPm: "General project management",
     cissp: "CISSP",
-    cisspLocked: "CISSP is protected with the same password as the trainer area.",
+    cisspLocked: "Sign in with an authorized trainer account to access CISSP exams.",
     cisspUnlock: "Unlock CISSP",
-    cisspPasswordError: "Incorrect CISSP password.",
-    trainerAccess: "Protected access. Trainer data is designed for Supabase.",
+    cisspPasswordError: "Sign-in denied. Check your trainer account credentials.",
+    trainerAccess: "Sign in with your Supabase trainer account.",
     trainerPassword: "Trainer password",
     enter: "Enter",
     trainerDashboard: "Trainer dashboard",
@@ -570,7 +578,6 @@ const copy = {
     result: "Result",
     action: "Action",
     see: "View",
-    results: "Results",
     total: "Total",
     percentage: "Percentage",
     lot: "Lot",
@@ -583,7 +590,8 @@ const copy = {
   },
 };
 
-function durationFor(count: number) {
+function durationFor(count: number, lotId?: string) {
+  if (lotId === PMP_INITIAL_LOT_ID) return 240 * 60;
   const minutesByCount: Record<number, number> = {
     50: 60,
     60: 75,
@@ -1015,6 +1023,7 @@ function normalizeSupabaseLots(lotRows: Record<string, unknown>[], questionRows:
           approach: { fr: String(question.approach_fr || ""), en: String(question.approach_en || "") },
         };
       });
+    if (lot.id === PMP_INITIAL_LOT_ID) questions.sort((a, b) => a.id.localeCompare(b.id));
     return {
       id: String(lot.id),
       examType: parseExamType(lot.exam_type),
@@ -1033,7 +1042,7 @@ function mergeExamLots(localLots: ExamLot[], remoteLots: ExamLot[]) {
   remoteLots.forEach((lot) => {
     if (!localIds.has(lot.id)) merged.push(lot);
   });
-  return merged;
+  return merged.sort((a, b) => Number(b.id === PMP_INITIAL_LOT_ID) - Number(a.id === PMP_INITIAL_LOT_ID));
 }
 
 function parseExamType(value: unknown): ExamType {
@@ -1111,6 +1120,7 @@ function hasRestrictedAttemptInLastThreeMonths(candidate: Candidate, attempts: A
   const floor = addMonths(new Date(), -3).getTime();
   return attempts.some((attempt) =>
     attempt.status !== "cancelled" &&
+    attempt.lotId !== PMP_INITIAL_LOT_ID &&
     (!attempt.candidate.hasAccount || !attempt.candidate.voucher) &&
     isSameGuest(candidate, attempt) &&
     new Date(attempt.startedAt).getTime() >= floor,
@@ -1123,7 +1133,7 @@ function readinessSummary(attempts: Attempt[], examType: ExamType) {
     .sort((a, b) => new Date(a.startedAt).getTime() - new Date(b.startedAt).getTime());
   const firstByLot = new Map<string, Attempt>();
   submitted.forEach((attempt) => {
-    if (!firstByLot.has(attempt.lotId)) firstByLot.set(attempt.lotId, attempt);
+    if (attempt.lotId !== PMP_INITIAL_LOT_ID && !firstByLot.has(attempt.lotId)) firstByLot.set(attempt.lotId, attempt);
   });
   const threshold = examType === "PMP" ? 75 : examType === "CAPM" ? 80 : 70;
   const qualifying = [...firstByLot.values()].filter((attempt) => attempt.percent >= threshold);
@@ -1192,9 +1202,10 @@ export default function Home() {
   const [remainingSeconds, setRemainingSeconds] = useState(durationFor(capmLot1.questionCount));
   const [attempts, setAttempts] = useState<Attempt[]>(() => loadJson<Attempt[]>(STORAGE_ATTEMPTS, []));
   const [activeAttempt, setActiveAttempt] = useState<Attempt | null>(null);
+  const [trainerEmail, setTrainerEmail] = useState("");
   const [trainerPassword, setTrainerPassword] = useState("");
+  const [trainerLoginError, setTrainerLoginError] = useState("");
   const [trainerUnlocked, setTrainerUnlocked] = useState(false);
-  const [cisspPassword, setCisspPassword] = useState("");
   const [cisspNotice, setCisspNotice] = useState("");
   const [settings, setSettings] = useState<AppSettings>(() => ({ ...DEFAULT_SETTINGS, ...loadJson<Partial<AppSettings>>(STORAGE_SETTINGS, {}) }));
   const [supabaseSession, setSupabaseSession] = useState<SupabaseAuthSession | null>(() => loadJson<SupabaseAuthSession | null>(STORAGE_SUPABASE_SESSION, null));
@@ -1214,9 +1225,13 @@ export default function Home() {
   const selectedLot = useMemo(() => examLots.find((lot) => lot.id === selectedLotId) ?? capmLot1, [examLots, selectedLotId]);
   const t = copy[language];
   const progress = selectedLot.questions.length ? Object.keys(answers).filter((id) => answers[id]?.length).length : 0;
-  const duration = durationFor(selectedLot.questionCount || selectedLot.questions.length || 15);
+  const duration = durationFor(selectedLot.questionCount || selectedLot.questions.length || 15, selectedLot.id);
   const timePercent = duration ? remainingSeconds / duration : 1;
   const currentScore = scoreAttempt(selectedLot, answers);
+  const completedPmpAssessment = attempts
+    .filter((attempt) => attempt.lotId === PMP_INITIAL_LOT_ID && attempt.status === "submitted" &&
+      attempt.submittedAt && isSameGuest(candidate, attempt))
+    .sort((a, b) => (a.submittedAt ?? "").localeCompare(b.submittedAt ?? ""))[0];
   const visibleLots = examLots.filter((lot) => lot.examType === candidate.examType);
   const lotSections = EXAM_SECTIONS.map((examType) => ({
     examType,
@@ -1249,15 +1264,29 @@ export default function Home() {
   const candidateAttempts = attempts.filter((attempt) => candidateMatchesAttempt(candidate, attempt));
   const candidateProfileSummaries = profileExamSummaries(candidateAttempts);
 
-  async function unlockCissp() {
-    if (cisspPassword === TRAINER_PASSWORD) {
+  async function unlockTrainer(forCissp = false) {
+    setTrainerLoginError("");
+    setCisspNotice("");
+    try {
+      const session = await supabaseAuth<SupabaseAuthSession>("/auth/v1/token?grant_type=password", {
+        email: normalizeEmail(trainerEmail),
+        password: trainerPassword,
+      });
+      if (!session.access_token) throw new Error("Missing trainer session");
+      const allowed = await supabaseRequest<boolean>("/rest/v1/rpc/is_exam_trainer", {
+        method: "POST",
+        body: {},
+        token: session.access_token,
+      });
+      if (allowed !== true) throw new Error("Trainer access denied");
       setTrainerUnlocked(true);
-      setSelectedExamCategory("CISSP");
-      setCisspNotice("");
-      if (isSupabaseConfigured(settings)) await refreshRemoteData();
-      return;
+      if (forCissp) setSelectedExamCategory("CISSP");
+    } catch {
+      if (forCissp) setCisspNotice(t.cisspPasswordError);
+      else setTrainerLoginError(t.cisspPasswordError);
+    } finally {
+      setTrainerPassword("");
     }
-    setCisspNotice(t.cisspPasswordError);
   }
 
   function chooseExamCategory(examType: ExamType) {
@@ -1957,15 +1986,31 @@ export default function Home() {
       if (lot.examType === "CISSP") setLanguage("en");
     }
     const voucher = candidateLinkedVoucher(candidate, voucherRecords, userAccounts);
-    if (!voucher) {
+    const pmpAssessment = lot.examType === "PMP" && lot.id === PMP_INITIAL_LOT_ID;
+    const pmpPractice = lot.examType === "PMP" && !pmpAssessment;
+    if (pmpPractice && !completedPmpAssessment) {
+      setAccessNotice(t.pmpAssessmentRequired);
+      return;
+    }
+
+    const assessmentSubmittedAt = completedPmpAssessment?.submittedAt;
+    const firstPmpPractice = pmpPractice && assessmentSubmittedAt && !attempts.some((attempt) =>
+      attempt.candidate.examType === "PMP" &&
+      attempt.lotId !== PMP_INITIAL_LOT_ID &&
+      attempt.status === "submitted" &&
+      isSameGuest(candidate, attempt) &&
+      attempt.startedAt >= assessmentSubmittedAt,
+    );
+    const includedPmpAttempt = pmpAssessment || firstPmpPractice;
+    if (!includedPmpAttempt && !voucher) {
       if (lot.questionCount >= 100 || hasRestrictedAttemptInLastThreeMonths(candidate, attempts)) {
         setAccessNotice(t.restrictedAccess);
         setView("home");
         window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
         return;
       }
-    } else {
-      const typedLots = examLots.filter((item) => item.examType === lot.examType);
+    } else if (!includedPmpAttempt && voucher) {
+      const typedLots = examLots.filter((item) => item.examType === lot.examType && item.id !== PMP_INITIAL_LOT_ID);
       const allowedLots = allowedLotsForVoucher(typedLots, voucher);
       if (!allowedLots.some((item) => item.id === lot.id)) {
         setAccessNotice(t.voucherAccessDenied);
@@ -1975,7 +2020,7 @@ export default function Home() {
       }
     }
     const matchingLimit = attemptLimits.find((limit) => matchesAttemptLimit(candidate, limit));
-    if (matchingLimit) {
+    if (matchingLimit && !includedPmpAttempt) {
       const usedAttempts = attempts.filter((attempt) => attempt.status !== "cancelled" && candidateMatchesAttempt(candidate, attempt)).length;
       if (usedAttempts >= matchingLimit.maxAttempts) {
         setAccessNotice(language === "fr"
@@ -1991,7 +2036,7 @@ export default function Home() {
     setSelectedLotId(lot.id);
     setAnswers(useDraft ? draft.answers : {});
     setHighlighted(useDraft ? draft.highlighted : []);
-    setRemainingSeconds(useDraft ? draft.remainingSeconds : durationFor(lot.questionCount));
+    setRemainingSeconds(useDraft ? draft.remainingSeconds : durationFor(lot.questionCount, lot.id));
     setActiveAttempt(useDraft ? draft : null);
     setView("exam");
   }
@@ -2519,18 +2564,26 @@ export default function Home() {
             </div>
           ) : (
             <div className="lot-sections">
+              {accessNotice && <p className="error">{accessNotice}</p>}
               {selectedSection && (
                 <section className="lot-section" key={selectedSection.examType}>
                 <div className="lot-section-head">
                   <h2>{selectedSection.examType}</h2>
                   <span>{selectedSection.lots.length} {language === "fr" ? "lot(s)" : "lot(s)"}</span>
                 </div>
+                {selectedSection.examType === "PMP" && (
+                  <div className="panel">
+                    <h3>{t.pmpWelcomeTitle}</h3>
+                    <p>{completedPmpAssessment ? t.pmpAssessmentCompleted : t.pmpWelcome}</p>
+                  </div>
+                )}
                 {selectedSection.examType === "CISSP" && !trainerUnlocked ? (
                   <div className="cissp-lock">
                     <p>{t.cisspLocked}</p>
                     <div className="actions">
-                      <input type="password" value={cisspPassword} onChange={(event) => setCisspPassword(event.target.value)} placeholder={t.trainerPassword} />
-                      <button className="primary" onClick={unlockCissp}>🔐 {t.cisspUnlock}</button>
+                      <input type="email" autoComplete="username" value={trainerEmail} onChange={(event) => setTrainerEmail(event.target.value)} placeholder={t.email} aria-label={t.email} />
+                      <input type="password" autoComplete="current-password" value={trainerPassword} onChange={(event) => setTrainerPassword(event.target.value)} placeholder={t.trainerPassword} aria-label={t.trainerPassword} />
+                      <button className="primary" onClick={() => void withBusy(t.loadingAction, () => unlockTrainer(true))}>{t.cisspUnlock}</button>
                     </div>
                     {cisspNotice && <p className="error">{cisspNotice}</p>}
                   </div>
@@ -2543,10 +2596,10 @@ export default function Home() {
                         <p>{lotDescription(lot, language)}</p>
                         <div className="chips">
                           <span>{lot.questions.length} questions</span>
-                          <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount) / 60) : "-"} min</span>
+                          <span>{lot.questions.length ? Math.round(durationFor(lot.questionCount, lot.id) / 60) : "-"} min</span>
                           <span>{lot.examType === "CISSP" ? "EN" : "FR / EN"}</span>
                         </div>
-                        <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
+                        <button className={`start-button ${lotTone(lot, index)}`} disabled={!lot.questions.length || (lot.examType === "PMP" && lot.id !== PMP_INITIAL_LOT_ID && !completedPmpAssessment)} onClick={() => window.confirm(t.confirmStart) && startExam(lot)}>▶ {t.startLot}</button>
                       </article>
                     ))}
                   </div>
@@ -2614,8 +2667,10 @@ export default function Home() {
             <div className="panel trainer-login">
               <h1>{t.trainer}</h1>
               <p>{t.trainerAccess}</p>
+              <input type="email" autoComplete="username" value={trainerEmail} onChange={(event) => setTrainerEmail(event.target.value)} placeholder={t.email} aria-label={t.email} />
               <input type="password" value={trainerPassword} onChange={(event) => setTrainerPassword(event.target.value)} placeholder={t.trainerPassword} />
-              <button className="primary" onClick={() => setTrainerUnlocked(trainerPassword === TRAINER_PASSWORD)}>▶ {t.enter}</button>
+              <button className="primary" onClick={() => void withBusy(t.loadingAction, () => unlockTrainer())}>{t.enter}</button>
+              {trainerLoginError && <p className="error" role="alert">{trainerLoginError}</p>}
             </div>
           ) : (
             <>
@@ -2866,7 +2921,7 @@ export default function Home() {
                 <div className="table-wrap profile-history">
                   <table>
                     <thead>
-                      <tr><th>{t.date}</th><th>{t.lot}</th><th>{t.score}</th><th>%</th><th>{t.status}</th><th>{t.result}</th></tr>
+                      <tr><th>{t.date}</th><th>{t.lot}</th><th>Score</th><th>%</th><th>{t.status}</th><th>{t.result}</th></tr>
                     </thead>
                     <tbody>
                       {examAttempts.map((attempt) => (
@@ -2918,13 +2973,24 @@ function ScoreRows({ title, rows }: { title: string; rows: { label: string; scor
 
 function ResultsPanel({ lot, attempt, language, onHome }: { lot: ExamLot; attempt: Attempt; language: Language; onHome: () => void }) {
   const t = copy[language];
+  const isInitialAssessment = lot.id === PMP_INITIAL_LOT_ID;
+  const exactPercent = attempt.total ? 100 * attempt.score / attempt.total : 0;
+  const displayPercent = isInitialAssessment ? Math.floor(exactPercent * 100) / 100 : attempt.percent;
+  const resultGrade = grade(isInitialAssessment ? Math.floor(exactPercent) : attempt.percent);
 
   return (
     <section className="panel results-panel">
       <div className="section-head">
         <div>
           <p className="eyebrow">{t.results} - {attempt.candidate.name}</p>
-          <h1>{attempt.percent}% - {grade(attempt.percent).label}</h1>
+          <h1>{displayPercent}% - {resultGrade.label}</h1>
+          {isInitialAssessment && (
+            <p>{attempt.score * 100 >= attempt.total * 75
+              ? (language === "fr" ? "Prêt pour l’examen" : "Ready for the exam")
+              : attempt.score * 100 >= attempt.total * 65
+                ? (language === "fr" ? "Peut tenter l’examen à ses risques et périls" : "May take the exam at their own risk")
+                : (language === "fr" ? "Pas prêt pour l’examen" : "Not ready for the exam")}</p>
+          )}
         </div>
         <button onClick={onHome}>⌂ {t.home}</button>
       </div>
